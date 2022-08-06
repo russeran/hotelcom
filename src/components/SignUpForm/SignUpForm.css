@@ -1,0 +1,51 @@
+.form-container {
+    background-color: rgb(238, 201, 107);
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 3rem;
+    width: 25rem;
+    margin: 0 auto;
+    display: flex;
+    height: 20rem;
+    border-radius: 15%;
+    ;
+}
+
+label {
+    display: inline-block;
+    margin: 1rem;
+    width: 5rem;
+    border: 2px solid black;
+    background-color: lightgoldenrodyellow;
+    height: 1.5rem;
+    text-align: center;
+    text-overflow: ellipsis;
+}
+
+input {
+    display: inline-block;
+    margin: 1rem;
+    width: 15rem;
+    height: 2rem;
+}
+
+button {
+    display: inline-block;
+    margin: 1rem;
+    width: 7rem;
+    height: 2rem;
+    border: 2px solid black;
+    border-radius: 25%;
+}
+
+.login-form {
+    background-color: rgb(244, 213, 132);
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 3rem;
+    width: 25rem;
+    margin: 0 auto;
+    display: flex;
+    height: 12rem;
+    border-radius: 15%;
+}
