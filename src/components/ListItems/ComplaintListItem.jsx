@@ -1,26 +1,33 @@
 import "./ListItems.css";
+import Table from 'react-bootstrap/Table';
 
-export default function ComplaintListItem({ complaint, index }) {
+
+export default function ComplaintListItem({ complaint }) {
     return (
-        <div className="complaint-list-item">
-            <div className="complaint-list-item-header">
-                <div className="date">
-                    <h2>{complaint.date}- <button>{complaint.status}</button></h2>
-                </div>
-                <div className="room">
-                    <h2>{complaint.room}-{complaint.name}</h2>
-                </div>
-             
-            </div>
-            <div className="complaint-list-item-body">
-                <div className="description">
-                    <p><button>COMPLAINT</button>{complaint.complaint}</p>
-                    <p><button>SOLUTION</button>{complaint.solution}</p>
-                </div>
-                <div className="user">
-                    <p><button>Created by</button>{complaint.user}</p>
-                </div>
-            </div>
-        </div>
+       <Table striped bordered hover  className="complaints-table" >
+
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Room #</th>
+                    <th>Guest Name</th>
+                    <th>Complaint</th>
+                    <th>Solution</th>
+                    <th>Agent Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{complaint.status}</td>
+                    <td>{complaint.date}</td>
+                    <td>{complaint.room}</td>
+                    <td>{complaint.name}</td>
+                    <td>{complaint.complaint}</td>
+                    <td>{complaint.solution}</td>
+                    <td>{complaint.user}</td>
+                </tr>   
+            </tbody>
+       </Table>
     );
 }

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import "./Forms.css"
 
-export default function NewComplaintForm({ addComplaint }) {
+
+
+export default function NewComplaintForm({ addComplaint}) {
     const [newComplaint, setNewComplaint] = useState({
         date: "",
         room: "",
@@ -46,17 +48,17 @@ export default function NewComplaintForm({ addComplaint }) {
                     <label>Date</label>
                     <input type="text" name="date" value={newComplaint.date} onChange={handleInputChange} required />
                 </div>
-                <br />
+
                 <div className="form-item">
                     <label>Room</label>
                     <input type="text" name="room" value={newComplaint.room} onChange={handleInputChange} required />
                 </div>
-                <br />
+
                 <div className="form-item">
                     <label>Name</label>
                     <input type="text" name="name" value={newComplaint.name} onChange={handleInputChange} required />
                 </div>
-                <br />
+
                 <div className="form-item">
                     <label>Complaint</label>
                     <input type="text" name="complaint" value={newComplaint.complaint} onChange={handleInputChange} required />
@@ -69,12 +71,12 @@ export default function NewComplaintForm({ addComplaint }) {
                     <label>Status</label>
                     <input type="text" name="status" value={newComplaint.status} onChange={handleInputChange} required />
                 </div>
-                <br />
+
                 <div className="form-item">
                     <label>User</label>
                     <input type="text" name="user" value={newComplaint.user} onChange={handleInputChange} required />
                 </div>
-                <br />
+
                 <div className="form-item">
                     <button type="submit">ADD</button>
                 </div>
