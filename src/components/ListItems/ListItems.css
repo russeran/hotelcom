@@ -1,0 +1,8 @@
+.complaint-list-item {
+    border: 2px solid black;
+    width: 20rem;
+    display: inline-block;
+    text-align: center;
+    background-color: rgb(227, 220, 220);
+    margin: 1rem;
+}

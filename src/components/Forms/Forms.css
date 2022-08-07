@@ -1,0 +1,9 @@
+.form-container {
+    display: inline-block;
+    background-color: rgb(118, 115, 108);
+    float: left;
+}
+
+.form-item {
+    margin: 0.1rem;
+}
