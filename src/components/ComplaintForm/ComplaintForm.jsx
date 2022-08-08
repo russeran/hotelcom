@@ -1,9 +1,9 @@
 import { useState } from "react";
-import "./Forms.css"
+import "./ComplaintForm.css"
 
 
 
-export default function NewComplaintForm({ addComplaint}) {
+export default function ComplaintForm({ addComplaint}) {
     const [newComplaint, setNewComplaint] = useState({
         date: "",
         room: "",

@@ -5,8 +5,8 @@ import { getUser } from "../../utilities/users-service";
 import AuthPage from "../AuthPage/AuthPage";
 import NavBar from "../../components/NavBar/NavBar";
 import ComplaintList from "../ComplaintList/ComplaintList.jsx"
-import NewComplaintForm from "../../components/Forms/NewComplaintForm.jsx";
-import NewConciergeForm from "../../components/Forms/NewConciergeForm";
+import ComplaintForm from "../../components/ComplaintForm/ComplaintForm.jsx"
+import ConciergeForm from "../../components/ConciergeForm/ConciergeForm.jsx";
 import ConciergeList from "../ConciergeList/ConciergeList";
 
 export default function App() {
@@ -29,14 +29,16 @@ export default function App() {
 
           <NavBar user={user} setUser={setUser} />
           <div className="complaint-section">
-          <NewComplaintForm addComplaint={addComplaint} />
+          <ComplaintForm addComplaint={addComplaint} />
         <ComplaintList complaints={complaints} />
         </div>
 <hr />
-        <div>
-          <NewConciergeForm  addConcierge={addConcierge}  />
+
+        <div className="concierge-section">
+          <ConciergeForm  addConcierge={addConcierge}  />
           <ConciergeList concierges={concierges} />
         </div>
+        <div></div>
           <Routes></Routes>
         </>
       ) : (

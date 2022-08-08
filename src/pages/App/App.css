@@ -3,12 +3,20 @@
 }
 
 .complaint-section {
-    display: inline;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-top: 2rem;
     border: black solid 2px;
-    background-color: brown;
+    background-color: rgb(130, 174, 158);
+    height: 25%;
+    display: block;
+}
+
+.app-container {
+    display: list-item;
+    margin-top: 2rem;
+    border: black solid 2px;
+    background-color: lightgoldenrodyellow;
     height: 25%;
 }

@@ -1,21 +1,13 @@
 
-import "./ListItems.css"
+import "./ConciergeListItem.css"
 
 export default function ConciergeListItem({concierge}){
 
 return (
 
-<table>
-<thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Price</th>
-        <th>Distance</th>
-        <th>User</th>
-        <th>Note</th>
-    </tr>
-</thead>
+
+// change to a CARD not a table
+
 <tbody>
     <tr>
         <td>{concierge.name}</td>
@@ -28,7 +20,7 @@ return (
 </tbody>
 
     
-</table>
+
 )
 
 

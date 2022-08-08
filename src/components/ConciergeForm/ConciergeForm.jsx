@@ -1,12 +1,13 @@
 import {useState} from "react";
-import './Forms.css'
+import './ConciergeForm.css'
 
 
-export default function NewConciergeForm({addConcierge}) {
+export default function ConciergeForm({addConcierge}) {
     const [newConcierge, setNewConcierge] = useState({
         name: "",
         type: "",
         price: "",
+        distance: "",
         note:"",
         user: "",
     });
