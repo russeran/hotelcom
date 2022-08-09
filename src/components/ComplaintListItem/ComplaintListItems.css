@@ -14,3 +14,16 @@
     background-color: rgb(227, 220, 220);
     margin: 1rem;
 }
+
+.complaints-table {
+    width: 30rem;
+    display: inline-block;
+}
+
+.table-button {
+    float: left;
+}
+
+td {
+    width: 15rem;
+}

@@ -1,5 +1,6 @@
 import {useState} from "react";
 import './ConciergeForm.css'
+import Form from "react-bootstrap/Form";
 
 
 export default function ConciergeForm({addConcierge}) {
@@ -36,7 +37,7 @@ export default function ConciergeForm({addConcierge}) {
 
 
     return (
-        <form onSubmit={handleAddConcierge}>
+        <Form onSubmit={handleAddConcierge}>
             <div className='form-container' id='new-concierge' >
 <h3>ADD NEW ITEM</h3>
 <div className='form-item' >
@@ -70,7 +71,7 @@ export default function ConciergeForm({addConcierge}) {
 
             </div>
 
-        </form>
+        </Form>
 
     );
 

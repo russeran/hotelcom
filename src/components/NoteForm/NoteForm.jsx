@@ -24,8 +24,8 @@ function handleAddNote(e){
 }
 
 function handleInputChange(e) {
-    const addNewNote = {...newNote, [e.
-        target.name]:e.target.value};
+    const addNewNote = {...newNote, 
+        [e.target.name]:e.target.value};
         setNewNote(addNewNote)
 }
 
