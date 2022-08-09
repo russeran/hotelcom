@@ -16,8 +16,8 @@ export default function ComplaintForm({ addComplaint}) {
     });
 
 
-    function handleAddComplain(evt) {
-        evt.preventDefault();
+    function handleAddComplain(e) {
+        e.preventDefault();
         addComplaint(newComplaint);
         setNewComplaint({
             date: "",
@@ -30,9 +30,9 @@ export default function ComplaintForm({ addComplaint}) {
         });
     }
 
-    function handleInputChange(evt) {
+    function handleInputChange(e) {
         const newNEWComplaint = { ...newComplaint,
-            [evt.target.name]: evt.target.value
+            [e.target.name]: e.target.value
         };
         
         setNewComplaint(newNEWComplaint);
@@ -76,7 +76,7 @@ export default function ComplaintForm({ addComplaint}) {
                     <label>User</label>
                     <input type="text" name="user" value={newComplaint.user} onChange={handleInputChange} required />
                 </div>
-
+<br />
                 <div className="form-item">
                     <button type="submit">ADD</button>
                 </div>

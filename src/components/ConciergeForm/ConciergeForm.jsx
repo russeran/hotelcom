@@ -63,6 +63,7 @@ export default function ConciergeForm({addConcierge}) {
     <label>User</label>
     <input type="text" name='user' value={newConcierge.user} onChange={handleInputChange} required />
 </div>
+<br />
 <div className="form-item">
                     <button type="submit">ADD</button>
                 </div>
