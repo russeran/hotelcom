@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
@@ -8,6 +9,7 @@ require('./config/database')
 
 const app = express();
 
+//
 app.use(logger('dev'));
 app.use(express.json());
 
@@ -20,6 +22,11 @@ app.use(require('./config/checkToken'))
 
 // Put API routes here, before the "catch all" route
 app.use('/api/users', require('./routes/api/users'))
+app.use('/api/complaints', require('./routes/api/complaints'))
+
+//CONNECT TO DB
+// mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+
 
 // The following "catch all" route (note the *) is necessary
 // to return the index.html on all non-AJAX requests
@@ -32,5 +39,5 @@ app.get('/*', function(req, res) {
 const port = process.env.PORT || 3001;
 
 app.listen(port, function() {
-  console.log(`Express app running on port ${port}`)
+    console.log(`Express app running on port ${port}`)
 });

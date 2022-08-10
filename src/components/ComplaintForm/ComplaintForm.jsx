@@ -42,45 +42,47 @@ export default function ComplaintForm({ addComplaint}) {
     
     return (
         <form onSubmit={handleAddComplain}>
-            <div className="form-container"  id="new-complaint" >
-                <h3>NEW GUEST COMPLAINT</h3>
-                <div className="form-item">
+            <table id="new-complaint" >
+
+                <tr>
+                <th className="form-item">
                     <label>Date</label>
                     <input type="text" name="date" value={newComplaint.date} onChange={handleInputChange} required />
-                </div>
+                </th>
 
-                <div className="form-item">
+                <th className="form-item">
                     <label>Room</label>
-                    <input type="text" name="room" value={newComplaint.room} onChange={handleInputChange} required />
-                </div>
+                    <input type="number" name="room" value={newComplaint.room} onChange={handleInputChange} required />
+                </th>
 
-                <div className="form-item">
+                <th className="form-item">
                     <label>Name</label>
                     <input type="text" name="name" value={newComplaint.name} onChange={handleInputChange} required />
-                </div>
+                </th>
 
-                <div className="form-item">
+                <th className="form-item">
                     <label>Complaint</label>
                     <input type="text" name="complaint" value={newComplaint.complaint} onChange={handleInputChange} required />
-                </div>
-                <div className="form-item">
+                </th>
+                <th className="form-item">
                     <label>Solution</label>
                     <input type="text" name="solution" value={newComplaint.solution} onChange={handleInputChange} required />
-                </div>
-                <div className="form-item">
+                </th>
+                <th className="form-item">
                     <label>Status</label>
                     <input type="text" name="status" value={newComplaint.status} onChange={handleInputChange} required />
-                </div>
+                </th>
 
-                <div className="form-item">
+                <th className="form-item">
                     <label>User</label>
                     <input type="text" name="user" value={newComplaint.user} onChange={handleInputChange} required />
-                </div>
-<br />
-                <div className="form-item">
+                </th>
+                 <br />
+                <th className="form-item">
                     <button type="submit">ADD</button>
-                </div>
-            </div>
+                </th>
+                </tr>
+            </table>
         </form>
     );
 

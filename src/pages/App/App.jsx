@@ -1,6 +1,5 @@
 import "./App.css";
 import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
 import { getUser } from "../../utilities/users-service";
 import AuthPage from "../AuthPage/AuthPage";
 import NavBar from "../../components/NavBar/NavBar";
@@ -40,31 +39,42 @@ export default function App() {
     <main className="App">
       {user ? (
         <>
-
-          <NavBar user={user} setUser={setUser} />
-
-          <hr />
+        <br />
+        <NavBar user={user} setUser={setUser} />
+        <br />
         <div className="task-section">
-          <TaskForm  addTask={addTask}  />
-          <TaskList tasks={tasks} />
+        <br/> 
+        <h3>TASK LIST</h3>
+        <TaskForm addTask={addTask} />
+        <TaskList tasks={tasks} />
         </div>
-        <hr />
-          <div className="complaint-section">
-          <ComplaintForm addComplaint={addComplaint} />
+        <br />
+        <div className="complaint-section">
+        <br/> 
+        <h3>COMPLAINT LIST</h3>
+        <ComplaintForm addComplaint={addComplaint} />
         <ComplaintList complaints={complaints} />
-        </div>
-<hr />
-        <div className="note-section">
-          <NoteForm  addNote={addNote}  />
-          <NoteList notes={notes} />
-        </div>
-<hr />
-        <div className="concierge-section">
-          <ConciergeForm  addConcierge={addConcierge}  />
-          <ConciergeList concierges={concierges} />
-        </div>
         
-          <Routes></Routes>
+        </div>
+       <br />
+        <div className="note-section" >
+        <br/> 
+        <h3>NOTE LIST</h3>
+        <NoteForm addNote={addNote} />
+        <NoteList notes={notes} />
+       
+        </div>
+       <br />
+        <div className="concierge-section" >
+        <br/>
+        <h3>CONCIERGE LIST</h3>
+        <ConciergeForm addConcierge={addConcierge} />
+        <ConciergeList concierges={concierges} />
+        
+        </div>
+      
+    
+        
         </>
       ) : (
         <AuthPage setUser={setUser} />

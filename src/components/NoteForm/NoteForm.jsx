@@ -32,28 +32,31 @@ function handleInputChange(e) {
 
 return (
  <form onSubmit={handleAddNote}>
-    <div className="form-container" id="new-note" >
-         <h3>ADD NOTE</h3>
-        <div className="form-item" >
+    <table  id="new-note" >
+
+    <tr>
+        
+        <th className="form-item" >
            <label>Date</label>
            <input type="text" name="date" value={newNote.date} onChange={handleInputChange} required />
-        </div>
+        </th>
 
-        <div className="form-item">
+        <th className="form-item">
            <label>User</label>
             <input type="text" name="user" value={newNote.user} onChange={handleInputChange} required />
-        </div>
-        <div className="form-item" >
+        </th>
+        <th className="form-item" >
             <label>Note</label>
             <input type="text" name="note" value={newNote.note} onChange={handleInputChange} required /> 
 
-        </div>
-        <br />
-        <div className="form-item" >
-            <button type="submit" >ADD</button>
-        </div>
-
-    </div>
+        </th>
+       <th>
+       <button type="submit" >ADD</button>
+       </th>
+            
+       
+</tr>
+    </table>
 
 
 </form>

@@ -1,10 +1,13 @@
 import TaskListItem from "../../components/TaskListItem/TaskListItem";
 import { Table } from "react-bootstrap";
 
+
 export default function TaskList({ tasks }) {
     return (
-        <div>
-            <Table striped bordered hover>
+        <div >
+  
+            <br />
+             <Table striped bordered hover  className="task-table" >
                 <thead>
                     <tr>
                         <th>Status</th>

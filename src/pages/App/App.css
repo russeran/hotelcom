@@ -3,20 +3,32 @@
 }
 
 .complaint-section {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2rem;
-    border: black solid 2px;
     background-color: rgb(130, 174, 158);
-    height: 25%;
-    display: block;
+    border: black solid 5px;
+    border-radius: 3%;
 }
 
-.app-container {
-    display: list-item;
-    margin-top: 2rem;
-    border: black solid 2px;
-    background-color: lightgoldenrodyellow;
-    height: 25%;
+.task-section {
+    background-color: rgb(240, 185, 165);
+    border: black solid 5px;
+    border-radius: 3%;
+}
+
+.note-section {
+    background-color: rgb(191, 90, 191);
+    border: black solid 5px;
+    border-radius: 3%;
+}
+
+.concierge-section {
+    background-color: blueviolet;
+    border: black solid 5px;
+    border-radius: 3%;
+}
+
+.App {
+    background-color: pink;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: large;
+    padding: 1% 2%;
 }

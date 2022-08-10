@@ -1,5 +1,8 @@
 #new-concierge {
+    border: 2px solid black;
+    display: inline-block;
+    text-align: center;
+    margin: 0.5rem;
     height: fit-content;
-    background-color: beige;
-    float: left;
+    width: fit-content;
 }

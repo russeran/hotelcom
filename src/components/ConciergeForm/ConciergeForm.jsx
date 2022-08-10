@@ -1,6 +1,5 @@
 import {useState} from "react";
 import './ConciergeForm.css'
-import Form from "react-bootstrap/Form";
 
 
 export default function ConciergeForm({addConcierge}) {
@@ -37,41 +36,41 @@ export default function ConciergeForm({addConcierge}) {
 
 
     return (
-        <Form onSubmit={handleAddConcierge}>
-            <div className='form-container' id='new-concierge' >
-<h3>ADD NEW ITEM</h3>
-<div className='form-item' >
+        <form onSubmit={handleAddConcierge}>
+            <table  id='new-concierge' >
+<tr>
+<th className='form-item' >
     <label>Type</label>
     <input type="text" name='type' value={newConcierge.type} onChange={handleInputChange} required />
-</div>
-<div className='form-item' >
+</th>
+<th className='form-item' >
     <label>Name</label>
     <input type="text" name='name' value={newConcierge.name} onChange={handleInputChange} required />
-</div>
-<div className='form-item' >
+</th>
+<th className='form-item' >
     <label>Price</label>
     <input type="text" name='price' value={newConcierge.price} onChange={handleInputChange} required />
-</div>
-<div className='form-item' >
+</th>
+<th className='form-item' >
     <label>Distance</label>
     <input type="text" name='distance' value={newConcierge.distance} onChange={handleInputChange} required />
-</div>
-<div className='form-item' >
+</th>
+<th className='form-item' >
     <label>Note</label>
     <input type="text" name='note' value={newConcierge.note} onChange={handleInputChange} required />
-</div>
-<div className='form-item' >
+</th>
+<th className='form-item' >
     <label>User</label>
     <input type="text" name='user' value={newConcierge.user} onChange={handleInputChange} required />
-</div>
+</th>
 <br />
-<div className="form-item">
+<th className="form-item">
                     <button type="submit">ADD</button>
-                </div>
+                </th>
+                </tr>
+            </table>
 
-            </div>
-
-        </Form>
+        </form>
 
     );
 
