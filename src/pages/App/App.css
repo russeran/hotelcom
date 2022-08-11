@@ -2,30 +2,6 @@
     text-align: center;
 }
 
-.complaint-section {
-    background-color: rgb(130, 174, 158);
-    border: black solid 5px;
-    border-radius: 3%;
-}
-
-.task-section {
-    background-color: rgb(240, 185, 165);
-    border: black solid 5px;
-    border-radius: 3%;
-}
-
-.note-section {
-    background-color: rgb(191, 90, 191);
-    border: black solid 5px;
-    border-radius: 3%;
-}
-
-.concierge-section {
-    background-color: blueviolet;
-    border: black solid 5px;
-    border-radius: 3%;
-}
-
 .App {
     background-color: pink;
     font-family: 'Times New Roman', Times, serif;

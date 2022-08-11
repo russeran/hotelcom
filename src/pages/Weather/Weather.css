@@ -1,0 +1,13 @@
+.weather {
+    border: 3px solid black;
+    border-radius: 3%;
+    background-color: aqua;
+    width: 13%;
+    height: 17%;
+    font-size: 1em;
+    background-image: url("/images/weather.png");
+    background-repeat: no-repeat;
+    color: white;
+    font-style: italic;
+    font-weight: bold;
+}
