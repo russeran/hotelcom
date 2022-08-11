@@ -10,8 +10,8 @@ return (
 
 <tbody>
     <tr>
-        <td>{concierge.name}</td>
         <td>{concierge.type}</td>
+        <td>{concierge.name}</td>
         <td>{concierge.price}</td>
         <td>{concierge.distance}</td>
         <td>{concierge.user}</td>

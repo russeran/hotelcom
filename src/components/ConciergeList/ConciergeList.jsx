@@ -8,8 +8,8 @@ export default function ConciergeList({ concierges }) {
         <Table striped bordered hover>
            <thead>
              <tr>
-                <th>Name</th>
                 <th>Type</th>
+                <th>Name</th>
                 <th>Price</th>
                 <th>Distance</th>
                 <th>User</th>

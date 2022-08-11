@@ -10,7 +10,7 @@ export default function ComplaintListItem({ complaint }) {
          <td>{complaint.date}</td>
          <td>{complaint.room}</td>
          <td>{complaint.name}</td>
-         <td>{complaint.complaint}</td>
+         <td>{complaint.issue}</td>
          <td>{complaint.solution}</td>
          <td>{complaint.status}</td>
             <td>{complaint.user}</td>

@@ -1,4 +1,4 @@
-import TaskListItem from "../../components/TaskListItem/TaskListItem";
+import TaskListItem from "../TaskListItem/TaskListItem";
 import { Table } from "react-bootstrap";
 
 

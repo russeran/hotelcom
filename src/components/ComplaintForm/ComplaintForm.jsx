@@ -8,7 +8,7 @@ export default function ComplaintForm({ addComplaint}) {
         date: "",
         room: "",
         name: "",
-        complaint: "",
+        issue: "",
         solution: "",
         status: "",
         user: ""
@@ -23,7 +23,7 @@ export default function ComplaintForm({ addComplaint}) {
             date: "",
             room: "",
             name: "",
-            complaint: "",
+            issue: "",
             solution: "",
             status: "",
             user: ""
@@ -61,8 +61,8 @@ export default function ComplaintForm({ addComplaint}) {
                 </th>
 
                 <th className="form-item">
-                    <label>Complaint</label>
-                    <input type="text" name="complaint" value={newComplaint.complaint} onChange={handleInputChange} required />
+                    <label>Issue</label>
+                    <input type="text" name="issue" value={newComplaint.issue} onChange={handleInputChange} required />
                 </th>
                 <th className="form-item">
                     <label>Solution</label>

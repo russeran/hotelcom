@@ -3,18 +3,22 @@ import { useEffect, useState } from "react";
 import { getUser } from "../../utilities/users-service";
 import AuthPage from "../AuthPage/AuthPage";
 import NavBar from "../../components/NavBar/NavBar";
-import ComplaintList from "../ComplaintList/ComplaintList.jsx"
+import ComplaintList from "../../components/ComplaintList/ComplaintList.jsx"
 import ComplaintForm from "../../components/ComplaintForm/ComplaintForm.jsx"
 import ConciergeForm from "../../components/ConciergeForm/ConciergeForm.jsx";
-import ConciergeList from "../ConciergeList/ConciergeList.jsx";
+import ConciergeList from "../../components/ConciergeList/ConciergeList.jsx";
 import NoteForm from "../../components/NoteForm/NoteForm.jsx";
-import NoteList from "../../pages/NoteList/NoteList.jsx";
+import NoteList from "../../components/NoteList/NoteList.jsx";
 import TaskForm from "../../components/TaskForm/TaskForm";
-import TaskList from "../../pages/TaskList/TaskList";
+import TaskList from "../../components/TaskList/TaskList";
 import * as complaintsAPI from "../../utilities/complaints-api";
-import HotelPrice from "../../pages/HotelPrices/HotelPrices";
-import axios from "axios";
+import * as conciergesAPI from "../../utilities/concierges-api";
+import * as notesAPI from "../../utilities/notes-api";
+import * as tasksAPI from "../../utilities/tasks-api";
+
 import Weather from "../Weather/Weather";
+
+
 
 
 export default function App() {
@@ -23,28 +27,6 @@ export default function App() {
   const [concierges, setConcierges] = useState([]);
   const [notes, setNotes] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const [hotels, setHotels] = useState([]);
-
-  
-
-  useEffect(() => {
-    const fetchHotels = async () => {
-      try {
-        const response = await HotelPrice.get("/hotels");
-        setHotels(response.data);
-
-      } catch (error) {
-        if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      } else {
-        console.log("Error", error.message);
-      }
-    }
-  }
-  fetchHotels();
-}, []);
 
 
 
@@ -54,23 +36,53 @@ useEffect(function(){
     setComplaints(users);
 }
 getAllComplaint();
-}, );
+},[] );
 
+useEffect(function(){
+  async function getAllConcierge(){
+    let users = await conciergesAPI.getAllConcierges();
+    setConcierges(users);
+}
+getAllConcierge();
+},[] );
+
+useEffect(function(){
+  async function getAllNotes(){
+    let users = await notesAPI.getAllNotes();
+    setNotes(users);
+}
+getAllNotes();
+},[] );
+
+useEffect(function(){
+  async function getAllTasks(){
+    let users = await tasksAPI.getAllTasks();
+    setTasks(users);
+}
+getAllTasks();
+},[] );
+  
 
 
   function addTask(task) {
+    tasksAPI.addATask(task);
     setTasks([...tasks, task]);
+
   }
 
   function addConcierge(concierge) {
+    conciergesAPI.addAConcierge(concierge);
     setConcierges([...concierges, concierge]);
   }
 
   function addComplaint(complaint) {
+    complaintsAPI.addAComplaint(complaint);
     setComplaints([...complaints, complaint]);
+
   }
 
   function addNote(note) {
+    notesAPI.addANote(note);
     setNotes ([...notes, note])
   }
 

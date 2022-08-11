@@ -4,11 +4,11 @@ const Schema = mongoose.Schema
 
 const complaintSchema = new Schema({
     date: { type: Date, default: Date.now },
-    room: { type: Number, required: true },
-    name: { type: String, required: true },
-    issue: { type: String, required: true },
-    solution: { type: String, required: true },
-    status: { type: String, required: true },
+    room: { type: Number, required: false },
+    name: { type: String, required: false },
+    issue: { type: String, required: false },
+    solution: { type: String, required: false },
+    status: { type: String, required: false },
     user: { type: Schema.Types.ObjectId, ref: 'User' }
 }, {
     timestamps: true,

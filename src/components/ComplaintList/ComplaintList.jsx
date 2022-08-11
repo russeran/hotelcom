@@ -1,5 +1,5 @@
-import ComplaintListItem from "../../components/ComplaintListItem/ComplaintListItem.jsx";
-import "../ComplaintList/ComplaintList.css"
+import ComplaintListItem from "../ComplaintListItem/ComplaintListItem.jsx";
+import "./ComplaintList.css"
 import {Table} from 'react-bootstrap';
 
 export default function ComplaintList({ complaints}) {
@@ -9,12 +9,13 @@ export default function ComplaintList({ complaints}) {
         <Table striped bordered hover>
         <thead>
             <tr>
-                <th>Status</th>
                 <th>Date</th>
-                <th>Department</th>
                 <th>Room</th>
+                <th>Guest Name</th>
+                <th>Issue</th>
+                <th>Solution</th>
+                <th>Status</th>
                 <th>User</th>
-                <th>Task</th>
             </tr>
         </thead>
     

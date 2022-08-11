@@ -4,8 +4,8 @@ import './ConciergeForm.css'
 
 export default function ConciergeForm({addConcierge}) {
     const [newConcierge, setNewConcierge] = useState({
-        name: "",
         type: "",
+        name: "",
         price: "",
         distance: "",
         note:"",
@@ -16,8 +16,8 @@ export default function ConciergeForm({addConcierge}) {
         evt.preventDefault();
         addConcierge(newConcierge);
         setNewConcierge({
-          name: "",
           type: "",
+          name: "",
           price: "",
           distance: "",
           note:"",

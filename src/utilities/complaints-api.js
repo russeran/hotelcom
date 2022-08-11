@@ -7,5 +7,5 @@ export function getAllComplaints() {
 }
 export function addAComplaint(complaintForm) {
     console.log(complaintForm)
-    return sendRequest(`${BASE_URL}/create`, { method: "POST" }, complaintForm);
+    return sendRequest(`${BASE_URL}/create`, "POST", complaintForm);
 }
