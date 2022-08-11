@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const complaintsCtrl = require('../../controllers/api/complaints')
 
-router.post('/', complaintsCtrl.create)
+router.post('/create', complaintsCtrl.create)
+router.get('/index', complaintsCtrl.index)
 
 
 // const {

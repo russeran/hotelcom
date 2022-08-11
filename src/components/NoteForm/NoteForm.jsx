@@ -33,7 +33,7 @@ function handleInputChange(e) {
 return (
  <form onSubmit={handleAddNote}>
     <table  id="new-note" >
-
+<thead>
     <tr>
         
         <th className="form-item" >
@@ -56,6 +56,7 @@ return (
             
        
 </tr>
+</thead>
     </table>
 
 

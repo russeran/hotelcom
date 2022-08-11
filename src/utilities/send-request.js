@@ -5,15 +5,15 @@ export default async function sendRequest(url, method = 'GET', payload = null) {
     // used to include a data payload, set headers, etc. 
     const options = { method };
     if (payload) {
-      options.headers = { 'Content-Type': 'application/json' };
-      options.body = JSON.stringify(payload);
+        options.headers = { 'Content-Type': 'application/json' };
+        options.body = JSON.stringify(payload);
     }
     const token = getToken()
-    if(token) {
+    if (token) {
         // Ensure the headers object exists
         options.headers = options.headers || {}
-        // Add token to an Authorization header
-        // Prefacing with 'Bearer' is recommended in the HTTP specification
+            // Add token to an Authorization header
+            // Prefacing with 'Bearer' is recommended in the HTTP specification
         options.headers.Authorization = `Bearer ${token}`
     }
 

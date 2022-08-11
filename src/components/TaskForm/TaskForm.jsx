@@ -44,8 +44,8 @@ const [newTask, setNewTask] = useState({
     return (
         <form onSubmit={handleAddTask}>
             <table  id="new-task" >
-
-                <tr>
+<thead>
+            <tr>
                 
                 <th className="form-item">
                     <label>Status</label>
@@ -71,11 +71,12 @@ const [newTask, setNewTask] = useState({
                     <label>Task</label>
                     <input type="text" name="task" value={newTask.task} onChange={handleInputChange} required />
                 </th>
-                <br />
+
                 <th className="form-item">
-                    <button type="submit">Add Task</button>
+                    <button type="submit">ADD</button>
                 </th>
-                </tr>
+            </tr>
+            </thead>
             </table>
         </form>
     );

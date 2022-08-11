@@ -38,6 +38,7 @@ export default function ConciergeForm({addConcierge}) {
     return (
         <form onSubmit={handleAddConcierge}>
             <table  id='new-concierge' >
+<thead> 
 <tr>
 <th className='form-item' >
     <label>Type</label>
@@ -63,11 +64,12 @@ export default function ConciergeForm({addConcierge}) {
     <label>User</label>
     <input type="text" name='user' value={newConcierge.user} onChange={handleInputChange} required />
 </th>
-<br />
+
 <th className="form-item">
                     <button type="submit">ADD</button>
                 </th>
                 </tr>
+                </thead>
             </table>
 
         </form>

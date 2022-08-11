@@ -5,7 +5,7 @@ import {Table} from 'react-bootstrap';
 export default function ComplaintList({ complaints}) {
    
     return (
-        <div complaint-table>
+        <div className="complaint-table">
         <Table striped bordered hover>
         <thead>
             <tr>

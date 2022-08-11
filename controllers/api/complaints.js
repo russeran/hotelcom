@@ -2,9 +2,16 @@ const Complaint = require('../../models/complaint')
 
 module.exports = {
     create,
+    index
 };
 
+async function index(req, res) {
+    const complaint = await Complaint.find({ user: req.user._id })
+    res.json(complaint)
+}
+
 async function create(req, res) {
+    req.body.user = req.user._id
     const newComplaint = await Complaint.create(req.body)
     console.log(newComplaint)
     return res.json(newComplaint)

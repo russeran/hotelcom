@@ -13,6 +13,6 @@ root.render( <
     <
     App / >
     <
-    /Router> <
-    /React.StrictMode>
+    /Router>  < /
+    React.StrictMode >
 );

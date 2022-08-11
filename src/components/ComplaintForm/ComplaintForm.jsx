@@ -16,7 +16,7 @@ export default function ComplaintForm({ addComplaint}) {
     });
 
 
-    function handleAddComplain(e) {
+    function handleAddComplaint(e) {
         e.preventDefault();
         addComplaint(newComplaint);
         setNewComplaint({
@@ -41,9 +41,9 @@ export default function ComplaintForm({ addComplaint}) {
  
     
     return (
-        <form onSubmit={handleAddComplain}>
+        <form onSubmit={handleAddComplaint}>
             <table id="new-complaint" >
-
+             <thead>
                 <tr>
                 <th className="form-item">
                     <label>Date</label>
@@ -77,11 +77,12 @@ export default function ComplaintForm({ addComplaint}) {
                     <label>User</label>
                     <input type="text" name="user" value={newComplaint.user} onChange={handleInputChange} required />
                 </th>
-                 <br />
+            
                 <th className="form-item">
                     <button type="submit">ADD</button>
                 </th>
                 </tr>
+                </thead>
             </table>
         </form>
     );
