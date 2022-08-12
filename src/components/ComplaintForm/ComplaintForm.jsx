@@ -4,7 +4,7 @@ import "./ComplaintForm.css"
 
 
 
-export default function ComplaintForm({ addComplaint }) {
+export default function ComplaintForm({ addComplaint, deleteComplaint, complaint }) {
     const [newComplaint, setNewComplaint] = useState({
         date: "",
         room: "",

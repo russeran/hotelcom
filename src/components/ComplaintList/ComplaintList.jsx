@@ -2,7 +2,7 @@ import ComplaintListItem from "../ComplaintListItem/ComplaintListItem.jsx";
 import "./ComplaintList.css"
 import {Table} from 'react-bootstrap';
 
-export default function ComplaintList({ complaints}) {
+export default function ComplaintList({ complaints, deleteComplaint }) {
    
     return (
         <div className="complaint-table">
@@ -21,7 +21,7 @@ export default function ComplaintList({ complaints}) {
         </thead>
     
             {complaints.map((complaint, index) => (
-                <ComplaintListItem key={index} complaint={complaint} index={index} />
+                <ComplaintListItem key={index} complaint={complaint} index={index} deleteComplaint={deleteComplaint} />
             ))}
          </Table>
        </div>

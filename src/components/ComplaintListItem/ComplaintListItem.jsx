@@ -3,7 +3,7 @@ import { useEffect ,useState } from "react";
 import * as complaintsAPI from '../../utilities/complaints-api';
 
 
-export default function ComplaintListItem({ complaint, handleDeleteComplaint, handleUpdateComplaint }) {
+export default function ComplaintListItem({ complaint, deleteComplaint }) {
     const [complaints, setComplaints] = useState([]);
   
     useEffect(function(){
@@ -14,12 +14,7 @@ export default function ComplaintListItem({ complaint, handleDeleteComplaint, ha
         getAllComplaints();
     } ,[] );
 
-    async function handleDeleteComplaint(evt) {
-        evt.preventDefault();
-        await complaintsAPI.deleteAComplaint(complaint._id);
-        setComplaints([...complaints, complaint]);
-      
-    }
+
 
  
 
@@ -35,7 +30,7 @@ export default function ComplaintListItem({ complaint, handleDeleteComplaint, ha
          <td>{complaint.solution}</td>
          <td>{complaint.status}</td>
             <td>{complaint.user}</td>
-            <td><form  onSubmit={handleDeleteComplaint} ><button type="submit" >X</button></form>
+            <td><button onClick={()=> deleteComplaint(complaint._id)} >X</button>
                   </td>
                   
      </tr>
