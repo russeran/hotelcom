@@ -9,3 +9,12 @@ export function addAComplaint(complaintForm) {
     console.log(complaintForm)
     return sendRequest(`${BASE_URL}/create`, "POST", complaintForm);
 }
+
+export function deleteAComplaint(complaint) {
+
+    return sendRequest(`${BASE_URL}/delete/${complaint}`, "DELETE");
+}
+
+export function updateAComplaint(complaint) {
+    return sendRequest(`${BASE_URL}/update/${complaint}`, "PATCH");
+}

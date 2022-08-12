@@ -2,7 +2,10 @@ const Complaint = require('../../models/complaint')
 
 module.exports = {
     create,
-    index
+    index,
+    delete: deleteComplaint,
+    update
+
 };
 
 async function index(req, res) {
@@ -16,6 +19,18 @@ async function create(req, res) {
     console.log(newComplaint)
     return res.json(newComplaint)
 }
+
+async function deleteComplaint(req, res) {
+    const complaint = await Complaint.findByIdAndRemove(req.params.id)
+    res.json(complaint)
+}
+
+async function update(req, res) {
+    const complaint = await Complaint.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    res.json(complaint)
+}
+
+
 
 
 

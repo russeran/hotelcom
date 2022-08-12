@@ -4,6 +4,8 @@ const complaintsCtrl = require('../../controllers/api/complaints')
 
 router.post('/create', complaintsCtrl.create)
 router.get('/index', complaintsCtrl.index)
+router.delete('/delete/:id', complaintsCtrl.delete)
+router.patch('/update/:id', complaintsCtrl.update)
 
 
 // const {

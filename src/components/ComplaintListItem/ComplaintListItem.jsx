@@ -1,9 +1,30 @@
 import "./ComplaintListItems.css"
+import { useEffect ,useState } from "react";
+import * as complaintsAPI from '../../utilities/complaints-api';
 
 
+export default function ComplaintListItem({ complaint, handleDeleteComplaint, handleUpdateComplaint }) {
+    const [complaints, setComplaints] = useState([]);
+  
+    useEffect(function(){
+        async function getAllComplaints(){
+        let users = await complaintsAPI.getAllComplaints();
+        setComplaints(users);
+        }
+        getAllComplaints();
+    } ,[] );
 
-export default function ComplaintListItem({ complaint }) {
+    async function handleDeleteComplaint(evt) {
+        evt.preventDefault();
+        await complaintsAPI.deleteAComplaint(complaint._id);
+        setComplaints([...complaints, complaint]);
+      
+    }
+
+ 
+
     return (
+
  
      <tbody>
      <tr>
@@ -14,6 +35,9 @@ export default function ComplaintListItem({ complaint }) {
          <td>{complaint.solution}</td>
          <td>{complaint.status}</td>
             <td>{complaint.user}</td>
+            <td><form  onSubmit={handleDeleteComplaint} ><button type="submit" >X</button></form>
+                  </td>
+                  
      </tr>
  </tbody>
     );

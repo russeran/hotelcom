@@ -16,6 +16,7 @@ export default function ComplaintList({ complaints}) {
                 <th>Solution</th>
                 <th>Status</th>
                 <th>User</th>
+                <th>Delete</th>
             </tr>
         </thead>
     

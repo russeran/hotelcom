@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./HotelPrices.css";
 
 
-export default HotelPrices(){
+export default function HotelPrices(){
 
   const options = {
     method: 'GET',
@@ -33,13 +33,18 @@ export default HotelPrices(){
     }
   };
   
+console.log(options);
+
   axios.request(options).then(function (response) {
     console.log(response.data);
   }).catch(function (error) {
     console.error(error);
   });
+
+
+return (
+  <div></div>
+);
+
+
 };
-
-
-
-  

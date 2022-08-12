@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { updateAComplaint } from "../../utilities/complaints-api";
 import "./ComplaintForm.css"
 
 
 
-export default function ComplaintForm({ addComplaint}) {
+export default function ComplaintForm({ addComplaint }) {
     const [newComplaint, setNewComplaint] = useState({
         date: "",
         room: "",
@@ -30,6 +31,21 @@ export default function ComplaintForm({ addComplaint}) {
         });
     }
 
+  function handleUpdateComplaint(e) {
+        e.preventDefault();
+        updateAComplaint(newComplaint);
+        setNewComplaint({
+            date: "",
+            room: "",
+            name: "",
+            issue: "",
+            solution: "",
+            status: "",
+            user: ""
+        });
+    }
+        
+
     function handleInputChange(e) {
         const newNEWComplaint = { ...newComplaint,
             [e.target.name]: e.target.value
@@ -38,9 +54,13 @@ export default function ComplaintForm({ addComplaint}) {
         setNewComplaint(newNEWComplaint);
 
     }
+
+  
+
  
     
     return (
+        <div>
         <form onSubmit={handleAddComplaint}>
             <table id="new-complaint" >
              <thead>
@@ -82,9 +102,14 @@ export default function ComplaintForm({ addComplaint}) {
                     <button type="submit">ADD</button>
                 </th>
                 </tr>
+                
                 </thead>
+                
             </table>
+            
         </form>
+        <form onSubmit={handleUpdateComplaint} ><button type="submit" >U</button></form>
+        </div>
     );
 
 

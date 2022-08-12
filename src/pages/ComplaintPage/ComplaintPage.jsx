@@ -7,6 +7,7 @@ import './ComplaintPage.css';
 
 export default function ComplaintPage() {
     const [complaints, setComplaints] = useState([]);
+    
 
     useEffect(function(){
         async function getAllComplaints(){
@@ -21,11 +22,15 @@ export default function ComplaintPage() {
         setComplaints([...complaints, complaint]);
 
     }
+
+   
+
+
     return (
         <div className="complaint-page">
             <br />
             <strong><h2>COMPLAINTS</h2></strong>
-            <ComplaintForm addComplaint={addComplaint} />
+            <ComplaintForm addComplaint={addComplaint}  />
             <ComplaintList complaints={complaints} />
         </div>
     );
