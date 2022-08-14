@@ -8,7 +8,7 @@ import TaskPage from "../TaskPage/TaskPage";
 import NotePage from "../NotePage/NotePage";
 import ConciergePage from "../ConciergePage/ConciergePage";
 import ComplaintPage from "../ComplaintPage/ComplaintPage";
-import HotelPrices from "../HotelPrices/HotelPrices";
+import HotelPrices from "../HotelPrices/HotelPrices.jsx";
 
 
 export default function App() {
@@ -34,7 +34,9 @@ export default function App() {
         <br />
         <ConciergePage/>
         <br />
-        <HotelPrices/>
+        <hr />
+        <HotelPrices  />
+        <hr />
 
         </>
       ) : (

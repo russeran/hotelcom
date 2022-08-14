@@ -10,8 +10,8 @@ export default function Weather() {
 
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=9ebb7fe68548d4066e5174b3b0d8b388`
 
-    const searchLocation = (event) => {
-        if (event.key === 'Enter') {
+    const searchLocation = (e) => {
+        if (e.key === 'Enter') {
         axios.get(url).then((res) => {
             setData(res.data);
             console.log(res.data);
@@ -30,7 +30,7 @@ export default function Weather() {
                 value={location}
                 type="text" 
                 placeholder="Hollywood" 
-                onChange={(event) => setLocation(event.target.value)} 
+                onChange={(e) => setLocation(e.target.value)} 
                 onKeyPress={searchLocation}
                 />
 
