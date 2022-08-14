@@ -35,7 +35,7 @@ export default function App() {
         <ConciergePage/>
         <br />
         <hr />
-        <HotelPrices  />
+     
         <hr />
 
         </>

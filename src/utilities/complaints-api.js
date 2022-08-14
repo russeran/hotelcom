@@ -12,7 +12,7 @@ export function addAComplaint(complaintForm) {
 
 export function deleteAComplaint(complaint) {
 
-    return sendRequest(`${BASE_URL}/delete/${complaint}`, "DELETE");
+    return sendRequest(`${BASE_URL}/delete/${complaint}`, `DELETE`);
 }
 
 export function updateAComplaint(complaint) {

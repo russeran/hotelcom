@@ -8,15 +8,16 @@ import './ComplaintPage.css';
 
 export default function ComplaintPage() {
     const [complaints, setComplaints] = useState([]);
+    const [change, setChange] = useState(true);
     
 
     useEffect(function(){
         async function getAllComplaints(){
-        let users = await complaintsAPI.getAllComplaints();
-        setComplaints(users);
+        let complaint = await complaintsAPI.getAllComplaints();
+        setComplaints(complaint);
         }
         getAllComplaints();
-    } ,[] );
+    } ,[change] );
     
     async function addComplaint(complaint) {
        const anything = await complaintsAPI.addAComplaint(complaint);
@@ -24,11 +25,12 @@ export default function ComplaintPage() {
 
     }
 
-    async function deleteComplaint(delComplaint) {
-        await complaintsAPI.deleteAComplaint(delComplaint);
+    async function handleDelete(complaint) {
+        await complaintsAPI.deleteAComplaint(complaint);
         const complaintsCopy = [...complaints];
-        const newComplaints = complaintsCopy.filter(complaint => complaint.id === delComplaint);
+        const newComplaints = complaintsCopy.filter(complaint => complaint.id === complaint._id);
         setComplaints(newComplaints);
+        setChange(!change);
       
     }
    
@@ -38,8 +40,8 @@ export default function ComplaintPage() {
         <div className="complaint-page">
             <br />
             <strong><h2>COMPLAINTS</h2></strong>
-            <ComplaintForm addComplaint={addComplaint} deleteComplaint={deleteComplaint} />
-            <ComplaintList complaints={complaints} deleteComplaint={deleteComplaint}/>
+            <ComplaintForm addComplaint={addComplaint}  />
+            <ComplaintList complaints={complaints} handleDelete={handleDelete}/>
             
         </div>
     );

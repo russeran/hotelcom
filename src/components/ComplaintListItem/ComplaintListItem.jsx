@@ -3,7 +3,7 @@ import { useEffect ,useState } from "react";
 import * as complaintsAPI from '../../utilities/complaints-api';
 
 
-export default function ComplaintListItem({ complaint, deleteComplaint }) {
+export default function ComplaintListItem({ complaint, handleDelete }) {
     const [complaints, setComplaints] = useState([]);
   
     useEffect(function(){
@@ -30,7 +30,7 @@ export default function ComplaintListItem({ complaint, deleteComplaint }) {
          <td>{complaint.solution}</td>
          <td>{complaint.status}</td>
             <td>{complaint.user}</td>
-            <td><button onClick={()=> deleteComplaint(complaint._id)} >X</button>
+            <td><button onClick={()=> handleDelete(complaint._id)} >X</button>
                   </td>
                   
      </tr>
