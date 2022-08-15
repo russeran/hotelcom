@@ -42,7 +42,7 @@ export default function Weather() {
                 <hr />
                     <div>
                         <span>Temperature:</span>
-                        <span>{data.main ? <h1>{data.main.temp}</h1> : null }</span>
+                        <span>{data.main ? <h1>{data.main.temp}C</h1> : null }</span>
                     </div>
                    <hr /> 
                    <div>

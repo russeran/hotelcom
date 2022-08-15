@@ -1,9 +1,10 @@
 import {useEffect, useState} from 'react';
 import ComplaintForm from '../../components/ComplaintForm/ComplaintForm';
 import ComplaintList from '../../components/ComplaintList/ComplaintList';
-import ComplaintListItem from '../../components/ComplaintListItem/ComplaintListItem';
+import ComplaintUpdate from '../../components/ComplaintUpdate/ComplaintUpdate';
 import * as complaintsAPI from '../../utilities/complaints-api';
-import './ComplaintPage.css';
+import './ComplaintPage.css'
+
 
 
 export default function ComplaintPage() {
@@ -33,6 +34,16 @@ export default function ComplaintPage() {
         setChange(!change);
       
     }
+    
+    async function updateComplaint(complaintId, updateComplaints) {
+        const updateComplaint = await complaintsAPI.updateComplaint(complaintId, updateComplaints)
+        const newUpdateComplaint = {...updateComplaints}
+        const complaintFound = complaints.findIndex(complaint => complaint._id === complaintId)
+        const newComplaint = [...complaints]
+        newComplaint[complaintFound] = newUpdateComplaint
+        setComplaints(newComplaint)
+        setChange(!change)
+    }
    
 
 
@@ -41,7 +52,8 @@ export default function ComplaintPage() {
             <br />
             <strong><h2>COMPLAINTS</h2></strong>
             <ComplaintForm addComplaint={addComplaint}  />
-            <ComplaintList complaints={complaints} handleDelete={handleDelete}/>
+            <ComplaintList complaints={complaints} handleDelete={handleDelete} updateComplaint={updateComplaint} setComplaints={setComplaints}/>
+            
             
         </div>
     );

@@ -1,9 +1,10 @@
 import "./ComplaintListItems.css"
 import { useEffect ,useState } from "react";
 import * as complaintsAPI from '../../utilities/complaints-api';
+import ComplaintUpdate from "../ComplaintUpdate/ComplaintUpdate";
 
 
-export default function ComplaintListItem({ complaint, handleDelete }) {
+export default function ComplaintListItem({ complaint, handleDelete, updateComplaint }) {
     const [complaints, setComplaints] = useState([]);
   
     useEffect(function(){
@@ -20,7 +21,7 @@ export default function ComplaintListItem({ complaint, handleDelete }) {
 
     return (
 
- 
+ <>
      <tbody>
      <tr>
          <td>{complaint.date}</td>
@@ -29,11 +30,14 @@ export default function ComplaintListItem({ complaint, handleDelete }) {
          <td>{complaint.issue}</td>
          <td>{complaint.solution}</td>
          <td>{complaint.status}</td>
-            <td>{complaint.user}</td>
-            <td><button onClick={()=> handleDelete(complaint._id)} >X</button>
-                  </td>
-                  
+         <td>{complaint.user}</td>
+         <td><button onClick={()=> handleDelete(complaint._id)} >X</button></td>
+              
      </tr>
+    
+     
  </tbody>
+ 
+ </>
     );
 }

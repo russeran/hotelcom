@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { updateAComplaint } from "../../utilities/complaints-api";
+
 import "./ComplaintForm.css"
+import Form from "react-bootstrap/Form";
+import { FormControl, FormLabel, Table, Button } from "react-bootstrap";
 
 
 
-export default function ComplaintForm({ addComplaint, deleteComplaint, complaint }) {
+export default function ComplaintForm({ addComplaint, deleteComplaint, complaint, updateComplaint }) {
     const [newComplaint, setNewComplaint] = useState({
         date: "",
         room: "",
@@ -33,7 +35,7 @@ export default function ComplaintForm({ addComplaint, deleteComplaint, complaint
 
   function handleUpdateComplaint(e) {
         e.preventDefault();
-        updateAComplaint(newComplaint);
+        updateComplaint(newComplaint);
         setNewComplaint({
             date: "",
             room: "",
@@ -46,7 +48,7 @@ export default function ComplaintForm({ addComplaint, deleteComplaint, complaint
     }
         
 
-    function handleInputChange(e) {
+    function handleFormControlChange(e) {
         const newNEWComplaint = { ...newComplaint,
             [e.target.name]: e.target.value
         };
@@ -61,53 +63,54 @@ export default function ComplaintForm({ addComplaint, deleteComplaint, complaint
     
     return (
         <div>
-        <form onSubmit={handleAddComplaint}>
-            <table id="new-complaint" >
+        <Form onSubmit={handleAddComplaint}>
+            <Table striped hover id="new-complaint" >
              <thead>
                 <tr>
+                {/* <th className="form-item">
+                    <FormLabel>Date</FormLabel>
+                    <FormControl type="text" name="date" value={newComplaint.date} onChange={handleFormControlChange} required />
+                </th> */}
+
                 <th className="form-item">
-                    <label>Date</label>
-                    <input type="text" name="date" value={newComplaint.date} onChange={handleInputChange} required />
+                    <FormLabel>Room</FormLabel>
+                    <FormControl type="number" name="room" value={newComplaint.room} onChange={handleFormControlChange} required />
                 </th>
 
                 <th className="form-item">
-                    <label>Room</label>
-                    <input type="number" name="room" value={newComplaint.room} onChange={handleInputChange} required />
+                    <FormLabel>Name</FormLabel>
+                    <FormControl type="text" name="name" value={newComplaint.name} onChange={handleFormControlChange} required />
                 </th>
-
+               
                 <th className="form-item">
-                    <label>Name</label>
-                    <input type="text" name="name" value={newComplaint.name} onChange={handleInputChange} required />
+                    <FormLabel>Issue</FormLabel>
+                    <FormControl type="text" name="issue" value={newComplaint.issue} onChange={handleFormControlChange} required />
                 </th>
-
+               
                 <th className="form-item">
-                    <label>Issue</label>
-                    <input type="text" name="issue" value={newComplaint.issue} onChange={handleInputChange} required />
-                </th>
-                <th className="form-item">
-                    <label>Solution</label>
-                    <input type="text" name="solution" value={newComplaint.solution} onChange={handleInputChange} required />
+                    <FormLabel>Solution</FormLabel>
+                    <FormControl type="text" name="solution" value={newComplaint.solution} onChange={handleFormControlChange} required />
                 </th>
                 <th className="form-item">
-                    <label>Status</label>
-                    <input type="text" name="status" value={newComplaint.status} onChange={handleInputChange} required />
+                    <FormLabel>Status</FormLabel>
+                    <FormControl type="text" name="status" value={newComplaint.status} onChange={handleFormControlChange} required />
                 </th>
-
+                
                 <th className="form-item">
-                    <label>User</label>
-                    <input type="text" name="user" value={newComplaint.user} onChange={handleInputChange} required />
+                    <FormLabel>User</FormLabel>
+                    <FormControl type="text" name="user" value={newComplaint.user} onChange={handleFormControlChange} required />
                 </th>
             
                 <th className="form-item">
-                    <button type="submit">ADD</button>
+                    <Button variant="success" type="submit">ADD</Button>
                 </th>
                 </tr>
                 
                 </thead>
                 
-            </table>
+            </Table>
             
-        </form>
+        </Form>
         <form onSubmit={handleUpdateComplaint} ><button type="submit" >U</button></form>
         </div>
     );

@@ -2,7 +2,7 @@
     border: 3px solid black;
     border-radius: 3%;
     background-color: aqua;
-    width: 13%;
+    width: 15rem;
     height: 17%;
     font-size: 1em;
     background-image: url("/images/weather.png");
@@ -10,4 +10,15 @@
     color: white;
     font-style: italic;
     font-weight: bold;
+}
+
+.search {
+    width: fit-content;
+    height: 17%;
+    font-size: 1em;
+    color: white;
+    font-style: italic;
+    font-weight: bold;
+    align-self: center;
+    display: inline-block;
 }
