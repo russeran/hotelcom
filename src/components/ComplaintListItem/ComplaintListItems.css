@@ -1,30 +1,31 @@
-.complaint-list-item {
-    border: 2px solid black;
-    width: 20rem;
+.card {
+    border: 5px solid rgb(97, 25, 96);
+    width: fit-content;
+    height: 38rem;
     display: inline-block;
     text-align: center;
     background-color: rgb(227, 220, 220);
-    margin: 1rem;
+    margin: 0.5rem;
 }
 
-.complaints-table {
-    border: 2px solid black;
-    width: 80rem;
-    text-align: center;
-    background-color: rgb(227, 220, 220);
-    margin: 1rem;
+.card-labels {
+    color: rgb(12, 36, 100);
+    background-color: rgb(147, 147, 120);
+    border: 5px solid rgb(41, 51, 51);
+    font-size: 1.5rem;
+    font-weight: bold;
+    height: 2.8rem;
+    padding: auto;
 }
 
-
-/* .complaints-table {
-    width: 30rem;
+.content {
     display: inline-block;
-} */
+    text-align: left;
+    height: 8rem;
+    padding: 0.5rem;
+    font-size: medium;
+}
 
 .table-button {
     float: left;
-}
-
-td {
-    width: 15rem;
 }

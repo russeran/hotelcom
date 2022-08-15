@@ -21,7 +21,7 @@ export default function App() {
       {user ? (
         <>
         <br />
-        <NavBar user={user} setUser={setUser} />
+        <NavBar user={user} setUser={setUser}  />
         <br />
         
         <Weather />
@@ -35,7 +35,7 @@ export default function App() {
         <ConciergePage/>
         <br />
         <hr />
-       <HotelPrices />
+       {/* <HotelPrices /> */}
         <hr />
 
         </>

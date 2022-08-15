@@ -63,7 +63,7 @@ export default function HotelPrices() {
   return (
 
     <div>
-      <h2>HOTELS</h2>
+      {/* <h2>HOTELS</h2>
   {hotels.map(hotel => {
     return (
       <div key={hotel.name} >
@@ -94,7 +94,7 @@ export default function HotelPrices() {
 
     )
 
-  })}
+  })} */}
     
    </div>
    

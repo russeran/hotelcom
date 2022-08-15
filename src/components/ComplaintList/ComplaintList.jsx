@@ -6,24 +6,13 @@ export default function ComplaintList({ complaints, handleDelete, updateComplain
    
     return (
         <div className="complaint-table">
-        <Table striped bordered hover>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Room</th>
-                <th>Guest Name</th>
-                <th>Issue</th>
-                <th>Solution</th>
-                <th>Status</th>
-                <th>User</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
+      
+       
     
             {complaints.map((complaint, index) => (
                 <ComplaintListItem key={index} complaint={complaint} index={index} handleDelete={handleDelete} updateComplaint={updateComplaint} />
             ))}
-         </Table>
+        
        </div>
     );
 }

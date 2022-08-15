@@ -111,7 +111,7 @@ export default function ComplaintForm({ addComplaint, deleteComplaint, complaint
             </Table>
             
         </Form>
-        <form onSubmit={handleUpdateComplaint} ><button type="submit" >U</button></form>
+       
         </div>
     );
 
