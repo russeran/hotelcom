@@ -1,5 +1,8 @@
 .complaint-page {
-    background-color: rgb(130, 174, 158);
+    display: block;
+    background-color: rgb(238, 201, 107);
     border: black solid 5px;
     border-radius: 3%;
+    height: 300rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }

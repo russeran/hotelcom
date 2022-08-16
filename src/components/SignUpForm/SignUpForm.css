@@ -4,9 +4,9 @@
     border-radius: 5px;
     padding: 3rem;
     width: 25rem;
-    margin: 0 auto;
+    margin: 3rem auto;
     display: flex;
-    height: 30rem;
+    height: 40rem;
     display: inline-block;
     ;
 }
@@ -32,18 +32,6 @@ input {
     margin: 0rem;
     width: 15rem;
     height: 2rem;
-}
-
-.login-form {
-    background-color: rgb(244, 213, 132);
-    border: 2px solid black;
-    border-radius: 5px;
-    padding: 3rem;
-    width: 25rem;
-    margin: 0 auto;
-    display: flex;
-    height: 25rem;
-    border-radius: 15%;
 }
 
 #new-complaint {

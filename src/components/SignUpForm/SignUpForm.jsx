@@ -1,6 +1,7 @@
 import { Component} from 'react'
 import { signUp } from '../../utilities/users-service'
 import './SignUpForm.css'
+import { Form, FormControl, FormLabel, Table, Button } from "react-bootstrap";
 
 export default class SignUpForm extends Component {
     state = {
@@ -41,22 +42,24 @@ export default class SignUpForm extends Component {
     render() {
         const disable = this.state.password !== this.state.confirm;
         return (
+          
           <div>
             <div className="form-container">
-              <form autoComplete="off" onSubmit={this.handleSubmit}>
-                <label>Name</label>
-                <input type="text" name="name" value={this.state.name} onChange={this.handleChange} required />
-                <br /><label>Email</label>
-                <input type="email" name="email" value={this.state.email} onChange={this.handleChange} required />
-                <br /><label>Password</label>
-                <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required />
-                <br /><label>Confirm</label>
-                <input type="password" name="confirm" value={this.state.confirm} onChange={this.handleChange} required />
-                <br /><button type="submit" disabled={disable}>SIGN UP</button>
-              </form>
+              <Form autoComplete="off" onSubmit={this.handleSubmit}>
+                <FormLabel>Name</FormLabel>
+                <FormControl type="text" name="name" value={this.state.name} onChange={this.handleChange} required />
+                <br /><FormLabel>Email</FormLabel>
+                <FormControl type="email" name="email" value={this.state.email} onChange={this.handleChange} required />
+                <br /><FormLabel>Password</FormLabel>
+                <FormControl type="password" name="password" value={this.state.password} onChange={this.handleChange} required />
+                <br /><FormLabel>Confirm</FormLabel>
+                <FormControl type="password" name="confirm" value={this.state.confirm} onChange={this.handleChange} required />
+                <br /><Button type="submit" disabled={disable}>SIGN UP</Button>
+              </Form>
             </div>
             <p className="error-message">&nbsp;{this.state.error}</p>
           </div>
+         
         );
     }
       
@@ -90,15 +93,15 @@ export default class SignUpForm extends Component {
 //     <div>
 //       <div className="form-container">
 //         <form autoComplete="off" onSubmit={handleSubmit}>
-//           <label>Name</label>
-//           <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-//           <label>Email</label>
-//           <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-//           <label>Password</label>
-//           <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-//           <label>Confirm</label>
-//           <input type="password" name="confirm" value={formData.confirm} onChange={handleChange} required />
-//           <button type="submit" disabled={disable}>SIGN UP</button>
+//           <FormLabel>Name</FormLabel>
+//           <FormControl type="text" name="name" value={formData.name} onChange={handleChange} required />
+//           <FormLabel>Email</FormLabel>
+//           <FormControl type="email" name="email" value={formData.email} onChange={handleChange} required />
+//           <FormLabel>Password</FormLabel>
+//           <FormControl type="password" name="password" value={formData.password} onChange={handleChange} required />
+//           <FormLabel>Confirm</FormLabel>
+//           <FormControl type="password" name="confirm" value={formData.confirm} onChange={handleChange} required />
+//           <Button type="submit" disabled={disable}>SIGN UP</Button>
 //         </form>
 //       </div>
 //       <p className="error-message">&nbsp;{formData.error}</p>

@@ -63,8 +63,8 @@ export default function ComplaintForm({ addComplaint, deleteComplaint, complaint
     
     return (
         <div>
-        <Form onSubmit={handleAddComplaint}>
-            <Table striped hover id="new-complaint" >
+        <Form className="new-complaint"  onSubmit={handleAddComplaint}>
+           
              <thead>
                 <tr>
                 <th className="form-item">
@@ -81,7 +81,6 @@ export default function ComplaintForm({ addComplaint, deleteComplaint, complaint
                     <FormLabel>Name</FormLabel>
                     <FormControl type="text" name="name" value={newComplaint.name} onChange={handleFormControlChange} required />
                 </th>
-               
                 <th className="form-item">
                     <FormLabel>Issue</FormLabel>
                     <FormControl type="text" name="issue" value={newComplaint.issue} onChange={handleFormControlChange} required />
@@ -108,7 +107,6 @@ export default function ComplaintForm({ addComplaint, deleteComplaint, complaint
                 
                 </thead>
                 
-            </Table>
             
         </Form>
        

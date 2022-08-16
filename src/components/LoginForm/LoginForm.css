@@ -1,0 +1,11 @@
+.login-form {
+    background-color: rgb(238, 201, 107);
+    border: 2px solid black;
+    padding: 3rem;
+    width: 25rem;
+    margin: 0 auto;
+    display: flex;
+    height: 25rem;
+    display: inline-block;
+    ;
+}

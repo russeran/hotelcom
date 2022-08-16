@@ -1,11 +1,12 @@
-#new-complaint {
+.new-complaint {
     border: 2px solid black;
     display: inline-block;
     text-align: center;
-    margin: auto;
     height: fit-content;
     width: 95%;
-    padding: 0.5rem;
+    background-color: beige;
+    padding: 1rem;
+    margin: 1rem;
 }
 
 input {
