@@ -32,6 +32,8 @@ export default function HotelPage({ index}) {
      }
    };
 
+  
+
    const searchDate = (e) => {
   
     if (e.key === 'Enter') {
