@@ -49,5 +49,7 @@
 
 ## ICEBOX: 
 - Allow user to upload profile picture
-- 
+- Allow users to update created items
+- Send notifications to related departments
+- Allow users to create chat box
 
