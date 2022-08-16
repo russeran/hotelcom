@@ -10,6 +10,7 @@
     color: white;
     font-style: italic;
     font-weight: bold;
+    display: inline-block;
 }
 
 .search {

@@ -1,6 +1,5 @@
 import ComplaintListItem from "../ComplaintListItem/ComplaintListItem.jsx";
 import "./ComplaintList.css"
-import {Table} from 'react-bootstrap';
 
 export default function ComplaintList({ complaints, handleDelete, updateComplaint }) {
    

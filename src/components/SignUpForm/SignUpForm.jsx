@@ -1,4 +1,4 @@
-import { Component, useState } from 'react'
+import { Component} from 'react'
 import { signUp } from '../../utilities/users-service'
 import './SignUpForm.css'
 

@@ -3,12 +3,13 @@ import { useState } from "react";
 import { getUser } from "../../utilities/users-service";
 import AuthPage from "../AuthPage/AuthPage";
 import NavBar from "../../components/NavBar/NavBar";
-import Weather from "../Weather/Weather";
 import TaskPage from "../TaskPage/TaskPage";
 import NotePage from "../NotePage/NotePage";
 import ConciergePage from "../ConciergePage/ConciergePage";
 import ComplaintPage from "../ComplaintPage/ComplaintPage";
 import HotelPrices from "../HotelPrices/HotelPrices.jsx";
+import Home from "../Home/Home.jsx";
+import { Routes, Route } from "react-router-dom";
 
 
 export default function App() {
@@ -20,28 +21,21 @@ export default function App() {
     <main className="App">
       {user ? (
         <>
-        <br />
-        <NavBar user={user} setUser={setUser}  />
-        <br />
-        
-        <Weather />
-        <br />
-        <TaskPage />
-        <br />
-        <ComplaintPage />
-        <br />
-        <NotePage/>
-        <br />
-        <ConciergePage/>
-        <br />
-        <hr />
-       {/* <HotelPrices /> */}
-        <hr />
-
+          <NavBar user={user} setUser={setUser} />
+          
+          <Routes>
+          <Route path="/complaints" element={<ComplaintPage />}/>
+          <Route path="/tasks" element={<TaskPage />}/>
+          <Route path="/notes" element={<NotePage/>}/>
+            <Route path="/concierge" element={<ConciergePage/>}/>
+            <Route path="/hotels" element={<HotelPrices />} />
+            <Route path="/" element={<Home/>} />
+          </Routes>
         </>
       ) : (
         <AuthPage setUser={setUser} />
       )}
     </main>
   );
+
 }

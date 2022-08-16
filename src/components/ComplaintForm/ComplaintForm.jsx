@@ -67,10 +67,10 @@ export default function ComplaintForm({ addComplaint, deleteComplaint, complaint
             <Table striped hover id="new-complaint" >
              <thead>
                 <tr>
-                {/* <th className="form-item">
+                <th className="form-item">
                     <FormLabel>Date</FormLabel>
                     <FormControl type="text" name="date" value={newComplaint.date} onChange={handleFormControlChange} required />
-                </th> */}
+                </th>
 
                 <th className="form-item">
                     <FormLabel>Room</FormLabel>

@@ -1,21 +1,10 @@
-import "./ComplaintListItems.css"
-import { useEffect ,useState } from "react";
-import * as complaintsAPI from '../../utilities/complaints-api';
-import ComplaintUpdate from "../ComplaintUpdate/ComplaintUpdate";
+import "./ComplaintListItems.css";
 import { Card, ListGroup, Button } from "react-bootstrap";
 
 
 export default function ComplaintListItem({ complaint, handleDelete, updateComplaint }) {
-    const [complaints, setComplaints] = useState([]);
+   
   
-    // useEffect(function(){
-    //     async function getAllComplaints(){
-    //     let users = await complaintsAPI.getAllComplaints();
-    //     setComplaints(users);
-    //     }
-    //     getAllComplaints();
-    // } ,[] );
-
 
     return (
 

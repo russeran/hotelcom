@@ -16,16 +16,16 @@ export default function NavBar({ user, setUser }) {
   return (
     <Navbar className="navbar"  expand="lg">
       <Container>
-        <Navbar.Brand className="mama-name" href="#home">MAMA SHELTER LA</Navbar.Brand>
+        <Navbar.Brand className="mama-name" href="/">MAMA SHELTER LA</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
           &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <Nav.Link href="https://all.accor.com/hotel/9919/index.en.shtml?partner_id=mamashelter">Book A Room</Nav.Link>
+            <Nav.Link target="_blank" href="https://all.accor.com/hotel/9919/index.en.shtml?partner_id=mamashelter">Book A Room</Nav.Link>
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <Nav.Link href="#home">Other Hotels</Nav.Link>
+            <Nav.Link href="/hotels">Other Hotels</Nav.Link>
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
             <NavDropdown title="MENU" id="basic-nav-dropdown">
               <NavDropdown.Item href="/complaints">Complaints</NavDropdown.Item>

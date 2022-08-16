@@ -1,31 +1,27 @@
-import {axios} from 'axios';
-import { useState } from 'react';
 import { useEffect } from 'react';
+import { useState } from 'react';
 import {Table} from 'react-bootstrap';
+import "./HotelPrices.css"
 
-
-export default function HotelPrices() {
+export default function HotelPrices({ hotelData}) {
    const [hotels, setHotels] = useState([]);
    const [error, setError] = useState(null);
+   const [checkin_date, setCheckin_date] = useState('');
+   const [checkout_date, setCheckout_date] = useState('');
 
-
- 
-
- 
-  
 
    const axios = require("axios");
 
    const options = {
      method: 'GET',
-    //  url: 'https://hotels-com-provider.p.rapidapi.com/v1/hotels/nearby',
+     url: 'https://hotels-com-provider.p.rapidapi.com/v1/hotels/nearby',
      params: {
        latitude: '34.0996494',
        currency: 'USD',
        longitude: '-118.3334383',
-       checkout_date: '2022-09-03',
+       checkout_date: `${checkout_date}`,
        sort_order: 'BEST_SELLER',
-       checkin_date: '2022-09-02',
+       checkin_date: `${checkin_date}`,
        adults_number: '1',
        locale: 'en_US'
      },
@@ -35,68 +31,86 @@ export default function HotelPrices() {
      }
    };
    
-   axios.request(options).then(response => {
-     setHotels(response.data.searchResults.results);
-   }).catch(function (error) {
-     console.error(error)
-     setError(error);
-     ;
-   });
 
 
 
-  // axios.request(options).then(function (response) {
-  //   var hotel = response.data.searchResults.results;
-  //   var price = hotel[0].ratePlan.price.current;
-  //   for (const key in hotel) {
-  //     if (hotel.hasOwnProperty(key)) {
-  //        element = hotel[key];
-  //     }
-  //   }
-  //    } 
+const searchDate = (e) => {
   
-  
-  // ).catch(function (error) {
-  //   console.error(error);
-  // });
+    if (e.key === 'Enter') {
+      console.log("gfk")
+        axios.request(options).then(response => {
+            setHotels(response.data.searchResults.results);
+        }).catch(function (error) {
+
+            setError(error);
+            ;
+        }).then(() => {
+            setCheckin_date('');
+            setCheckout_date('');
+        }
+        );
+    }
+}
+
+
 
   return (
 
-    <div>
-      {/* <h2>HOTELS</h2>
-  {hotels.map(hotel => {
+<div>
+
+  <div className='search'>
+  <label className='search-labels' >CHECK-IN</label>
+      <input
+      value={checkin_date}
+      type="text"
+      placeholder="YYYY-MM-DD"
+      onChange={(e) => setCheckin_date(e.target.value)}
+      
+      />
+      <label className='search-labels' >CHECK-OUT</label>
+      <input
+      value={checkout_date}
+      type="text"
+      placeholder="YYYY-MM-DD"
+      onChange={(e) => setCheckout_date(e.target.value)}
+      onKeyPress={searchDate}
+      />
+
+
+  </div>
+  
+  <br />
+   <Table striped bordered hover className='hotel-table' >
+      <thead className='hotel-thead' >
+          <tr>
+              <th>Name</th>
+              <th>Rate</th>
+              <th>Rooms Left</th>
+              <th>Neighbourhood</th>
+              <th>Rating</th>
+          </tr>
+      </thead>
+
+    {hotels.map((hotel, index) => {
     return (
-      <div key={hotel.name} >
-        <div>
-          <h2>HOTEL NAME</h2>
-          <h3>{hotel.name}</h3>
-        </div>
-        <div>
-          <h2>HOTEL PRICE</h2>
-          <h3>{hotel.ratePlan.price.current}</h3>
-        </div>
-        <div>
-        <h2>ROOMS LEFT</h2>
-        <h3>{hotel.roomsLeft}</h3>
-        </div>
-        <div>
-        <h2>Neighbourhood</h2>
-        <h3>{hotel.neighbourhood}</h3>
-        </div>
-        <div>
-          <h2>Rating</h2>
-          <h3>{hotel.guestReviews.rating}</h3>
-        </div>
+    <tbody  className='hotel-tbody' key={index} >
+            <tr>
+                <td>{hotel.name}</td>
+                <td>{hotel.ratePlan.price.current}</td>
+                <td>{hotel.roomsLeft}</td>
+                <td>{hotel.neighbourhood}</td>
+                <td>{hotel.guestReviews.rating}</td>
+            </tr>
+   </tbody>
+        )
 
-
-          
-      </div>
-
-    )
-
-  })} */}
-    
-   </div>
+      })} 
+      </Table>
+   <div/>
+</div>
    
+  
   );
 }
+
+  
