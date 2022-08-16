@@ -1,5 +1,6 @@
 import {useState} from "react";
 import './ConciergeForm.css'
+import { FormControl, FormLabel, Table, Button, Form } from "react-bootstrap";
 
 
 export default function ConciergeForm({addConcierge}) {
@@ -7,7 +8,7 @@ export default function ConciergeForm({addConcierge}) {
         type: "",
         name: "",
         price: "",
-        distance: "",
+        trip: "",
         note:"",
         user: "",
     });
@@ -19,7 +20,7 @@ export default function ConciergeForm({addConcierge}) {
           type: "",
           name: "",
           price: "",
-          distance: "",
+          trip: "",
           note:"",
           user: "",
 
@@ -35,44 +36,64 @@ export default function ConciergeForm({addConcierge}) {
     }
 
 
-    return (
-        <form onSubmit={handleAddConcierge}>
-            <table  id='new-concierge' >
-<thead> 
-<tr>
-<th className='form-item' >
-    <label>Type</label>
-    <input type="text" name='type' value={newConcierge.type} onChange={handleInputChange} required />
-</th>
-<th className='form-item' >
-    <label>Name</label>
-    <input type="text" name='name' value={newConcierge.name} onChange={handleInputChange} required />
-</th>
-<th className='form-item' >
-    <label>Price</label>
-    <input type="text" name='price' value={newConcierge.price} onChange={handleInputChange} required />
-</th>
-<th className='form-item' >
-    <label>Distance</label>
-    <input type="text" name='distance' value={newConcierge.distance} onChange={handleInputChange} required />
-</th>
-<th className='form-item' >
-    <label>Note</label>
-    <input type="text" name='note' value={newConcierge.note} onChange={handleInputChange} required />
-</th>
-<th className='form-item' >
-    <label>User</label>
-    <input type="text" name='user' value={newConcierge.user} onChange={handleInputChange} required />
-</th>
-
-<th className="form-item">
-                    <button type="submit">ADD</button>
+    return (  <div>
+        <Form className="new-concierge"  onSubmit={handleAddConcierge}>
+           
+             <thead>
+                <tr>
+                <div className="form-element">
+                <th className="form-item">
+                    <FormLabel>Type</FormLabel>
+                    <FormControl type="text" name="type" value={newConcierge.type} onChange={handleInputChange} required />
                 </th>
-                </tr>
-                </thead>
-            </table>
+                </div>
+                <div className="form-element" >
+                <th className="form-item">
+                    <FormLabel>Name</FormLabel>
+                    <FormControl type="text" name="name" value={newConcierge.name} onChange={handleInputChange} required />
+                </th>
+                </div>
+                <div className="form-element">
 
-        </form>
+                <th className="form-item">
+                    <FormLabel>Price</FormLabel>
+                    <FormControl type="text" name="price" value={newConcierge.price} onChange={handleInputChange} required />
+                </th>
+                </div>
+                <div className="form-element">
+                <th className="form-item">
+                    <FormLabel>Trip</FormLabel>
+                    <FormControl type="text" name="trip" value={newConcierge.trip} onChange={handleInputChange} required />
+                </th>
+                </div>
+                <div className="form-element">
+               
+                <th className="form-item">
+                    <FormLabel>Note</FormLabel>
+                    <FormControl type="text" name="note" value={newConcierge.note} onChange={handleInputChange} required />
+                </th>
+                </div>
+                <div className="form-element">
+                
+                <th className="form-item">
+                    <FormLabel>User</FormLabel>
+                    <FormControl type="text" name="user" value={newConcierge.user} onChange={handleInputChange} required />
+                </th>
+                </div>
+                <br />
+                <div className="form-element">
+                <th className="form-item">
+                    <Button className="comp-button" variant="success" type="submit">ADD</Button>
+                </th>
+                </div>
+                </tr>
+                
+                </thead>
+                
+            
+        </Form>
+       
+        </div>
 
     );
 

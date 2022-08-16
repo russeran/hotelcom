@@ -1,5 +1,6 @@
 .concierge-page {
-    background-color: blueviolet;
+    background-image: url("/images/conciergee.png");
+    background-size: cover;
     border: black solid 5px;
     border-radius: 3%;
 }

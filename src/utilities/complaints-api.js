@@ -16,5 +16,5 @@ export function deleteAComplaint(complaint) {
 }
 
 export function updateComplaint(complaint, updateComplaint) {
-    return sendRequest(`${BASE_URL}/update/${complaint}`, "PUT", updateComplaint);
+    return sendRequest(`${BASE_URL}/${complaint}`, "PUT", updateComplaint);
 }

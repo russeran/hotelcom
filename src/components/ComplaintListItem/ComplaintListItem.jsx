@@ -1,5 +1,6 @@
 import "./ComplaintListItems.css";
 import { Card, ListGroup, Button } from "react-bootstrap";
+import ComplaintUpdate from "../ComplaintUpdate/ComplaintUpdate";
 
 
 export default function ComplaintListItem({ complaint, handleDelete, updateComplaint }) {
@@ -30,6 +31,7 @@ export default function ComplaintListItem({ complaint, handleDelete, updateCompl
         <ListGroup.Item>{complaint.user}</ListGroup.Item>
       <Button  variant="danger"  onClick={()=> handleDelete(complaint._id)} >DELETE</Button>
       </Card.Body>
+    
     </Card>
 
  

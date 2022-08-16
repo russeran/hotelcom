@@ -23,7 +23,7 @@ export default function ConciergePage() {
     return (
         <div className="concierge-page">
             <br />
-            <strong><h2>CONCIERGE</h2></strong>
+            <strong><h1 className='comp-h1' >CONCIERGE</h1></strong>
             <ConciergeForm addConcierge={addConcierge} />
             <ConciergeList concierges={concierges} />
         </div>

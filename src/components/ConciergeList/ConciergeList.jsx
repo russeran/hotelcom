@@ -1,5 +1,6 @@
 import ConciergeListItem from "../../components/ConciergeListItem/ConciergeListItem.jsx";
 import { Table } from "react-bootstrap";
+import "./ConciergeList.css"
 
 export default function ConciergeList({ concierges }) {
     return (
@@ -11,7 +12,7 @@ export default function ConciergeList({ concierges }) {
                 <th>Type</th>
                 <th>Name</th>
                 <th>Price</th>
-                <th>Distance</th>
+                <th>Trip</th>
                 <th>User</th>
                 <th>Note</th>
             </tr>

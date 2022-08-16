@@ -1,8 +1,29 @@
 .complaint-page {
     display: block;
     background-color: rgb(238, 201, 107);
+    background-image: url("/images/mama.png");
+    background-repeat: no-repeat;
+    background-size: cover;
     border: black solid 5px;
     border-radius: 3%;
-    height: 300rem;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 3rem;
+}
+
+.comp-h1 {
+    font-family: Rubik Burned, Rubik, sans-serif;
+    font-size: 8rem;
+    color: rgb(5, 5, 4);
+    margin-top: 0.5rem;
+    display: inline-block;
+    width: 80%;
+}
+
+.comp-date {
+    font-family: Rubik, sans-serif;
+    font-size: 3rem;
+    color: rgb(249, 249, 14);
+    margin-top: 0.5rem;
+    display: inline-block;
+    width: 80%;
 }

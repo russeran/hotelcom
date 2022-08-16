@@ -1,6 +1,6 @@
 # Departments Communication App - Connecting People
 
-### Purpose: Make communication easier between departments of companies
+### Purpose: Make communication easier between hotel departments
 <hr>
 
 ### Getting Started:
@@ -14,7 +14,10 @@
 <hr>
 
 ### Screenshots:
-![screenshot]()
+![screenshot](images/ss1.png)
+![screenshot](images/ss2.png)
+![screenshot](images/ss3.png)
+
 <hr>
 
 ### [ERD] (https://lucid.app/lucidchart/a8def6a0-c439-4cbf-a77d-9e4bb6ca6025/edit?invitationId=inv_4f889782-cda2-4b97-9ac3-50b9fe70b5be&page=0_0#)
@@ -27,6 +30,8 @@
 
 ### [WIREFRAME] (https://lucid.app/lucidchart/a8def6a0-c439-4cbf-a77d-9e4bb6ca6025/edit?invitationId=inv_4f889782-cda2-4b97-9ac3-50b9fe70b5be&page=0_0#)
 ![wireframe](images/Wireframe.jpg)
+
+
 
 <hr>
 

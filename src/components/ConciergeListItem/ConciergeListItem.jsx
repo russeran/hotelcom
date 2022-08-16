@@ -13,7 +13,7 @@ return (
         <td>{concierge.type}</td>
         <td>{concierge.name}</td>
         <td>{concierge.price}</td>
-        <td>{concierge.distance}</td>
+        <td>{concierge.trip}</td>
         <td>{concierge.user}</td>
         <td>{concierge.note}</td>
     </tr>

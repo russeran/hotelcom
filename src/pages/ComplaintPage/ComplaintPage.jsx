@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import ComplaintForm from '../../components/ComplaintForm/ComplaintForm';
 import ComplaintList from '../../components/ComplaintList/ComplaintList';
-import ComplaintUpdate from '../../components/ComplaintUpdate/ComplaintUpdate';
 import * as complaintsAPI from '../../utilities/complaints-api';
 import './ComplaintPage.css'
 
@@ -48,13 +47,29 @@ export default function ComplaintPage() {
 
 
     return (
+        <div>
+            <span className='comp-date' >{new Date().toLocaleString()}</span>
+            { complaints && complaints.length > 0 ?
+           
+           <>
         <div className="complaint-page">
             <br />
-            <strong><h2>COMPLAINTS</h2></strong>
+            <strong><h1 className='comp-h1' >COMPLAINTS</h1></strong>
             <ComplaintForm addComplaint={addComplaint}  />
+        
             <ComplaintList complaints={complaints} handleDelete={handleDelete} updateComplaint={updateComplaint} setComplaints={setComplaints}/>
-            
-            
+            </div>
+            </>
+            :
+            <>
+             <ComplaintForm addComplaint={addComplaint}  />
+            <h1 className='comp-h1'>No Current Complaints</h1>
+            <h1 className='comp-h1' > YOU ARE THE BEST </h1>
+           
+        
+            <ComplaintList complaints={complaints} handleDelete={handleDelete} updateComplaint={updateComplaint} setComplaints={setComplaints}/>
+            </>
+            }  
         </div>
     );
 }
