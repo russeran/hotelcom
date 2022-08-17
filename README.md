@@ -24,8 +24,8 @@
 ![ERD](images/ERD.png)
 <hr>
 
-### [TRELLO BOARD] ()
-![Trello Board](https://trello.com/b/KZ76ZV7k/hotelcom-mern-project4)
+### [TRELLO BOARD] (https://trello.com/b/KZ76ZV7k/hotelcom-mern-project4)
+![Trello Board](images/TRELLO.png)
 <hr>
 
 ### [WIREFRAME] (https://lucid.app/lucidchart/a8def6a0-c439-4cbf-a77d-9e4bb6ca6025/edit?invitationId=inv_4f889782-cda2-4b97-9ac3-50b9fe70b5be&page=0_0#)
