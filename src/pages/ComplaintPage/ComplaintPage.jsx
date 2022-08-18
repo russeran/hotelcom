@@ -47,14 +47,17 @@ export default function ComplaintPage() {
 
 
     return (
-        <div>
-            <span className='comp-date' >{new Date().toLocaleString()}</span>
+        <>
+        <br></br>
+        <br></br>
+        <div className="complaint-page">
+            <strong><h1 className='comp-h1' >COMPLAINTS</h1></strong>
             { complaints && complaints.length > 0 ?
            
            <>
-        <div className="complaint-page">
+        <div >
             <br />
-            <strong><h1 className='comp-h1' >COMPLAINTS</h1></strong>
+            
             <ComplaintForm addComplaint={addComplaint}  />
         
             <ComplaintList complaints={complaints} handleDelete={handleDelete} updateComplaint={updateComplaint} setComplaints={setComplaints}/>
@@ -71,5 +74,6 @@ export default function ComplaintPage() {
             </>
             }  
         </div>
+        </>
     );
 }

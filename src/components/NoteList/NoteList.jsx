@@ -2,7 +2,7 @@ import NoteListItem from "../NoteListItem/NoteListItem";
 import { Table } from "react-bootstrap";
 
 
-export default function NoteList({ notes }) {
+export default function NoteList({ notes, handleDelete }) {
     return (
         <div className="note-list">
             <Table striped bordered hover>
@@ -14,7 +14,7 @@ export default function NoteList({ notes }) {
                 </tr>
             </thead>
             {notes.map((note, index) => (
-                <NoteListItem key={index} note={note} index={index} />
+                <NoteListItem key={index} note={note} index={index} handleDelete={handleDelete} />
             ))}
             </Table>
         </div>

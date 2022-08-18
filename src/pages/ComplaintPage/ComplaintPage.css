@@ -1,6 +1,6 @@
 .complaint-page {
     display: block;
-    background-color: rgb(238, 201, 107);
+    background-color: pink;
     background-image: url("/images/mama.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -17,13 +17,5 @@
     margin-top: 0.5rem;
     display: inline-block;
     width: 80%;
-}
-
-.comp-date {
-    font-family: Rubik, sans-serif;
-    font-size: 3rem;
-    color: rgb(249, 249, 14);
-    margin-top: 0.5rem;
-    display: inline-block;
-    width: 80%;
+    color: rgb(195, 17, 17);
 }

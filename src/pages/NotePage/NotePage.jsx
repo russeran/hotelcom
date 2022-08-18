@@ -6,6 +6,7 @@ import './NotePage.css';
 
 export default function NotePage() {
     const [notes, setNotes] = useState([]);
+    const [change, setChange] = useState(true);
 
     useEffect(function(){
         async function getAllNotes(){
@@ -13,7 +14,7 @@ export default function NotePage() {
           setNotes(users);
       }
       getAllNotes();
-      },[] );
+      },[change] );
 
 
       function addNote(note) {
@@ -21,13 +22,28 @@ export default function NotePage() {
         setNotes ([...notes, note])
       }
 
+      async function handleDelete(note) {
+        await notesAPI.deleteANote(note);
+        const notesCopy = [...notes];
+        const newNotes = notesCopy.filter(note => note.id === note._id);
+        setNotes(newNotes);
+        setChange(!change);
+      
+    }
+
       return (
+        <>
+        <br></br>
+        <br></br>
+        <strong><h1 id="note-h1" >NOTES</h1></strong>
+        <NoteForm addNote={addNote} />
         <div className="note-page">
           <br />
-            <strong><h2>NOTES</h2></strong>
-            <NoteForm addNote={addNote} />
-            <NoteList notes={notes} />
+            
+            
+            <NoteList notes={notes} handleDelete={handleDelete}/>
         </div>
+        </>
         );
     }
 

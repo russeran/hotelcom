@@ -10,7 +10,7 @@ const complaintSchema = new Schema({
     issue: { type: String, required: false },
     solution: { type: String, required: false },
     status: { type: String, required: false },
-    user: { type: Schema.Types.ObjectId, ref: 'User' }
+    user: { type: String, required: false }
 }, {
     timestamps: true,
 })

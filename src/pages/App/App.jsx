@@ -7,10 +7,10 @@ import TaskPage from "../TaskPage/TaskPage";
 import NotePage from "../NotePage/NotePage";
 import ConciergePage from "../ConciergePage/ConciergePage";
 import ComplaintPage from "../ComplaintPage/ComplaintPage";
-import HotelPrices from "../HotelPrices/HotelPrices.jsx";
 import Home from "../Home/Home.jsx";
 import HotelPage from "../HotelPage/HotelPage";
 import { Routes, Route } from "react-router-dom";
+import Clock from "../../components/Clock/Clock";
 
 
 export default function App() {
@@ -22,8 +22,9 @@ export default function App() {
     <main className="App">
       {user ? (
         <>
+        
           <NavBar user={user} setUser={setUser} />
-          
+          <Clock />
           <Routes>
           <Route path="/complaints" element={<ComplaintPage />}/>
           <Route path="/tasks" element={<TaskPage />}/>

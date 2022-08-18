@@ -1,29 +1,27 @@
 .new-concierge {
-    display: inline-block;
+    display: flex;
     border: 2px solid black;
     text-align: center;
     height: fit-content;
+    width: fit-content;
     background-color: rgb(180, 193, 222);
-    margin: 1rem;
     padding: 1rem;
     border-radius: 10px;
     opacity: 0.8;
-}
-
-input {
-    height: 3rem;
-    width: fit-content;
-}
-
-.form-element {
-    display: inline;
-    flex-direction: column;
+    margin: auto;
     align-items: center;
-    justify-content: center;
 }
 
 .comp-button {
     width: 8rem;
     height: 2.5rem;
     margin: 0.5rem;
+}
+
+.con-form-items {
+    width: 10%;
+    height: 2rem;
+    margin: 0.5rem;
+    display: inline-block;
+    color: rgb(12, 12, 12);
 }

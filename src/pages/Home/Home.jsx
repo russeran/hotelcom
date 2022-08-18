@@ -1,5 +1,5 @@
 import './Home.css'
-import Weather from '../Weather/Weather';
+import Weather from '../../components/Weather/Weather';
 
 export default function Home() {
     return ( <>

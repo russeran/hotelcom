@@ -9,7 +9,7 @@ module.exports = {
 };
 
 async function index(req, res) {
-    const complaint = await Complaint.find({ user: req.user._id })
+    const complaint = await Complaint.find({})
     res.json(complaint)
 }
 

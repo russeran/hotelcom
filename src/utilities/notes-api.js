@@ -9,3 +9,8 @@ export function getAllNotes() {
 export function addANote(noteForm) {
     return sendRequest(`${BASE_URL}/create`, "POST", noteForm);
 }
+
+export function deleteANote(note) {
+
+    return sendRequest(`${BASE_URL}/delete/${note}`, `DELETE`);
+}

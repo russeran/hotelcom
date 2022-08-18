@@ -3,4 +3,14 @@
     background-size: cover;
     border: black solid 5px;
     border-radius: 3%;
+    display: block;
+    text-align: center;
+}
+
+.con-h1 {
+    font-family: Rubik Burned, Rubik, sans-serif;
+    font-size: 8rem;
+    color: rgb(20, 0, 11);
+    margin-top: 0.5rem;
+    display: fixed;
 }

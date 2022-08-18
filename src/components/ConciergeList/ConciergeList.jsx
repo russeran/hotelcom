@@ -1,26 +1,16 @@
 import ConciergeListItem from "../../components/ConciergeListItem/ConciergeListItem.jsx";
-import { Table } from "react-bootstrap";
 import "./ConciergeList.css"
 
-export default function ConciergeList({ concierges }) {
+export default function ConciergeList({ concierges, handleDelete }) {
     return (
-        <div className="concierge-list">
+        <>
 
-        <Table striped bordered hover>
-           <thead>
-             <tr>
-                <th>Type</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Trip</th>
-                <th>User</th>
-                <th>Note</th>
-            </tr>
-           </thead>
+       
+         
             {concierges.map((concierge, index) => (
-                <ConciergeListItem key={index} concierge={concierge} index={index} />
+                <ConciergeListItem key={index} concierge={concierge} index={index} handleDelete={handleDelete} />
             ))}
-            </Table>
-        </div>
+    
+        </>
     );
 }

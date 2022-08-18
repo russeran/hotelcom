@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import {Table} from 'react-bootstrap';
 import HotelForm from '../../components/HotelForm/HotelForm.jsx';
 import HotelList from '../../components/HotelList/HotelList.jsx';
-
+import './HotelPage.css';
 
 export default function HotelPage({ index}) {
    const [hotels, setHotels] = useState([]);
@@ -37,10 +36,11 @@ export default function HotelPage({ index}) {
    const searchDate = (e) => {
   
     if (e.key === 'Enter') {
-      console.log("gfk")
+      console.log("prices are coming")
         axios.request(options).then(response => {
             setHotels(response.data.searchResults.results);
         }).catch(function (error) {
+          console.log(error);
 
             setError(error);
             ;
@@ -54,6 +54,7 @@ export default function HotelPage({ index}) {
 
    return (
     <div>
+      <h1 className='sort-info'> --SORT ORDER: BEST SELLER--</h1>
     <HotelForm searchDate={searchDate} setCheckin_date={setCheckin_date} setCheckout_date={setCheckout_date} setHotels={setHotels} checkin_date={checkin_date} checkout_date={checkout_date}/>
     <HotelList hotels={hotels} index={index} />
     </div>

@@ -1,5 +1,6 @@
 import "./NoteForm.css";
 import {useState} from 'react';
+import {Button, Form} from 'react-bootstrap';
 
 
 export default function NoteForm ({
@@ -31,7 +32,7 @@ function handleInputChange(e) {
 
 
 return (
- <form onSubmit={handleAddNote}>
+ <Form onSubmit={handleAddNote}>
     <table  id="new-note" >
 <thead>
     <tr>
@@ -47,11 +48,12 @@ return (
         </th>
         <th className="form-item" >
             <label>Note</label>
-            <input type="text" name="note" value={newNote.note} onChange={handleInputChange} required /> 
+            <br />
+            <textarea className="note-input" type="text" name="note" value={newNote.note} onChange={handleInputChange} required /> 
 
         </th>
        <th>
-       <button type="submit" >ADD</button>
+       <Button type="submit" >ADD</Button>
        </th>
             
        
@@ -60,5 +62,5 @@ return (
     </table>
 
 
-</form>
+</Form>
 )}

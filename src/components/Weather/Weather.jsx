@@ -16,9 +16,12 @@ export default function Weather() {
             setData(res.data);
             console.log(res.data);
         })
+        
         setLocation('');
     }
   }
+
+
 
     return (
 
@@ -37,12 +40,12 @@ export default function Weather() {
             </div>
             
             <div className="weather-container">
-                
+           
                 <h2>{data.name}</h2>
                 <hr />
                     <div>
                         <span>Temperature:</span>
-                        <span>{data.main ? <h1>{data.main.temp.slice(0,2)}C</h1> : null }</span>
+                        <span>{data.main ? <h1>{Math.floor(data.main.temp - 273.15) * 1.8 + 32}</h1> : null }</span>
                     </div>
                    <hr /> 
                    <div>
