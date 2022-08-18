@@ -35,9 +35,10 @@ export default function ConciergePage() {
         <>
         <br></br>
         <br></br>
+        <strong><h1 className='con-h1' >CONCIERGE</h1></strong>
         <div className="concierge-page">
             <br />
-            <strong><h1 className='con-h1' >CONCIERGE</h1></strong>
+            
             <ConciergeForm addConcierge={addConcierge} />
             <ConciergeList concierges={concierges} handleDelete={handleDelete}/>
         </div>

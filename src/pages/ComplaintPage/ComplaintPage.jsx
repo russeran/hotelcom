@@ -50,8 +50,9 @@ export default function ComplaintPage() {
         <>
         <br></br>
         <br></br>
+        <strong><h1 className='comp-h1' >COMPLAINTS</h1></strong>
         <div className="complaint-page">
-            <strong><h1 className='comp-h1' >COMPLAINTS</h1></strong>
+            
             { complaints && complaints.length > 0 ?
            
            <>

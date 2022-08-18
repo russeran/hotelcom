@@ -27,10 +27,10 @@ export default function NavBar({ user, setUser }) {
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
             <Nav.Link href="/hotels">Other Hotels</Nav.Link>
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <NavDropdown title="MENU" id="basic-nav-dropdown">
+            <NavDropdown title="FRONT DESK" id="basic-nav-dropdown">
               <NavDropdown.Item href="/complaints">Complaints</NavDropdown.Item>
               <NavDropdown.Item href="/notes">
-                Notes
+                SHO
               </NavDropdown.Item>
               <NavDropdown.Item href="/tasks">Tasks</NavDropdown.Item>
               <NavDropdown.Divider />

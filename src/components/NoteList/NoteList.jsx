@@ -1,11 +1,12 @@
 import NoteListItem from "../NoteListItem/NoteListItem";
 import { Table } from "react-bootstrap";
+import "./NoteList.css"
 
 
 export default function NoteList({ notes, handleDelete }) {
     return (
-        <div className="note-list">
-            <Table striped bordered hover>
+        <div>
+            <Table className="note-table" striped bordered hover>
             <thead>
                 <tr>
                     <th>Date</th>

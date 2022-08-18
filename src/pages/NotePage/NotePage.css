@@ -2,6 +2,9 @@
     background-color: rgb(195, 148, 207);
     border: black solid 5px;
     border-radius: 3%;
+    opacity: 0.7;
+    padding: 1rem;
+    border-radius: 10px;
 }
 
 #note-h1 {
@@ -11,5 +14,5 @@
     margin-top: 0.5rem;
     display: inline-block;
     width: 80%;
-    color: goldenrod;
+    color: rgb(195, 148, 207);
 }

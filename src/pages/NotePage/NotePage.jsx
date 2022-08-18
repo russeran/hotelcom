@@ -35,7 +35,7 @@ export default function NotePage() {
         <>
         <br></br>
         <br></br>
-        <strong><h1 id="note-h1" >NOTES</h1></strong>
+        <strong><h1 id="note-h1" >SHO</h1></strong>
         <NoteForm addNote={addNote} />
         <div className="note-page">
           <br />
