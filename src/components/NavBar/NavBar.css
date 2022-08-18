@@ -18,7 +18,10 @@
     float: left;
     font-family: 'Rubik Burned', 'Rubik', 'sans-serif';
     margin-left: 0rem;
-    ;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    padding: 0.2rem;
+    background-color: pink;
 }
 
 .user-welcome {

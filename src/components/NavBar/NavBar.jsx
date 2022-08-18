@@ -20,8 +20,6 @@ export default function NavBar({ user, setUser }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-          &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <Nav.Link href="/">Home</Nav.Link>
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
             <Nav.Link target="_blank" href="https://all.accor.com/hotel/9919/index.en.shtml?partner_id=mamashelter">Book A Room</Nav.Link>
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;

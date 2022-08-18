@@ -54,7 +54,7 @@ export default function HotelPage({ index}) {
 
    return (
     <div>
-      <h1 className='sort-info'> --SORT ORDER: BEST SELLER--</h1>
+      <h1 className='sort-info'> -BEST SELLERS-</h1>
     <HotelForm searchDate={searchDate} setCheckin_date={setCheckin_date} setCheckout_date={setCheckout_date} setHotels={setHotels} checkin_date={checkin_date} checkout_date={checkout_date}/>
     <HotelList hotels={hotels} index={index} />
     </div>
