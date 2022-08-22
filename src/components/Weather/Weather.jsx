@@ -8,7 +8,7 @@ export default function Weather() {
     const [location, setLocation] = useState('');
 
 
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=9ebb7fe68548d4066e5174b3b0d8b388`
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=hollywood&appid=9ebb7fe68548d4066e5174b3b0d8b388`
 
     const searchLocation = (e) => {
         if (e.key === 'Enter') {
@@ -17,7 +17,7 @@ export default function Weather() {
             console.log(res.data);
         })
         
-        setLocation('');
+        setLocation('Hollywood');
     }
   }
 
