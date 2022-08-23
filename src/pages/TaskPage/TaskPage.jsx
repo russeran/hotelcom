@@ -21,11 +21,17 @@ export default function TaskPage() {
     
     }
     return (
+        <>
+        <strong><h2>TASKS</h2></strong>
+        <div>
+        <TaskForm addTask={addTask} />
         <div className="task-page">
             <br />
-            <strong><h2>TASKS</h2></strong>
-            <TaskForm addTask={addTask} />
+            
+            
             <TaskList tasks={tasks} />
         </div>
+        </div>
+        </>
     );
     }

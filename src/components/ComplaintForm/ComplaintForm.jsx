@@ -57,7 +57,7 @@ export default function ComplaintForm({ addComplaint }) {
                 <div className="form-element">
                 <th className="form-item">
                     <FormLabel>Date</FormLabel>
-                    <FormControl type="text" name="date" value={newComplaint.date} onChange={handleFormControlChange} required />
+                    <FormControl type="datetime-local" name="date" value={newComplaint.date} onChange={handleFormControlChange} required />
                 </th>
                 </div>
                 <div className="form-element" >
