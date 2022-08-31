@@ -3,3 +3,13 @@
     border: black solid 5px;
     border-radius: 3%;
 }
+
+#task-h2 {
+    font-family: Rubik Burned, Rubik, sans-serif;
+    font-size: 8rem;
+    color: rgb(5, 5, 4);
+    margin-top: 0.5rem;
+    display: inline-block;
+    width: 80%;
+    color: rgb(240, 185, 165);
+}

@@ -22,7 +22,7 @@ export default function TaskPage() {
     }
     return (
         <>
-        <strong><h2>TASKS</h2></strong>
+        <strong><h2 id='task-h2'>TASKS</h2></strong>
         <div>
         <TaskForm addTask={addTask} />
         <div className="task-page">
