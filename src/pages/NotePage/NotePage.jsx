@@ -17,16 +17,14 @@ export default function NotePage() {
       },[change] );
 
 
-      function addNote(note) {
-        notesAPI.addANote(note);
-        setNotes ([...notes, note])
+      async function addNote(note) {
+        const newNote = await notesAPI.addANote(note);
+        setNotes([...notes, newNote]);
       }
 
-      async function handleDelete(note) {
-        await notesAPI.deleteANote(note);
-        const notesCopy = [...notes];
-        const newNotes = notesCopy.filter(note => note.id === note._id);
-        setNotes(newNotes);
+      async function handleDelete(noteId) {
+        await notesAPI.deleteANote(noteId);
+        setNotes(notes.filter(note => note._id !== noteId));
         setChange(!change);
       
     }

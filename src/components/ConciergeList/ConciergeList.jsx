@@ -8,7 +8,7 @@ export default function ConciergeList({ concierges, handleDelete }) {
        
          
             {concierges.map((concierge, index) => (
-                <ConciergeListItem key={index} concierge={concierge} index={index} handleDelete={handleDelete} />
+                <ConciergeListItem key={concierge._id || index} concierge={concierge} index={index} handleDelete={handleDelete} />
             ))}
     
         </>

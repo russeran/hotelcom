@@ -16,15 +16,17 @@ Three processes are needed for full end-to-end development:
 3. Frontend — `BROWSER=none PORT=3000 npm start` (CRA dev server on 3000, hot-reloads). Uses the `proxy` field to reach the API on 3001. Do NOT use `npm run build` + `node server.js` for development.
 
 ### Required environment (`.env`, untracked)
-The backend reads these via `dotenv`; create `.env` in the repo root:
+Copy `.env.example` to `.env` in the repo root. The backend reads `DATABASE_URL`, `SECRET`, and `PORT` via `dotenv`:
 
 ```
 DATABASE_URL=mongodb://127.0.0.1:27017/hotelcom
 SECRET=dev_local_secret_change_me
 PORT=3001
+REACT_APP_OPENWEATHER_KEY=<openweathermap key>
+REACT_APP_RAPIDAPI_KEY=<rapidapi hotels-com-provider key>
 ```
 
-`.env` is gitignored. `SECRET` signs/verifies JWTs; `DATABASE_URL` is the Mongo connection string.
+`.env` is gitignored. `SECRET` signs/verifies JWTs; `DATABASE_URL` is the Mongo connection string. The `REACT_APP_*` keys feed the Weather widget (Home) and the "Other Hotels" search (HotelPage). Note: CRA only exposes `REACT_APP_*` vars and bakes them into the client bundle at build time, so they are visible to end users and the dev server must be restarted to pick up changes to them.
 
 ### Non-obvious gotchas
 - The API server only serves the built client (`serve-favicon` + static + `/*` catch-all) when `build/index.html` exists. In development that folder is absent and the client is served by the CRA dev server on port 3000 — this is expected; hitting the backend (3001) directly on a non-`/api` route returns a plain "development mode" message, not the SPA.

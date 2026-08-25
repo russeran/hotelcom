@@ -17,16 +17,14 @@ export default function ConciergePage() {
         getAllConcierges();
     } ,[change] );
     
-    function addConcierge(concierge) {
-        conciergesAPI.addAConcierge(concierge);
-        setConcierges([...concierges, concierge]);
+    async function addConcierge(concierge) {
+        const newConcierge = await conciergesAPI.addAConcierge(concierge);
+        setConcierges([...concierges, newConcierge]);
     }
     
-    async function handleDelete(complaint) {
-        await conciergesAPI.deleteAConcierge(complaint);
-        const conciergeCopy = [...concierges];
-        const newConcierge = conciergeCopy.filter(complaint => complaint.id === complaint._id);
-        setConcierges(newConcierge);
+    async function handleDelete(conciergeId) {
+        await conciergesAPI.deleteAConcierge(conciergeId);
+        setConcierges(concierges.filter(concierge => concierge._id !== conciergeId));
         setChange(!change);
       
     }

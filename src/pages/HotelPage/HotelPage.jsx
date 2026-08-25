@@ -26,7 +26,7 @@ export default function HotelPage({ index}) {
        locale: 'en_US'
      },
      headers: {
-       'X-RapidAPI-Key': '3c30f65b81msh70f4a13bd6bf8ccp1c759ajsnc90fcdc9b0bb',
+       'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
        'X-RapidAPI-Host': 'hotels-com-provider.p.rapidapi.com'
      }
    };

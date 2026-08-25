@@ -8,7 +8,9 @@ export default function NoteListItem({ note, handleDelete }) {
                 <td>{note.date}</td>
                 <td>{note.user}</td>
                 <td>{note.note}</td>
-                <Button  variant="danger"  onClick={()=> handleDelete(note._id)} >DELETE</Button>
+                <td>
+                    <Button variant="danger" onClick={() => handleDelete(note._id)}>DELETE</Button>
+                </td>
             </tr>
         </tbody>
     );

@@ -12,10 +12,11 @@ export default function NoteList({ notes, handleDelete }) {
                     <th>Date</th>
                     <th>User</th>
                     <th>Note</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             {notes.map((note, index) => (
-                <NoteListItem key={index} note={note} index={index} handleDelete={handleDelete} />
+                <NoteListItem key={note._id || index} note={note} index={index} handleDelete={handleDelete} />
             ))}
             </Table>
         </div>
