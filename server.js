@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
@@ -13,9 +14,15 @@ app.use(logger('dev'));
 app.use(express.json());
 
 // Configure both serve-favicon & static middleware
-// to serve from the production 'build' folder
-app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
-app.use(express.static(path.join(__dirname, 'build')));
+// to serve from the production 'build' folder.
+// In development the React dev server (port 3000) serves the client and
+// proxies API requests here, so the 'build' folder won't exist yet.
+const buildDir = path.join(__dirname, 'build');
+const buildExists = fs.existsSync(path.join(buildDir, 'index.html'));
+if (buildExists) {
+    app.use(favicon(path.join(buildDir, 'favicon.ico')));
+    app.use(express.static(buildDir));
+}
 
 app.use(require('./config/checkToken'))
 
@@ -29,7 +36,11 @@ app.use('/api/tasks', require('./routes/api/tasks'))
 // The following "catch all" route (note the *) is necessary
 // to return the index.html on all non-AJAX requests
 app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    if (buildExists) {
+        return res.sendFile(path.join(buildDir, 'index.html'));
+    }
+    // In development the client is served by the React dev server on port 3000.
+    res.status(200).send('API server running in development mode. Open the React dev server (http://localhost:3000).');
 });
 
 // Configure to use port 3001 instead of 3000 during
