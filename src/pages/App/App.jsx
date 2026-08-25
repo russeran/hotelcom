@@ -9,6 +9,7 @@ import ConciergePage from "../ConciergePage/ConciergePage";
 import ComplaintPage from "../ComplaintPage/ComplaintPage";
 import Home from "../Home/Home.jsx";
 import HotelPage from "../HotelPage/HotelPage";
+import ChatPage from "../ChatPage/ChatPage";
 import { Routes, Route } from "react-router-dom";
 import Clock from "../../components/Clock/Clock";
 
@@ -31,6 +32,7 @@ export default function App() {
           <Route path="/notes" element={<NotePage/>}/>
             <Route path="/concierge" element={<ConciergePage/>}/>
             <Route path="/hotels" element={<HotelPage />} />
+            <Route path="/chat" element={<ChatPage />} />
             <Route path="/" element={<Home user={user} setUser={setUser} />} />
           </Routes>
         </>

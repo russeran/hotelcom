@@ -53,6 +53,8 @@ export default function NavBar({ user, setUser }) {
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
             <Nav.Link href="/hotels">Other Hotels</Nav.Link>
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
+            <Nav.Link href="/chat">Chat</Nav.Link>
+            &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
             <NavDropdown title="FRONT DESK" id="basic-nav-dropdown">
               <NavDropdown.Item href="/complaints">Complaints</NavDropdown.Item>
               <NavDropdown.Item href="/notes">
