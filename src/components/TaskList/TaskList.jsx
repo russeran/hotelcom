@@ -10,6 +10,7 @@ export default function TaskList({ tasks, handleDelete, handleToggleStatus }) {
         <Table hover responsive className="align-middle mb-0 task-table">
             <thead>
                 <tr>
+                    <th>Priority</th>
                     <th>Status</th>
                     <th>Department</th>
                     <th>Room</th>

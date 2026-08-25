@@ -16,10 +16,11 @@ async function index(req, res) {
 
 async function create(req, res) {
     const newTask = await Task.create(req.body)
-    // Notify the related department about the new task.
+    // Notify the related department about the new task, flagging urgency.
+    const priorityTag = newTask.priority && newTask.priority !== 'Normal' ? `[${newTask.priority}] ` : ''
     await notifications.notify({
         department: newTask.department,
-        message: `New task for ${newTask.department || 'the team'}: ${newTask.task}`,
+        message: `${priorityTag}New task for ${newTask.department || 'the team'}: ${newTask.task}`,
         type: 'task'
     })
     return res.json(newTask)

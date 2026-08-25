@@ -1,11 +1,13 @@
 import './TaskListItem.css'
 import { Button } from "react-bootstrap";
 import StatusBadge from "../StatusBadge/StatusBadge";
+import PriorityBadge from "../PriorityBadge/PriorityBadge";
 
 export default function TaskListItem({ task, handleDelete, handleToggleStatus }) {
     const done = task.status === 'Done';
     return (
         <tr>
+            <td><PriorityBadge priority={task.priority} /></td>
             <td><StatusBadge status={task.status} /></td>
             <td>{task.department}</td>
             <td>{task.room}</td>

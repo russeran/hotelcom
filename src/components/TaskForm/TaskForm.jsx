@@ -2,7 +2,7 @@ import './TaskForm.css';
 import { useState } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
 
-const BLANK = { status: 'Open', department: '', room: '', user: '', task: '' };
+const BLANK = { status: 'Open', priority: 'Normal', department: '', room: '', user: '', task: '' };
 
 export default function TaskForm({ addTask }) {
     const [newTask, setNewTask] = useState(BLANK);
@@ -21,16 +21,25 @@ export default function TaskForm({ addTask }) {
         <Form onSubmit={handleAddTask} className="task-form">
             <Row className="g-2 align-items-end">
                 <Col md={2}>
-                    <Form.Label>Status</Form.Label>
-                    <Form.Select name="status" value={newTask.status} onChange={handleInputChange}>
-                        <option>Open</option>
-                        <option>In Progress</option>
-                        <option>Done</option>
+                    <Form.Label>Department</Form.Label>
+                    <Form.Select name="department" value={newTask.department} onChange={handleInputChange} required>
+                        <option value="">Select…</option>
+                        <option>Housekeeping</option>
+                        <option>Maintenance</option>
+                        <option>Front Desk</option>
+                        <option>Food &amp; Beverage</option>
+                        <option>Security</option>
+                        <option>Concierge</option>
                     </Form.Select>
                 </Col>
                 <Col md={2}>
-                    <Form.Label>Department</Form.Label>
-                    <Form.Control type="text" name="department" placeholder="Housekeeping" value={newTask.department} onChange={handleInputChange} required />
+                    <Form.Label>Priority</Form.Label>
+                    <Form.Select name="priority" value={newTask.priority} onChange={handleInputChange}>
+                        <option>Low</option>
+                        <option>Normal</option>
+                        <option>High</option>
+                        <option>Urgent</option>
+                    </Form.Select>
                 </Col>
                 <Col md={1}>
                     <Form.Label>Room</Form.Label>
