@@ -11,30 +11,29 @@ import Home from "../Home/Home.jsx";
 import HotelPage from "../HotelPage/HotelPage";
 import ChatPage from "../ChatPage/ChatPage";
 import { Routes, Route } from "react-router-dom";
-import Clock from "../../components/Clock/Clock";
 
 
 export default function App() {
   const [user, setUser] = useState(getUser());
-  
+
 
 
   return (
     <main className="App">
       {user ? (
         <>
-        
           <NavBar user={user} setUser={setUser} />
-          <Clock />
-          <Routes>
-          <Route path="/complaints" element={<ComplaintPage />}/>
-          <Route path="/tasks" element={<TaskPage />}/>
-          <Route path="/notes" element={<NotePage/>}/>
-            <Route path="/concierge" element={<ConciergePage/>}/>
-            <Route path="/hotels" element={<HotelPage />} />
-            <Route path="/chat" element={<ChatPage />} />
-            <Route path="/" element={<Home user={user} setUser={setUser} />} />
-          </Routes>
+          <div className="app-content">
+            <Routes>
+              <Route path="/complaints" element={<ComplaintPage />}/>
+              <Route path="/tasks" element={<TaskPage />}/>
+              <Route path="/notes" element={<NotePage/>}/>
+              <Route path="/concierge" element={<ConciergePage/>}/>
+              <Route path="/hotels" element={<HotelPage />} />
+              <Route path="/chat" element={<ChatPage />} />
+              <Route path="/" element={<Home user={user} setUser={setUser} />} />
+            </Routes>
+          </div>
         </>
       ) : (
         <AuthPage setUser={setUser} />

@@ -53,10 +53,22 @@ export default function HotelPage({ index}) {
 }
 
    return (
-    <div>
-      <h1 className='sort-info'> -BEST SELLERS-</h1>
-    <HotelForm searchDate={searchDate} setCheckin_date={setCheckin_date} setCheckout_date={setCheckout_date} setHotels={setHotels} checkin_date={checkin_date} checkout_date={checkout_date}/>
-    <HotelList hotels={hotels} index={index} />
+    <div className="page">
+      <header className="page-header">
+        <div>
+          <h1 className="section-title">Other Hotels Nearby</h1>
+          <p className="section-subtitle">Best sellers around Los Angeles · press Enter to search</p>
+        </div>
+      </header>
+      <div className="surface-card page-card">
+        <HotelForm searchDate={searchDate} setCheckin_date={setCheckin_date} setCheckout_date={setCheckout_date} setHotels={setHotels} checkin_date={checkin_date} checkout_date={checkout_date}/>
+      </div>
+      {hotels.length > 0 && (
+        <div className="surface-card page-card">
+          <HotelList hotels={hotels} index={index} />
+        </div>
+      )}
+      {error && <p className="muted">Could not load hotels right now. Please try again later.</p>}
     </div>
 
     );

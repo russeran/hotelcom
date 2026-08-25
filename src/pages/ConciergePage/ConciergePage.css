@@ -1,16 +1,1 @@
-.concierge-page {
-    background-image: url("/images/conciergee.png");
-    background-size: cover;
-    border: black solid 5px;
-    border-radius: 3%;
-    display: block;
-    text-align: center;
-}
-
-.con-h1 {
-    font-family: Rubik Burned, Rubik, sans-serif;
-    font-size: 8rem;
-    color: pink;
-    margin-top: 0.5rem;
-    display: fixed;
-}
+/* Concierge page uses the shared .page / .toolbar layout defined in index.css */

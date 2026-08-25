@@ -1,64 +1,49 @@
-import {useState} from "react";
+import { useState } from "react";
 import './ConciergeForm.css'
-import { FormControl, FormLabel, Button, Form } from "react-bootstrap";
+import { Row, Col, Form, Button } from "react-bootstrap";
 
+const BLANK = { type: "", name: "", price: "", trip: "", note: "", user: "" };
 
-export default function ConciergeForm({addConcierge}) {
-    const [newConcierge, setNewConcierge] = useState({
-        type: "",
-        name: "",
-        price: "",
-        trip: "",
-        note:"",
-        user: "",
-    });
+export default function ConciergeForm({ addConcierge }) {
+    const [newConcierge, setNewConcierge] = useState(BLANK);
 
-    function handleAddConcierge(evt){
+    function handleAddConcierge(evt) {
         evt.preventDefault();
         addConcierge(newConcierge);
-        setNewConcierge({
-          type: "",
-          name: "",
-          price: "",
-          trip: "",
-          note:"",
-          user: "",
-
-        });
+        setNewConcierge(BLANK);
     }
 
     function handleInputChange(evt) {
-        const newNewConcierge = {...newConcierge,
-          [evt.target.name]: evt.target.value
-        };
-
-        setNewConcierge(newNewConcierge);
+        setNewConcierge({ ...newConcierge, [evt.target.name]: evt.target.value });
     }
 
-
-    return (  
-    <>
-        <Form className="new-concierge"  onSubmit={handleAddConcierge}>
-        <span>
-                    <FormLabel  className="con-form-items" >Type</FormLabel>
-                    <FormControl  className="con-form-items" type="text" name="type" value={newConcierge.type} onChange={handleInputChange} required />
-                    <FormLabel className="con-form-items" >Name</FormLabel>
-                    <FormControl  className="con-form-items" type="text" name="name" value={newConcierge.name} onChange={handleInputChange} required />
-                    <FormLabel className="con-form-items" >Price</FormLabel>
-                    <FormControl  className="con-form-items" type="text" name="price" value={newConcierge.price} onChange={handleInputChange} required />
-                    <FormLabel className="con-form-items" >Trip</FormLabel>
-                    <FormControl  className="con-form-items" type="text" name="trip" value={newConcierge.trip} onChange={handleInputChange} required />
-               
-                    <FormLabel className="con-form-items" >Note</FormLabel>
-                    <FormControl  className="con-form-items" type="text" name="note" value={newConcierge.note} onChange={handleInputChange} required />
-                    <FormLabel className="con-form-items" >User</FormLabel>
-                    <FormControl className="con-form-items"  type="text" name="user" value={newConcierge.user} onChange={handleInputChange} required />
-                    <Button  className="con-form-items comp-button" variant="success" type="submit">ADD</Button>
-                    </span>
+    return (
+        <Form className="concierge-form" onSubmit={handleAddConcierge}>
+            <Row className="g-2 align-items-end">
+                <Col md={2}>
+                    <Form.Label>Type</Form.Label>
+                    <Form.Control type="text" name="type" placeholder="Tour, Dining…" value={newConcierge.type} onChange={handleInputChange} required />
+                </Col>
+                <Col md={3}>
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control type="text" name="name" placeholder="Griffith Observatory" value={newConcierge.name} onChange={handleInputChange} required />
+                </Col>
+                <Col md={1}>
+                    <Form.Label>Price</Form.Label>
+                    <Form.Control type="text" name="price" placeholder="$" value={newConcierge.price} onChange={handleInputChange} />
+                </Col>
+                <Col md={2}>
+                    <Form.Label>Trip</Form.Label>
+                    <Form.Control type="text" name="trip" placeholder="Distance / time" value={newConcierge.trip} onChange={handleInputChange} />
+                </Col>
+                <Col md={2}>
+                    <Form.Label>Note</Form.Label>
+                    <Form.Control type="text" name="note" placeholder="Tip" value={newConcierge.note} onChange={handleInputChange} />
+                </Col>
+                <Col md={2}>
+                    <Button className="w-100" variant="primary" type="submit">Add</Button>
+                </Col>
+            </Row>
         </Form>
-       
-        </>
-
     );
-
 }

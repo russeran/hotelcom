@@ -1,83 +1,53 @@
 import './TaskForm.css';
 import { useState } from 'react';
+import { Row, Col, Form, Button } from 'react-bootstrap';
 
-export default function TaskForm ({
-    addTask }) {
+const BLANK = { status: 'Open', department: '', room: '', user: '', task: '' };
 
-const [newTask, setNewTask] = useState({
-    status: '',
-    date: '',
-    department: '',
-    room: '',
-    user: '',
-    task: '',
-
-    });
-
-
-    
-  
+export default function TaskForm({ addTask }) {
+    const [newTask, setNewTask] = useState(BLANK);
 
     function handleAddTask(e) {
         e.preventDefault();
         addTask(newTask);
-        setNewTask({
-            status: '',
-            date: '',
-            department: '',
-            room: '',
-            user: '',
-            task: '',
-        });
+        setNewTask(BLANK);
     }
 
     function handleInputChange(e) {
-        const addNewTask = { ...newTask,
-            [e.target.name]: e.target.value
-        };
-        
-        setNewTask(addNewTask)
+        setNewTask({ ...newTask, [e.target.name]: e.target.value });
     }
 
-
-
     return (
-        <form onSubmit={handleAddTask}>
-            <table  id="new-task" >
-<thead>
-            <tr>
-                
-                <th className="form-item">
-                    <label>Status</label>
-                    <input type="text" name="status" value={newTask.status} onChange={handleInputChange} required />
-                </th>
-                <th className="form-item">
-                    <label>Date</label>
-                    <input type="text" name="date" value={newTask.date} onChange={handleInputChange} required />
-                </th>
-                <th className="form-item">
-                    <label>Department</label>
-                    <input type="text" name="department" value={newTask.department} onChange={handleInputChange} required />
-                </th>
-                <th className="form-item">
-                    <label>Room</label>
-                    <input type="text" name="room" value={newTask.room} onChange={handleInputChange} />
-                </th>
-                <th className="form-item">
-                    <label>User</label>
-                    <input type="text" name="user" value={newTask.user} onChange={handleInputChange} required />
-                </th>
-                <th className="form-item">
-                    <label>Task</label>
-                    <input type="text" name="task" value={newTask.task} onChange={handleInputChange} required />
-                </th>
-
-                <th className="form-item">
-                    <button type="submit">ADD</button>
-                </th>
-            </tr>
-            </thead>
-            </table>
-        </form>
+        <Form onSubmit={handleAddTask} className="task-form">
+            <Row className="g-2 align-items-end">
+                <Col md={2}>
+                    <Form.Label>Status</Form.Label>
+                    <Form.Select name="status" value={newTask.status} onChange={handleInputChange}>
+                        <option>Open</option>
+                        <option>In Progress</option>
+                        <option>Done</option>
+                    </Form.Select>
+                </Col>
+                <Col md={2}>
+                    <Form.Label>Department</Form.Label>
+                    <Form.Control type="text" name="department" placeholder="Housekeeping" value={newTask.department} onChange={handleInputChange} required />
+                </Col>
+                <Col md={1}>
+                    <Form.Label>Room</Form.Label>
+                    <Form.Control type="text" name="room" placeholder="101" value={newTask.room} onChange={handleInputChange} />
+                </Col>
+                <Col md={2}>
+                    <Form.Label>Assignee</Form.Label>
+                    <Form.Control type="text" name="user" placeholder="Name" value={newTask.user} onChange={handleInputChange} required />
+                </Col>
+                <Col md={3}>
+                    <Form.Label>Task</Form.Label>
+                    <Form.Control type="text" name="task" placeholder="Describe the task" value={newTask.task} onChange={handleInputChange} required />
+                </Col>
+                <Col md={2}>
+                    <Button type="submit" variant="primary" className="w-100">Add Task</Button>
+                </Col>
+            </Row>
+        </Form>
     );
 }

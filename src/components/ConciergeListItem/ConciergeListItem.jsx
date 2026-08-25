@@ -1,38 +1,29 @@
-import { Card, ListGroup, Button } from "react-bootstrap";
-
+import { Card, Button, Badge } from "react-bootstrap";
 import "./ConciergeListItem.css"
 
-export default function ConciergeListItem({concierge, handleDelete}){
+export default function ConciergeListItem({ concierge, handleDelete }) {
+    return (
+        <Card className="con-card">
+            <Card.Body>
+                <div className="con-head">
+                    <div>
+                        <div className="con-name">{concierge.name}</div>
+                        {concierge.type && <Badge bg="info" className="con-type text-uppercase">{concierge.type}</Badge>}
+                    </div>
+                    {concierge.price && <div className="con-price">${concierge.price}</div>}
+                </div>
 
-return (
+                {concierge.trip && (
+                    <div className="con-field"><span className="field-label">Trip</span><span className="field-value">{concierge.trip}</span></div>
+                )}
+                {concierge.note && (
+                    <div className="con-field"><span className="field-label">Note</span><span className="field-value">{concierge.note}</span></div>
+                )}
 
-<>
-
-<Card className="con-card" style={{ width: '18rem' }}>
-      <Card.Body>
-        <Card.Title>{concierge.type}</Card.Title>
-        <Card.Title variant="info"  >{concierge.name}-{concierge.price}</Card.Title>
-      </Card.Body>
-      <ListGroup className="list-group-flush">
-        <ListGroup.Item className="card-labels" >TRIP</ListGroup.Item>
-      <ListGroup.Item className="con-trip">{concierge.trip}</ListGroup.Item>
-      <ListGroup.Item className="card-labels"  >NOTE</ListGroup.Item>
-        <ListGroup.Item className="con-content" >{concierge.note}</ListGroup.Item>
-      
-      </ListGroup>
-      <Card.Body>
-        <ListGroup.Item>{concierge.user}</ListGroup.Item>
-      <Button  variant="danger"  onClick={()=> handleDelete(concierge._id)} >DELETE</Button>
-      </Card.Body>
-    
-    </Card>
-
- 
-    
-    </>
+                <div className="con-actions">
+                    <Button size="sm" variant="outline-danger" onClick={() => handleDelete(concierge._id)}>Delete</Button>
+                </div>
+            </Card.Body>
+        </Card>
     );
-
-
-
-
 }

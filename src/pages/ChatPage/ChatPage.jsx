@@ -48,9 +48,14 @@ export default function ChatPage() {
     }
 
     return (
-        <div className="chat-page">
-            <h1 className="chat-title">TEAM CHAT</h1>
-            <div className="chat-messages">
+        <div className="page chat-page">
+            <header className="page-header">
+                <div>
+                    <h1 className="section-title">Team Chat</h1>
+                    <p className="section-subtitle">{messages.length} message{messages.length === 1 ? '' : 's'} · live</p>
+                </div>
+            </header>
+            <div className="chat-messages surface-card">
                 {messages.length === 0 ? (
                     <p className="chat-empty">No messages yet. Say hello!</p>
                 ) : (

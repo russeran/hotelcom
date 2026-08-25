@@ -2,16 +2,16 @@ import ComplaintListItem from "../ComplaintListItem/ComplaintListItem.jsx";
 import "./ComplaintList.css"
 
 export default function ComplaintList({ complaints, handleDelete, updateComplaint }) {
-   
     return (
-        <div className="complaint-table">
-      
-       
-    
+        <div className="complaint-grid">
             {complaints.map((complaint, index) => (
-                <ComplaintListItem key={index} complaint={complaint} index={index} handleDelete={handleDelete} updateComplaint={updateComplaint} />
+                <ComplaintListItem
+                    key={complaint._id || index}
+                    complaint={complaint}
+                    handleDelete={handleDelete}
+                    updateComplaint={updateComplaint}
+                />
             ))}
-        
-       </div>
+        </div>
     );
 }

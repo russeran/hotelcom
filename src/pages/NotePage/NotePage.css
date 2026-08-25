@@ -1,18 +1,1 @@
-.note-page {
-    background-color: rgb(195, 148, 207);
-    border: black solid 5px;
-    border-radius: 3%;
-    opacity: 0.7;
-    padding: 1rem;
-    border-radius: 10px;
-}
-
-#note-h1 {
-    font-family: Rubik Burned, Rubik, sans-serif;
-    font-size: 8rem;
-    color: rgb(5, 5, 4);
-    margin-top: 0.5rem;
-    display: inline-block;
-    width: 80%;
-    color: rgb(195, 148, 207);
-}
+/* Note page uses the shared .page / .toolbar layout defined in index.css */

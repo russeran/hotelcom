@@ -1,51 +1,59 @@
 import "./ComplaintListItems.css";
 import { useState } from "react";
-import { Card, ListGroup, Button } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import ComplaintUpdate from "../ComplaintUpdate/ComplaintUpdate";
+import StatusBadge from "../StatusBadge/StatusBadge";
 
+function formatDate(value) {
+    if (!value) return '';
+    const d = new Date(value);
+    return isNaN(d) ? value : d.toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
 
 export default function ComplaintListItem({ complaint, handleDelete, updateComplaint }) {
-
     const [editing, setEditing] = useState(false);
 
     return (
+        <Card className="complaint-card">
+            <Card.Body>
+                <div className="complaint-card-head">
+                    <div>
+                        <div className="complaint-room">Room {complaint.room}</div>
+                        <div className="complaint-guest">{complaint.name}</div>
+                    </div>
+                    <StatusBadge status={complaint.status} />
+                </div>
 
- <>
+                <div className="complaint-field">
+                    <span className="field-label">Issue</span>
+                    <span className="field-value">{complaint.issue || '—'}</span>
+                </div>
+                <div className="complaint-field">
+                    <span className="field-label">Solution</span>
+                    <span className="field-value">{complaint.solution || '—'}</span>
+                </div>
 
+                <div className="complaint-meta">{formatDate(complaint.date)}</div>
 
-<Card className="card" style={{ width: '18rem' }}>
-      <Card.Body>
-        <Card.Title>{complaint.date}</Card.Title>
-        <Card.Title variant="info"  >{complaint.room}-{complaint.name}</Card.Title>
-      </Card.Body>
-      <ListGroup className="list-group-flush">
-        <ListGroup.Item className="card-labels" >ISSUE</ListGroup.Item>
-      <ListGroup.Item className="content">{complaint.issue}</ListGroup.Item>
-      <ListGroup.Item className="card-labels"  >SOLUTION</ListGroup.Item>
-        <ListGroup.Item className="content" >{complaint.solution}</ListGroup.Item>
-        <ListGroup.Item className="card-labels"  >STATUS</ListGroup.Item>
-        <ListGroup.Item>{complaint.status}</ListGroup.Item>
-       
-        
-      </ListGroup>
-      <Card.Body>
-        <ListGroup.Item>{complaint.user}</ListGroup.Item>
-      <Button variant="primary" onClick={() => setEditing(!editing)}>{editing ? 'CLOSE' : 'EDIT'}</Button>
-      {' '}
-      <Button  variant="danger"  onClick={()=> handleDelete(complaint._id)} >DELETE</Button>
-      {editing && (
-        <ComplaintUpdate
-          complaint={complaint}
-          updateComplaint={updateComplaint}
-          onClose={() => setEditing(false)}
-        />
-      )}
-      </Card.Body>
-    
-    </Card>
+                <div className="complaint-actions">
+                    <Button size="sm" variant="outline-secondary" onClick={() => setEditing(!editing)}>
+                        {editing ? 'Close' : 'Edit'}
+                    </Button>
+                    <Button size="sm" variant="outline-danger" onClick={() => handleDelete(complaint._id)}>
+                        Delete
+                    </Button>
+                </div>
 
- 
-    
-    </>
+                {editing && (
+                    <div className="complaint-edit">
+                        <ComplaintUpdate
+                            complaint={complaint}
+                            updateComplaint={updateComplaint}
+                            onClose={() => setEditing(false)}
+                        />
+                    </div>
+                )}
+            </Card.Body>
+        </Card>
     );
 }

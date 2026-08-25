@@ -5,20 +5,20 @@ import "./NoteList.css"
 
 export default function NoteList({ notes, handleDelete }) {
     return (
-        <div>
-            <Table className="note-table" striped bordered hover>
+        <Table hover responsive className="align-middle mb-0 note-table">
             <thead>
                 <tr>
                     <th>Date</th>
-                    <th>User</th>
+                    <th>Author</th>
                     <th>Note</th>
-                    <th>Actions</th>
+                    <th className="text-end">Actions</th>
                 </tr>
             </thead>
-            {notes.map((note, index) => (
-                <NoteListItem key={note._id || index} note={note} index={index} handleDelete={handleDelete} />
-            ))}
-            </Table>
-        </div>
+            <tbody>
+                {notes.map((note, index) => (
+                    <NoteListItem key={note._id || index} note={note} handleDelete={handleDelete} />
+                ))}
+            </tbody>
+        </Table>
     );
-} 
+}
