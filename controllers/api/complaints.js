@@ -1,4 +1,5 @@
 const Complaint = require('../../models/complaint')
+const notifications = require('./notifications')
 
 module.exports = {
     create,
@@ -16,7 +17,12 @@ async function index(req, res) {
 async function create(req, res) {
     req.body.user = req.user._id
     const newComplaint = await Complaint.create(req.body)
-    console.log(newComplaint)
+    // Notify the Front Desk about the new complaint.
+    await notifications.notify({
+        department: 'Front Desk',
+        message: `New complaint (room ${newComplaint.room}): ${newComplaint.issue}`,
+        type: 'complaint'
+    })
     return res.json(newComplaint)
 }
 

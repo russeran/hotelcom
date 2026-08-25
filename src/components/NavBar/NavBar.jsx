@@ -1,11 +1,39 @@
 
+import { useEffect, useState, useCallback } from "react";
 import * as userService from "../../utilities/users-service";
-import { Navbar, Nav, NavDropdown, Container  } from "react-bootstrap";
+import * as notificationsAPI from "../../utilities/notifications-api";
+import { Navbar, Nav, NavDropdown, Container, Badge, Button } from "react-bootstrap";
 import './NavBar.css';
 
 
 
 export default function NavBar({ user, setUser }) {
+  const [notifications, setNotifications] = useState([]);
+
+  const loadNotifications = useCallback(async () => {
+    try {
+      const data = await notificationsAPI.getAllNotifications();
+      setNotifications(data);
+    } catch (err) {
+      // Non-fatal: leave notifications empty if the request fails.
+      console.log('Failed to load notifications', err);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadNotifications();
+    // Poll periodically so notifications from other users/actions show up.
+    const interval = setInterval(loadNotifications, 15000);
+    return () => clearInterval(interval);
+  }, [loadNotifications]);
+
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  async function handleMarkRead(notificationId) {
+    await notificationsAPI.markNotificationRead(notificationId);
+    setNotifications(notifications.map(n => (n._id === notificationId ? { ...n, read: true } : n)));
+  }
+
   function handleLogOut() {
     // Delegate to the users-service
     userService.logOut();
@@ -37,6 +65,39 @@ export default function NavBar({ user, setUser }) {
               </NavDropdown.Item>
             </NavDropdown>
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
+            <NavDropdown
+              id="notifications-nav-dropdown"
+              title={
+                <span>
+                  Notifications{' '}
+                  {unreadCount > 0 && <Badge bg="danger">{unreadCount}</Badge>}
+                </span>
+              }
+              align="end"
+            >
+              {notifications.length === 0 ? (
+                <NavDropdown.Item disabled>No notifications</NavDropdown.Item>
+              ) : (
+                notifications.slice(0, 10).map(n => (
+                  <NavDropdown.ItemText key={n._id} className="notification-item">
+                    <div style={{ fontWeight: n.read ? 'normal' : 'bold', maxWidth: '320px' }}>
+                      {n.message}
+                    </div>
+                    {!n.read && (
+                      <Button
+                        size="sm"
+                        variant="link"
+                        className="p-0"
+                        onClick={() => handleMarkRead(n._id)}
+                      >
+                        Mark read
+                      </Button>
+                    )}
+                  </NavDropdown.ItemText>
+                ))
+              )}
+            </NavDropdown>
+            &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
             <Nav.Link href="/" onClick={handleLogOut} >Log Out</Nav.Link>
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
@@ -46,22 +107,4 @@ export default function NavBar({ user, setUser }) {
       </Container>
     </Navbar>
   );
-
-  // (
-  //   <nav className="nav-bar">
-  //     <span>Welcome, {user.name}</span>
-  //     &nbsp; | &nbsp;
-  //     <Link to="" onClick={handleLogOut}>
-  //       Log Out
-  //     </Link>
-  //     &nbsp; | &nbsp;
-  //     <Link to="" >Tasks</Link>
-  //     &nbsp; | &nbsp;
-  //     <Link to="/complaints" >Complaints</Link>
-  //     &nbsp; | &nbsp;
-  //     <Link to="">Notes</Link>
-  //     &nbsp; | &nbsp;
-  //     <Link to="/concierge">Concierges</Link>
-  //   </nav>
-  // );
 }

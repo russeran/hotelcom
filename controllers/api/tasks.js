@@ -1,4 +1,5 @@
 const Task = require('../../models/task')
+const notifications = require('./notifications')
 
 module.exports = {
     create,
@@ -15,6 +16,12 @@ async function index(req, res) {
 
 async function create(req, res) {
     const newTask = await Task.create(req.body)
+    // Notify the related department about the new task.
+    await notifications.notify({
+        department: newTask.department,
+        message: `New task for ${newTask.department || 'the team'}: ${newTask.task}`,
+        type: 'task'
+    })
     return res.json(newTask)
 }
 
