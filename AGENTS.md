@@ -39,7 +39,9 @@ REACT_APP_RAPIDAPI_KEY=<rapidapi hotels-com-provider key>
 - The client's "current user" comes entirely from the decoded JWT payload (there is no `/me` endpoint). Anything that must change the displayed user (e.g. the profile-picture upload at `POST /api/users/avatar`) re-issues a new JWT that the client stores — update the token, don't expect a separate profile fetch.
 - Uploaded profile pictures are written to `uploads/` (gitignored) and served statically at `/uploads/...`; in dev the CRA proxy forwards those requests to the API on 3001.
 - Notifications are auto-created (best-effort) when a task or complaint is created; the NavBar polls `/api/notifications/index` every 15s.
-- Team chat (`/chat`, `/api/messages`) is polling-based (the Chat page polls every 3s) rather than websockets, to stay consistent with the rest of the app and avoid websocket-proxy issues in dev. The message author is set server-side from the JWT user's name.
+- Team chat (`/chat`, `/api/messages`) is polling-based (the Chat page polls every 3s) rather than websockets, to stay consistent with the rest of the app and avoid websocket-proxy issues in dev. The message author is set server-side from the JWT user's name. Messages are scoped to a `channel` (department tabs); `GET /api/messages/index?channel=` filters, and the `General` channel also includes legacy channel-less messages.
+- Tasks carry a `priority` (Low/Normal/High/Urgent). The Task page sorts Urgent-first (open ahead of completed), supports a department filter, and new-task notifications are prefixed with the priority when it isn't Normal.
+- Concierge supports full CRUD including edit (`PUT /api/concierges/:id`) and has `address`/`phone`/`url` fields that render as Directions/Call/Website links on each card.
 
 ### Lint / test / build
 - Lint: there is no standalone lint script; ESLint (CRA config) runs as part of `npm start` and `npm run build`. `npm run build` fails the build on ESLint errors unless `CI=false` (warnings are allowed).
