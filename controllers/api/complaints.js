@@ -21,7 +21,7 @@ async function create(req, res) {
 }
 
 async function deleteComplaint(req, res) {
-    const deleteComplaint = await Complaint.findByIdAndRemove(req.params.id)
+    const deleteComplaint = await Complaint.findByIdAndDelete(req.params.id)
     return res.json(deleteComplaint)
 }
 

@@ -18,6 +18,6 @@ async function create(req, res) {
 }
 
 async function deleteConcierge(req, res) {
-    const deleteConcierge = await Concierge.findByIdAndRemove(req.params.id)
+    const deleteConcierge = await Concierge.findByIdAndDelete(req.params.id)
     return res.json(deleteConcierge)
 }

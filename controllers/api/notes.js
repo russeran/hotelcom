@@ -17,6 +17,6 @@ async function create(req, res) {
 }
 
 async function deleteNote(req, res) {
-    const deleteNote = await Note.findByIdAndRemove(req.params.id)
+    const deleteNote = await Note.findByIdAndDelete(req.params.id)
     return res.json(deleteNote)
 }
