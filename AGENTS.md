@@ -34,6 +34,9 @@ REACT_APP_RAPIDAPI_KEY=<rapidapi hotels-com-provider key>
 - Resource route paths use explicit subpaths: `POST /api/<resource>/create`, `GET /api/<resource>/index`, `DELETE /api/<resource>/delete/:id`, and `PUT /api/<resource>/:id` for updates (tasks, complaints). This differs from typical REST conventions — match `src/utilities/*-api.js`.
 - Express is intentionally pinned to `^4`: the catch-all route uses the `'/*'` pattern, which is invalid under Express 5 / path-to-regexp v8.
 - CRA is pinned to `react-scripts` 5.0.1 with React 18 and react-router 6; do not jump to React 19 / react-router 7 without migrating off CRA.
+- The client's "current user" comes entirely from the decoded JWT payload (there is no `/me` endpoint). Anything that must change the displayed user (e.g. the profile-picture upload at `POST /api/users/avatar`) re-issues a new JWT that the client stores — update the token, don't expect a separate profile fetch.
+- Uploaded profile pictures are written to `uploads/` (gitignored) and served statically at `/uploads/...`; in dev the CRA proxy forwards those requests to the API on 3001.
+- Notifications are auto-created (best-effort) when a task or complaint is created; the NavBar polls `/api/notifications/index` every 15s.
 
 ### Lint / test / build
 - Lint: there is no standalone lint script; ESLint (CRA config) runs as part of `npm start` and `npm run build`. `npm run build` fails the build on ESLint errors unless `CI=false` (warnings are allowed).
