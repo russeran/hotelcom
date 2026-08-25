@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import * as userService from "../../utilities/users-service";
 import * as notificationsAPI from "../../utilities/notifications-api";
-import { Navbar, Nav, NavDropdown, Container, Badge, Button } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Container, Badge, Button, Image } from "react-bootstrap";
 import './NavBar.css';
 
 
@@ -101,6 +101,10 @@ export default function NavBar({ user, setUser }) {
             <Nav.Link href="/" onClick={handleLogOut} >Log Out</Nav.Link>
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
             &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
+            {user.avatar && (
+              <Image src={user.avatar} roundedCircle width={32} height={32} alt="avatar" style={{ objectFit: 'cover' }} />
+            )}
+            &nbsp;
             <h5 className="user-welcome" >Welcome, {user.name}</h5>
           </Nav>
         </Navbar.Collapse>

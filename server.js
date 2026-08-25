@@ -24,6 +24,9 @@ if (buildExists) {
     app.use(express.static(buildDir));
 }
 
+// Serve uploaded files (e.g. user profile pictures)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use(require('./config/checkToken'))
 
 // Put API routes here, before the "catch all" route

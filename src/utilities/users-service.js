@@ -18,6 +18,15 @@ export function logOut() {
     localStorage.removeItem('token')
 }
 
+export async function updateAvatar(file) {
+    const formData = new FormData()
+    formData.append('avatar', file)
+    // The server responds with a fresh JWT that includes the new avatar.
+    const token = await usersAPI.uploadAvatar(formData, getToken())
+    localStorage.setItem('token', token)
+    return getUser()
+}
+
 export function getToken() {
     // getItem returns null if there's no string
     const token = localStorage.getItem('token')

@@ -5,7 +5,8 @@ const User = require('../../models/user')
 module.exports = {
     create,
     login,
-    checkToken
+    checkToken,
+    uploadAvatar
 }
 
 async function create(req, res) {
@@ -42,6 +43,26 @@ async function login(req, res) {
 function checkToken(req, res) {
     console.log('req.user', req.user )
     res.json(req.exp)
+}
+
+async function uploadAvatar(req, res) {
+    try {
+        if (!req.file) return res.status(400).json('No file uploaded')
+        const avatarPath = `/uploads/${req.file.filename}`
+        const user = await User.findByIdAndUpdate(
+            req.user._id,
+            { avatar: avatarPath },
+            { new: true }
+        )
+        if (!user) return res.status(404).json('User not found')
+        // Re-issue a JWT so the client picks up the new avatar (the client
+        // derives the current user from the token payload).
+        const token = createJWT(user)
+        res.json(token)
+    } catch (err) {
+        console.log(err)
+        res.status(400).json(err)
+    }
 }
 
 
