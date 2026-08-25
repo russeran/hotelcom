@@ -26,6 +26,6 @@ async function deleteComplaint(req, res) {
 }
 
 async function update(req, res) {
-    const updateComplaint = await Complaint.findByIdAndUpdate(req.params.id, req.body)
+    const updateComplaint = await Complaint.findByIdAndUpdate(req.params.id, req.body, { new: true })
     return res.json(updateComplaint)
 }

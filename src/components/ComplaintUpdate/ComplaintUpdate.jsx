@@ -2,30 +2,22 @@ import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import {Button} from "react-bootstrap";
 
-export default function ComplaintUpdate({ complaint, updateComplaint }) {
+export default function ComplaintUpdate({ complaint, updateComplaint, onClose }) {
     const [updateComplaints, setUpdateComplaint] = useState({
-        date: "",
-        room: "",
-        name: "",
-        issue: "",
-        solution: "",
-        status: "",
-        user: ""
+        date: complaint.date || "",
+        room: complaint.room || "",
+        name: complaint.name || "",
+        issue: complaint.issue || "",
+        solution: complaint.solution || "",
+        status: complaint.status || "",
+        user: complaint.user || ""
 
     });
 
     function handleSubmit(e) {
         e.preventDefault();
         updateComplaint(complaint._id, updateComplaints);
-        setUpdateComplaint({
-            date: "",
-            room: "",
-            name: "",
-            issue: "",
-            solution: "",
-            status: "",
-            user: ""
-        });
+        if (onClose) onClose();
     }
 
     function handleChange(e) {
@@ -41,10 +33,6 @@ export default function ComplaintUpdate({ complaint, updateComplaint }) {
     return (
         <div className="complaint-update">
          <Form onSubmit={handleSubmit}>
-             <Form.Group controlId="formComplaintDate">
-                 <Form.Label>Date</Form.Label>
-                 <Form.Control type="text" name="date" value={updateComplaints.date} onChange={handleChange} />
-             </Form.Group>
              <Form.Group controlId="formComplaintRoom">
                  <Form.Label>Room</Form.Label>
                  <Form.Control type="text" name="room" value={updateComplaints.room} onChange={handleChange} />
@@ -69,9 +57,18 @@ export default function ComplaintUpdate({ complaint, updateComplaint }) {
                  <Form.Label>User</Form.Label>
                  <Form.Control type="text" name="user" value={updateComplaints.user} onChange={handleChange} />
              </Form.Group>
+             <br />
              <Button variant="primary" type="submit">
-                 Update
+                 Save
              </Button>
+             {onClose && (
+                 <>
+                     {' '}
+                     <Button variant="outline-secondary" type="button" onClick={onClose}>
+                         Cancel
+                     </Button>
+                 </>
+             )}
          </Form>
         </div>
     );

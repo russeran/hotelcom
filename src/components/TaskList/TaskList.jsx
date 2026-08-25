@@ -2,7 +2,7 @@ import TaskListItem from "../TaskListItem/TaskListItem";
 import { Table } from "react-bootstrap";
 
 
-export default function TaskList({ tasks }) {
+export default function TaskList({ tasks, handleDelete, handleToggleStatus }) {
     return (
         <div >
   
@@ -16,10 +16,11 @@ export default function TaskList({ tasks }) {
                         <th>Room</th>
                         <th>User</th>
                         <th>Task</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 {tasks.map((task, index) => (
-                <TaskListItem  key={index}  task={task} index={index} />
+                <TaskListItem  key={task._id || index}  task={task} index={index} handleDelete={handleDelete} handleToggleStatus={handleToggleStatus} />
                 ))}
             </Table>
         </div>

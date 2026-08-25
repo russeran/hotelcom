@@ -25,11 +25,9 @@ export default function ComplaintPage() {
 
     }
 
-    async function handleDelete(complaint) {
-        await complaintsAPI.deleteAComplaint(complaint);
-        const complaintsCopy = [...complaints];
-        const newComplaints = complaintsCopy.filter(complaint => complaint.id === complaint._id);
-        setComplaints(newComplaints);
+    async function handleDelete(complaintId) {
+        await complaintsAPI.deleteAComplaint(complaintId);
+        setComplaints(complaints.filter(complaint => complaint._id !== complaintId));
         setChange(!change);
       
     }

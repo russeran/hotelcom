@@ -9,3 +9,11 @@ export function getAllTasks() {
 export function addATask(taskForm) {
     return sendRequest(`${BASE_URL}/create`, "POST", taskForm);
 }
+
+export function updateATask(taskId, updatedTask) {
+    return sendRequest(`${BASE_URL}/${taskId}`, "PUT", updatedTask);
+}
+
+export function deleteATask(taskId) {
+    return sendRequest(`${BASE_URL}/delete/${taskId}`, "DELETE");
+}

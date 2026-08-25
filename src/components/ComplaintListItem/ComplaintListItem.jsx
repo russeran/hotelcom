@@ -1,11 +1,12 @@
 import "./ComplaintListItems.css";
+import { useState } from "react";
 import { Card, ListGroup, Button } from "react-bootstrap";
 import ComplaintUpdate from "../ComplaintUpdate/ComplaintUpdate";
 
 
 export default function ComplaintListItem({ complaint, handleDelete, updateComplaint }) {
-   
-  
+
+    const [editing, setEditing] = useState(false);
 
     return (
 
@@ -29,7 +30,16 @@ export default function ComplaintListItem({ complaint, handleDelete, updateCompl
       </ListGroup>
       <Card.Body>
         <ListGroup.Item>{complaint.user}</ListGroup.Item>
+      <Button variant="primary" onClick={() => setEditing(!editing)}>{editing ? 'CLOSE' : 'EDIT'}</Button>
+      {' '}
       <Button  variant="danger"  onClick={()=> handleDelete(complaint._id)} >DELETE</Button>
+      {editing && (
+        <ComplaintUpdate
+          complaint={complaint}
+          updateComplaint={updateComplaint}
+          onClose={() => setEditing(false)}
+        />
+      )}
       </Card.Body>
     
     </Card>
