@@ -7,6 +7,9 @@ const conciergeSchema = new Schema({
     price: { type: Number, required: false },
     trip: { type: String, required: false },
     note: { type: String, required: false },
+    address: { type: String, required: false },
+    phone: { type: String, required: false },
+    url: { type: String, required: false },
     user: { type: String, required: false }
 
 }, {
