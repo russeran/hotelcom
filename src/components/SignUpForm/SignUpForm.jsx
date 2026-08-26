@@ -42,7 +42,7 @@ export default class SignUpForm extends Component {
             <FormLabel>Email</FormLabel>
             <FormControl type="email" name="email" placeholder="you@hotel.com" value={this.state.email} onChange={this.handleChange} required />
             <FormLabel>Password</FormLabel>
-            <FormControl type="password" name="password" placeholder="At least 3 characters" value={this.state.password} onChange={this.handleChange} required />
+            <FormControl type="password" name="password" placeholder="At least 6 characters" minLength={6} value={this.state.password} onChange={this.handleChange} required />
             <FormLabel>Confirm Password</FormLabel>
             <FormControl type="password" name="confirm" placeholder="Re-enter password" value={this.state.confirm} onChange={this.handleChange} required />
             <FormLabel>Department</FormLabel>

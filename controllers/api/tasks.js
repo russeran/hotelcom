@@ -28,9 +28,16 @@ async function create(req, res) {
     return res.json(newTask)
 }
 
+const TASK_UPDATABLE = ['status', 'priority', 'department', 'room', 'user', 'task', 'acknowledgedAt', 'acknowledgedBy'];
+
 async function update(req, res) {
-    const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    await audit.record({ req, action: 'update', entity: 'task', entityId: req.params.id, details: `${updatedTask ? updatedTask.task : ''} → ${JSON.stringify(req.body)}` })
+    // Whitelist updatable fields to prevent mass assignment.
+    const updates = {}
+    for (const key of TASK_UPDATABLE) {
+        if (req.body[key] !== undefined) updates[key] = req.body[key]
+    }
+    const updatedTask = await Task.findByIdAndUpdate(req.params.id, updates, { new: true, runValidators: true })
+    await audit.record({ req, action: 'update', entity: 'task', entityId: req.params.id, details: `${updatedTask ? updatedTask.task : ''} → ${JSON.stringify(updates)}` })
     return res.json(updatedTask)
 }
 

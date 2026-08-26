@@ -1,8 +1,10 @@
+require('express-async-errors');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
+const helmet = require('helmet');
 
 require('dotenv').config()
 require('./config/database')
@@ -11,6 +13,9 @@ const app = express();
 
 //
 app.use(logger('dev'));
+// Security headers. CSP/CORP are relaxed so the SPA, Google Fonts, and
+// external images (avatars, event posters) load without extra config.
+app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false, crossOriginResourcePolicy: false }));
 app.use(express.json());
 
 // Configure both serve-favicon & static middleware
@@ -40,6 +45,11 @@ app.use('/api/messages', require('./routes/api/messages'))
 app.use('/api/audit', require('./routes/api/audit'))
 app.use('/api/events', require('./routes/api/events'))
 
+// JSON 404 for unknown API routes (before the SPA catch-all).
+app.use('/api/*', function(req, res) {
+    res.status(404).json('Not found');
+});
+
 // The following "catch all" route (note the *) is necessary
 // to return the index.html on all non-AJAX requests
 app.get('/*', function(req, res) {
@@ -48,6 +58,16 @@ app.get('/*', function(req, res) {
     }
     // In development the client is served by the React dev server on port 3000.
     res.status(200).send('API server running in development mode. Open the React dev server (http://localhost:3000).');
+});
+
+// Centralized error handler. With express-async-errors, rejected promises in
+// async route handlers land here instead of hanging the request.
+// eslint-disable-next-line no-unused-vars
+app.use(function(err, req, res, next) {
+    console.error('Unhandled error:', err && err.message ? err.message : err);
+    if (err && err.name === 'CastError') return res.status(400).json('Invalid id');
+    if (err && err.name === 'ValidationError') return res.status(400).json(err.message);
+    res.status(500).json('Internal server error');
 });
 
 // Configure to use port 3001 instead of 3000 during

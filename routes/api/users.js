@@ -2,9 +2,19 @@ const express = require('express')
 const path = require('path')
 const multer = require('multer')
 const router = express.Router()
+const rateLimit = require('express-rate-limit')
 const usersCtrl = require('../../controllers/api/users')
 const ensureLoggedIn = require('../../config/ensureLoggedIn')
 const requireRole = require('../../config/requireRole')
+
+// Throttle auth endpoints to slow brute-force attempts.
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 20,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: 'Too many attempts, please try again later.'
+})
 
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '..', '..', 'uploads'),
@@ -21,8 +31,8 @@ const upload = multer({
     }
 })
 
-router.post('/', usersCtrl.create)
-router.post('/login', usersCtrl.login)
+router.post('/', authLimiter, usersCtrl.create)
+router.post('/login', authLimiter, usersCtrl.login)
 router.get('/check-token', ensureLoggedIn, usersCtrl.checkToken)
 router.get('/refresh-token', ensureLoggedIn, usersCtrl.refreshToken)
 router.post('/avatar', ensureLoggedIn, upload.single('avatar'), usersCtrl.uploadAvatar)

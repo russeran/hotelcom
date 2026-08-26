@@ -60,6 +60,20 @@ async function updateRole(req, res) {
         const updates = {}
         if (req.body.role !== undefined) updates.role = req.body.role
         if (req.body.department !== undefined) updates.department = req.body.department
+
+        // Guard against admin lockout: don't let an admin demote themselves,
+        // and don't allow removing the last remaining admin.
+        if (updates.role && updates.role !== 'admin') {
+            if (req.params.id === req.user._id) {
+                return res.status(400).json('You cannot change your own role')
+            }
+            const target = await User.findById(req.params.id)
+            if (target && target.role === 'admin') {
+                const adminCount = await User.countDocuments({ role: 'admin' })
+                if (adminCount <= 1) return res.status(400).json('Cannot remove the last admin')
+            }
+        }
+
         const user = await User.findByIdAndUpdate(req.params.id, updates, { new: true, runValidators: true })
         if (!user) return res.status(404).json('User not found')
         await audit.record({ req, action: 'role_change', entity: 'user', entityId: user._id, details: `${user.name} → role=${user.role}${user.department ? ', dept=' + user.department : ''}` })
