@@ -1,4 +1,5 @@
 const Message = require('../../models/message')
+const io = require('../../config/io')
 
 module.exports = {
     index,
@@ -41,5 +42,7 @@ async function create(req, res) {
         channel: req.body.channel || 'General',
         text: req.body.text
     })
+    // Push to connected clients in real time.
+    io.emit('chat:new', message)
     return res.json(message)
 }

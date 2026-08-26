@@ -1,4 +1,5 @@
 const Notification = require('../../models/notification')
+const io = require('../../config/io')
 
 module.exports = {
     index,
@@ -59,7 +60,10 @@ async function deleteNotification(req, res) {
 // primary action (e.g. creating a task or complaint).
 async function notify({ department, message, type }) {
     try {
-        return await Notification.create({ department, message, type })
+        const n = await Notification.create({ department, message, type })
+        // Real-time ping; clients re-fetch their (server-scoped) feed.
+        io.emit('notification:new', { department, type })
+        return n
     } catch (err) {
         console.log('notify error', err)
         return null

@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import * as messagesAPI from '../../utilities/messages-api';
 import { getUser } from '../../utilities/users-service';
+import { onSocket } from '../../utilities/socket';
 import './ChatPage.css';
 
 const CHANNELS = ['General', 'Front Desk', 'Housekeeping', 'Maintenance', 'Food & Beverage', 'Security', 'Concierge'];
@@ -42,8 +43,16 @@ export default function ChatPage() {
     useEffect(() => {
         loadMessages(channel);
         loadSummary();
-        const interval = setInterval(() => { loadMessages(channel); loadSummary(); }, 3000);
-        return () => clearInterval(interval);
+        // Real-time: append incoming messages for the active channel and refresh
+        // the summary (for unread dots). Slow interval remains as a fallback.
+        const off = onSocket('chat:new', (msg) => {
+            loadSummary();
+            if (msg.channel === channel) {
+                setMessages(prev => (prev.some(m => m._id === msg._id) ? prev : [...prev, msg]));
+            }
+        });
+        const interval = setInterval(() => { loadMessages(channel); loadSummary(); }, 20000);
+        return () => { off(); clearInterval(interval); };
     }, [loadMessages, loadSummary, channel]);
 
     // Mark the active channel as seen whenever its messages update.

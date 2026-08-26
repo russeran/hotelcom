@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import * as userService from "../../utilities/users-service";
 import { isAdmin, canManage } from "../../utilities/users-service";
+import { onSocket } from "../../utilities/socket";
 import * as notificationsAPI from "../../utilities/notifications-api";
 import { Navbar, Nav, NavDropdown, Container, Badge, Button, Image, Form } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -30,8 +31,11 @@ export default function NavBar({ user, setUser }) {
 
   useEffect(() => {
     loadNotifications();
-    const interval = setInterval(loadNotifications, 15000);
-    return () => clearInterval(interval);
+    // Real-time: refresh the (server-scoped) feed the moment a notification is
+    // created. A slow interval remains as a resilience fallback.
+    const off = onSocket('notification:new', loadNotifications);
+    const interval = setInterval(loadNotifications, 60000);
+    return () => { off(); clearInterval(interval); };
   }, [loadNotifications]);
 
   useEffect(() => {

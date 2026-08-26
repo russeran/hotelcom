@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState, useEffect, useCallback } from "react";
 import { getUser, refreshUser } from "../../utilities/users-service";
+import { connectSocket, disconnectSocket } from "../../utilities/socket";
 import AuthPage from "../AuthPage/AuthPage";
 import NavBar from "../../components/NavBar/NavBar";
 import TaskPage from "../TaskPage/TaskPage";
@@ -40,6 +41,14 @@ export default function App() {
       window.removeEventListener('focus', sync);
     };
   }, [sync]);
+
+  // Maintain a real-time socket connection while signed in.
+  useEffect(() => {
+    if (user) {
+      connectSocket();
+      return () => disconnectSocket();
+    }
+  }, [user]);
 
   return (
     <main className="App">

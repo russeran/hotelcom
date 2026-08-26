@@ -1,10 +1,12 @@
 require('express-async-errors');
 const express = require('express');
+const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const helmet = require('helmet');
+const io = require('./config/io');
 
 require('dotenv').config()
 require('./config/database')
@@ -76,6 +78,11 @@ app.use(function(err, req, res, next) {
 // development to avoid collision with React's dev server
 const port = process.env.PORT || 3001;
 
-app.listen(port, function() {
-    console.log(`Express app running on port ${port}`)
+// Wrap Express in an HTTP server so socket.io can share the port for real-time
+// chat and notification events.
+const server = http.createServer(app);
+io.init(server);
+
+server.listen(port, function() {
+    console.log(`Express app running on port ${port} (with real-time socket.io)`)
 });
