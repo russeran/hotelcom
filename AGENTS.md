@@ -57,6 +57,17 @@ REACT_APP_RAPIDAPI_KEY=<rapidapi hotels-com-provider key>
 - **Nearby events (Concierge)**: `GET /api/events` is a server-side proxy to the Ticketmaster Discovery API (key `TICKETMASTER_API_KEY`, kept off the client). It returns `{ configured: false, events: [] }` when no key is set (the UI shows a "connect a key" prompt), a normalized event list when configured, and a `502` with an empty list on upstream errors. The Concierge page's `EventsNearby` component auto-loads it and can "Save" an event as a curated recommendation. Add `TICKETMASTER_API_KEY` as a secret to enable live events.
 - **Complaints & notes have a `department`** (complaints default to `Front Desk`; a complaint's notification is routed to that department). Their index views are **manager-scoped**: a manager sees only their department's records (+ department-less/general), while staff and admins see all. Note: legacy documents without a `department` are treated as general (Mongoose applies the complaint default `Front Desk` on read).
 
+### Front-desk modules & platform notes
+- **Reliability**: `server.js` uses `express-async-errors` + a centralized error handler + a JSON `404` for unknown `/api/*`, so async controller errors (e.g. a bad ObjectId → `CastError`) return `400/500` instead of hanging. `helmet` sets security headers (CSP/CORP relaxed for the SPA/fonts/external images). Auth routes are rate-limited (`express-rate-limit`). bcrypt cost is 12; password `minLength` is 6.
+- **Rooms** (`/rooms`, `/api/rooms`): a room-status board with statuses `Vacant Clean | Vacant Dirty | Occupied | Inspected | Out of Order` (list on `models/room.js`). Delete is manager/admin.
+- **Reservations** (`/reservations`, `/api/reservations`): `Booked | Checked In | Checked Out | Cancelled`. Cross-department automation on update: check-in sets the matching room `Occupied`; check-out sets it `Vacant Dirty` and notifies Housekeeping.
+- **Task workflow**: statuses `Open → Acknowledged → In Progress → Done`; `PUT /api/tasks/:id/acknowledge` stamps `acknowledgedAt/By` server-side; per-priority SLA (Urgent 1h/High 4h/Normal 24h/Low 72h) drives a client-side `OVERDUE` badge. Assignee dropdown comes from `GET /api/users/directory` (name+department, any signed-in user).
+- **Guest requests**: the Dashboard "Log a Guest Request" form creates a routed, department-tagged task (which notifies that department).
+- **Reports** (`/reports`, managers/admins): KPIs + bar breakdowns + CSV export (client-side via `src/utilities/csv.js`).
+- **Global search** (`/search?q=`): client-side aggregation across tasks/complaints/reservations/rooms/notes/concierge, launched from the NavBar search box.
+- **Notifications** are per-user via `readBy[]` (no shared read state). **Client error toasts**: `send-request` surfaces server error messages through `src/utilities/toast.js` + `ToastHost` (401s are suppressed and handled by logout).
+- **Admin lockout guards**: an admin can't change their own role or remove the last admin.
+
 ### Lint / test / build
 - Lint: there is no standalone lint script; ESLint (CRA config) runs as part of `npm start` and `npm run build`. `npm run build` fails the build on ESLint errors unless `CI=false` (warnings are allowed).
 - Tests: `npm test` runs the CRA (Jest) test runner, but the repo currently has no test files.
