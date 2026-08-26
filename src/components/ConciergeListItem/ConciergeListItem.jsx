@@ -7,7 +7,7 @@ function mapsHref(address) {
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
 }
 
-export default function ConciergeListItem({ concierge, handleDelete, updateConcierge }) {
+export default function ConciergeListItem({ concierge, handleDelete, updateConcierge, canManage }) {
     const [editing, setEditing] = useState(false);
 
     return (
@@ -51,7 +51,9 @@ export default function ConciergeListItem({ concierge, handleDelete, updateConci
                     <Button size="sm" variant="outline-secondary" onClick={() => setEditing(!editing)}>
                         {editing ? 'Close' : 'Edit'}
                     </Button>
-                    <Button size="sm" variant="outline-danger" onClick={() => handleDelete(concierge._id)}>Delete</Button>
+                    {canManage && (
+                        <Button size="sm" variant="outline-danger" onClick={() => handleDelete(concierge._id)}>Delete</Button>
+                    )}
                 </div>
 
                 {editing && (

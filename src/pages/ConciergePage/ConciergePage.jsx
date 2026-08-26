@@ -3,6 +3,7 @@ import { Form, InputGroup } from 'react-bootstrap';
 import ConciergeForm from '../../components/ConciergeForm/ConciergeForm';
 import ConciergeList from '../../components/ConciergeList/ConciergeList';
 import * as conciergesAPI from '../../utilities/concierges-api';
+import { canManage } from '../../utilities/users-service';
 import './ConciergePage.css';
 
 export default function ConciergePage() {
@@ -89,7 +90,7 @@ export default function ConciergePage() {
             {visible.length === 0 ? (
                 <div className="surface-card page-card empty-state">No recommendations match your filters.</div>
             ) : (
-                <ConciergeList concierges={visible} handleDelete={handleDelete} updateConcierge={updateConcierge} />
+                <ConciergeList concierges={visible} handleDelete={handleDelete} updateConcierge={updateConcierge} canManage={canManage()} />
             )}
         </div>
     );

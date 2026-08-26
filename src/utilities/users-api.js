@@ -13,6 +13,19 @@ export function checkToken() {
     return sendRequest(`${BASE_URL}/check-token`)
 }
 
+// --- Admin user management ---
+export function getUsers() {
+    return sendRequest(BASE_URL)
+}
+
+export function updateUserRole(userId, updates) {
+    return sendRequest(`${BASE_URL}/${userId}/role`, 'PUT', updates)
+}
+
+export function deleteUser(userId) {
+    return sendRequest(`${BASE_URL}/${userId}`, 'DELETE')
+}
+
 export async function uploadAvatar(formData, token) {
     // Multipart upload can't go through sendRequest (which sends JSON), so
     // use fetch directly with the auth header and a FormData body.

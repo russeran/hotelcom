@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import * as userService from "../../utilities/users-service";
+import { isAdmin } from "../../utilities/users-service";
 import * as notificationsAPI from "../../utilities/notifications-api";
 import { Navbar, Nav, NavDropdown, Container, Badge, Button, Image } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
@@ -66,6 +67,7 @@ export default function NavBar({ user, setUser }) {
             <Nav.Link as={NavLink} to="/concierge">Concierge</Nav.Link>
             <Nav.Link as={NavLink} to="/chat">Chat</Nav.Link>
             <Nav.Link as={NavLink} to="/hotels">Hotels</Nav.Link>
+            {isAdmin(user) && <Nav.Link as={NavLink} to="/admin">Admin</Nav.Link>}
           </Nav>
 
           <div className="nav-right">
@@ -113,7 +115,13 @@ export default function NavBar({ user, setUser }) {
                 </span>
               }
             >
+              <div className="user-menu-meta">
+                <span className={`role-badge role-${user.role || 'staff'}`}>{user.role || 'staff'}</span>
+                {user.department && <span className="user-dept">{user.department}</span>}
+              </div>
+              <NavDropdown.Divider />
               <NavDropdown.Item as={NavLink} to="/">Profile & Dashboard</NavDropdown.Item>
+              {isAdmin(user) && <NavDropdown.Item as={NavLink} to="/admin">User Management</NavDropdown.Item>}
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={handleLogOut}>Log Out</NavDropdown.Item>
             </NavDropdown>

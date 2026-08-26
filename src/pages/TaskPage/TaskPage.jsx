@@ -3,6 +3,7 @@ import { Form, InputGroup } from 'react-bootstrap';
 import TaskForm from '../../components/TaskForm/TaskForm';
 import TaskList from '../../components/TaskList/TaskList';
 import { PRIORITY_RANK } from '../../components/PriorityBadge/PriorityBadge';
+import { canManage } from '../../utilities/users-service';
 import * as tasksAPI from '../../utilities/tasks-api';
 import './TaskPage.css';
 
@@ -120,7 +121,7 @@ export default function TaskPage() {
             </div>
 
             <div className="surface-card page-card">
-                <TaskList tasks={visibleTasks} handleDelete={handleDelete} handleToggleStatus={handleToggleStatus} />
+                <TaskList tasks={visibleTasks} handleDelete={handleDelete} handleToggleStatus={handleToggleStatus} canManage={canManage()} />
             </div>
         </div>
     );

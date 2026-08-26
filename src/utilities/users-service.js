@@ -48,6 +48,16 @@ export function getUser() {
     return token ? JSON.parse(atob(token.split('.')[1])).user : null
 }
 
+// --- Role helpers (role travels in the JWT payload) ---
+export function isAdmin(user = getUser()) {
+    return !!user && user.role === 'admin'
+}
+
+// Managers and admins can perform privileged actions (e.g. delete records).
+export function canManage(user = getUser()) {
+    return !!user && (user.role === 'manager' || user.role === 'admin')
+}
+
 export function checkToken() {
     return usersAPI.checkToken()
         .then(dateStr => new Date(dateStr))

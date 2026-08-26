@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import { signUp } from '../../utilities/users-service'
-import { Form, FormControl, FormLabel, Button } from "react-bootstrap";
+import { Form, FormControl, FormLabel, FormSelect, Button } from "react-bootstrap";
 
 export default class SignUpForm extends Component {
     state = {
@@ -8,6 +8,7 @@ export default class SignUpForm extends Component {
         email: '',
         password: '',
         confirm: '',
+        department: '',
         error: ''
     }
 
@@ -44,6 +45,16 @@ export default class SignUpForm extends Component {
             <FormControl type="password" name="password" placeholder="At least 3 characters" value={this.state.password} onChange={this.handleChange} required />
             <FormLabel>Confirm Password</FormLabel>
             <FormControl type="password" name="confirm" placeholder="Re-enter password" value={this.state.confirm} onChange={this.handleChange} required />
+            <FormLabel>Department</FormLabel>
+            <FormSelect name="department" value={this.state.department} onChange={this.handleChange}>
+                <option value="">Select department (optional)</option>
+                <option>Front Desk</option>
+                <option>Housekeeping</option>
+                <option>Maintenance</option>
+                <option>Food &amp; Beverage</option>
+                <option>Security</option>
+                <option>Concierge</option>
+            </FormSelect>
             <Button type="submit" variant="primary" disabled={disable}>Create Account</Button>
             <p className="auth-error">{this.state.error}</p>
           </Form>

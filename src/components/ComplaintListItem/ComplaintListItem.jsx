@@ -10,8 +10,11 @@ function formatDate(value) {
     return isNaN(d) ? value : d.toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 }
 
-export default function ComplaintListItem({ complaint, handleDelete, updateComplaint }) {
+export default function ComplaintListItem({ complaint, handleDelete, updateComplaint, currentUser }) {
     const [editing, setEditing] = useState(false);
+    const privileged = !!currentUser && ['manager', 'admin'].includes(currentUser.role);
+    const owner = !!currentUser && complaint.user && complaint.user.toString() === currentUser._id;
+    const canDelete = privileged || owner;
 
     return (
         <Card className="complaint-card">
@@ -39,9 +42,11 @@ export default function ComplaintListItem({ complaint, handleDelete, updateCompl
                     <Button size="sm" variant="outline-secondary" onClick={() => setEditing(!editing)}>
                         {editing ? 'Close' : 'Edit'}
                     </Button>
-                    <Button size="sm" variant="outline-danger" onClick={() => handleDelete(complaint._id)}>
-                        Delete
-                    </Button>
+                    {canDelete && (
+                        <Button size="sm" variant="outline-danger" onClick={() => handleDelete(complaint._id)}>
+                            Delete
+                        </Button>
+                    )}
                 </div>
 
                 {editing && (

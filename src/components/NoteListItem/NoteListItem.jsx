@@ -7,14 +7,19 @@ function formatDate(value) {
     return isNaN(d) ? value : d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-export default function NoteListItem({ note, handleDelete }) {
+export default function NoteListItem({ note, handleDelete, currentUser }) {
+    const privileged = !!currentUser && ['manager', 'admin'].includes(currentUser.role);
+    const author = !!currentUser && note.user === currentUser.name;
+    const canDelete = privileged || author;
     return (
         <tr>
             <td className="text-nowrap">{formatDate(note.date)}</td>
             <td>{note.user}</td>
             <td>{note.note}</td>
             <td className="text-end">
-                <Button size="sm" variant="outline-danger" onClick={() => handleDelete(note._id)}>Delete</Button>
+                {canDelete && (
+                    <Button size="sm" variant="outline-danger" onClick={() => handleDelete(note._id)}>Delete</Button>
+                )}
             </td>
         </tr>
     );

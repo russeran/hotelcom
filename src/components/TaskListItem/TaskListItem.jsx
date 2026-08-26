@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import StatusBadge from "../StatusBadge/StatusBadge";
 import PriorityBadge from "../PriorityBadge/PriorityBadge";
 
-export default function TaskListItem({ task, handleDelete, handleToggleStatus }) {
+export default function TaskListItem({ task, handleDelete, handleToggleStatus, canManage }) {
     const done = task.status === 'Done';
     return (
         <tr>
@@ -21,10 +21,14 @@ export default function TaskListItem({ task, handleDelete, handleToggleStatus })
                 >
                     {done ? 'Reopen' : 'Done'}
                 </Button>
-                {' '}
-                <Button size="sm" variant="outline-danger" onClick={() => handleDelete(task._id)}>
-                    Delete
-                </Button>
+                {canManage && (
+                    <>
+                        {' '}
+                        <Button size="sm" variant="outline-danger" onClick={() => handleDelete(task._id)}>
+                            Delete
+                        </Button>
+                    </>
+                )}
             </td>
         </tr>
     );

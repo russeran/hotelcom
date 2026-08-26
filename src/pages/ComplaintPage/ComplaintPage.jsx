@@ -3,6 +3,7 @@ import { Form, InputGroup } from 'react-bootstrap';
 import ComplaintForm from '../../components/ComplaintForm/ComplaintForm';
 import ComplaintList from '../../components/ComplaintList/ComplaintList';
 import * as complaintsAPI from '../../utilities/complaints-api';
+import { getUser } from '../../utilities/users-service';
 import './ComplaintPage.css'
 
 const CLOSED = ['done', 'resolved', 'complete', 'completed', 'closed', 'cancelled'];
@@ -88,7 +89,7 @@ export default function ComplaintPage() {
             {visible.length === 0 ? (
                 <div className="surface-card page-card empty-state">No complaints match your filters. Nice work!</div>
             ) : (
-                <ComplaintList complaints={visible} handleDelete={handleDelete} updateComplaint={updateComplaint} />
+                <ComplaintList complaints={visible} handleDelete={handleDelete} updateComplaint={updateComplaint} currentUser={getUser()} />
             )}
         </div>
     );

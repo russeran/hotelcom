@@ -1,7 +1,7 @@
 import ComplaintListItem from "../ComplaintListItem/ComplaintListItem.jsx";
 import "./ComplaintList.css"
 
-export default function ComplaintList({ complaints, handleDelete, updateComplaint }) {
+export default function ComplaintList({ complaints, handleDelete, updateComplaint, currentUser }) {
     return (
         <div className="complaint-grid">
             {complaints.map((complaint, index) => (
@@ -10,6 +10,7 @@ export default function ComplaintList({ complaints, handleDelete, updateComplain
                     complaint={complaint}
                     handleDelete={handleDelete}
                     updateComplaint={updateComplaint}
+                    currentUser={currentUser}
                 />
             ))}
         </div>

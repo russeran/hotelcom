@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import NoteForm from '../../components/NoteForm/NoteForm';
 import NoteList from '../../components/NoteList/NoteList';
 import * as notesAPI from '../../utilities/notes-api';
+import { getUser } from '../../utilities/users-service';
 import './NotePage.css';
 
 export default function NotePage() {
@@ -42,7 +43,7 @@ export default function NotePage() {
                 {notes.length === 0 ? (
                     <div className="empty-state">No notes yet. Add the first handover note above.</div>
                 ) : (
-                    <NoteList notes={notes} handleDelete={handleDelete} />
+                    <NoteList notes={notes} handleDelete={handleDelete} currentUser={getUser()} />
                 )}
             </div>
         </div>
