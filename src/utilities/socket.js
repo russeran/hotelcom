@@ -11,11 +11,12 @@ export function connectSocket() {
         if (!socket.connected) socket.connect();
         return socket;
     }
+    // Default transports (polling handshake, then upgrade to websocket) so the
+    // connection works through the CRA dev proxy.
     socket = io({
         path: '/socket.io',
         auth: { token },
         autoConnect: true,
-        transports: ['websocket', 'polling'],
     });
     return socket;
 }
