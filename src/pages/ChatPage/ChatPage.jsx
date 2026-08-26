@@ -75,6 +75,17 @@ export default function ChatPage() {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
+    async function loadEarlier() {
+        if (!messages.length) return;
+        const older = await messagesAPI.getAllMessages(channel, { before: messages[0].createdAt, limit: 50 });
+        if (older.length) {
+            setMessages(prev => {
+                const existing = new Set(prev.map(m => m._id));
+                return [...older.filter(m => !existing.has(m._id)), ...prev];
+            });
+        }
+    }
+
     async function handleSubmit(e) {
         e.preventDefault();
         const trimmed = text.trim();
@@ -114,6 +125,9 @@ export default function ChatPage() {
             </div>
 
             <div className="chat-messages surface-card">
+                {messages.length >= 50 && (
+                    <button type="button" className="chat-load-earlier" onClick={loadEarlier}>Load earlier messages</button>
+                )}
                 {messages.length === 0 ? (
                     <p className="chat-empty">No messages in #{channel} yet. Start the conversation!</p>
                 ) : (

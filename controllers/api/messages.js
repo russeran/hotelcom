@@ -31,8 +31,15 @@ async function index(req, res) {
             ? { $or: [{ channel: 'General' }, { channel: { $exists: false } }] }
             : { channel: req.query.channel }
     }
-    const messages = await Message.find(filter).sort({ createdAt: 1 }).limit(100)
-    res.json(messages)
+    // Pagination: `before` (ISO date) fetches the page of messages immediately
+    // older than that timestamp ("load earlier"). We fetch the newest `limit`
+    // matching rows then return them ascending for display.
+    const limit = Math.min(parseInt(req.query.limit, 10) || 100, 200)
+    if (req.query.before) {
+        filter.createdAt = { $lt: new Date(req.query.before) }
+    }
+    const docs = await Message.find(filter).sort({ createdAt: -1 }).limit(limit)
+    res.json(docs.reverse())
 }
 
 async function create(req, res) {

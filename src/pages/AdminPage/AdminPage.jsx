@@ -15,22 +15,30 @@ function formatWhen(value) {
 }
 
 export default function AdminPage() {
+    const PAGE = 25;
     const me = getUser();
     const [users, setUsers] = useState([]);
     const [logs, setLogs] = useState([]);
+    const [logTotal, setLogTotal] = useState(0);
     const [error, setError] = useState('');
 
     async function load() {
         try {
             const [u, l] = await Promise.all([
                 usersAPI.getUsers(),
-                usersAPI.getAuditLog().catch(() => []),
+                usersAPI.getAuditLog({ limit: PAGE, skip: 0 }).catch(() => ({ logs: [], total: 0 })),
             ]);
             setUsers(u);
-            setLogs(l);
+            setLogs(l.logs || []);
+            setLogTotal(l.total || 0);
         } catch {
             setError('Could not load users.');
         }
+    }
+
+    async function loadMoreLogs() {
+        const more = await usersAPI.getAuditLog({ limit: PAGE, skip: logs.length }).catch(() => ({ logs: [] }));
+        setLogs(prev => [...prev, ...(more.logs || [])]);
     }
 
     useEffect(() => { load(); }, []);
@@ -127,7 +135,7 @@ export default function AdminPage() {
             <header className="page-header mt-4">
                 <div>
                     <h2 className="section-title">Activity Log</h2>
-                    <p className="section-subtitle">{logs.length} recent action{logs.length === 1 ? '' : 's'}</p>
+                    <p className="section-subtitle">Showing {logs.length} of {logTotal} action{logTotal === 1 ? '' : 's'}</p>
                 </div>
             </header>
             <div className="surface-card page-card">
@@ -156,6 +164,11 @@ export default function AdminPage() {
                             ))}
                         </tbody>
                     </Table>
+                )}
+                {logs.length < logTotal && (
+                    <div className="text-center mt-3">
+                        <Button size="sm" variant="outline-secondary" onClick={loadMoreLogs}>Load more</Button>
+                    </div>
                 )}
             </div>
         </div>

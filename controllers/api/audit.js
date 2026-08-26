@@ -5,10 +5,15 @@ module.exports = {
     record
 };
 
-// Admin-only: the most recent activity, newest first.
+// Admin-only: the most recent activity, newest first. Paginated via limit/skip.
 async function index(req, res) {
-    const logs = await AuditLog.find({}).sort({ createdAt: -1 }).limit(200)
-    res.json(logs)
+    const limit = Math.min(parseInt(req.query.limit, 10) || 50, 200)
+    const skip = parseInt(req.query.skip, 10) || 0
+    const [logs, total] = await Promise.all([
+        AuditLog.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit),
+        AuditLog.countDocuments({})
+    ])
+    res.json({ logs, total, skip, limit })
 }
 
 // Best-effort helper used by other controllers to record a mutation.

@@ -6,6 +6,7 @@ const rateLimit = require('express-rate-limit')
 const usersCtrl = require('../../controllers/api/users')
 const ensureLoggedIn = require('../../config/ensureLoggedIn')
 const requireRole = require('../../config/requireRole')
+const { requireFields } = require('../../config/validate')
 
 // Throttle auth endpoints to slow brute-force attempts.
 const authLimiter = rateLimit({
@@ -31,8 +32,8 @@ const upload = multer({
     }
 })
 
-router.post('/', authLimiter, usersCtrl.create)
-router.post('/login', authLimiter, usersCtrl.login)
+router.post('/', authLimiter, requireFields('name', 'email', 'password'), usersCtrl.create)
+router.post('/login', authLimiter, requireFields('email', 'password'), usersCtrl.login)
 router.get('/check-token', ensureLoggedIn, usersCtrl.checkToken)
 router.get('/refresh-token', ensureLoggedIn, usersCtrl.refreshToken)
 router.get('/directory', ensureLoggedIn, usersCtrl.directory)

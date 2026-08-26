@@ -17,8 +17,8 @@ export function refreshToken() {
     return sendRequest(`${BASE_URL}/refresh-token`)
 }
 
-export function getAuditLog() {
-    return sendRequest('/api/audit')
+export function getAuditLog({ limit = 50, skip = 0 } = {}) {
+    return sendRequest(`/api/audit?limit=${limit}&skip=${skip}`)
 }
 
 // Roster (name + department) for assignment dropdowns; any signed-in user.
