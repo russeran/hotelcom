@@ -66,6 +66,7 @@ REACT_APP_RAPIDAPI_KEY=<rapidapi hotels-com-provider key>
 - **Reports** (`/reports`, managers/admins): KPIs + bar breakdowns + CSV export (client-side via `src/utilities/csv.js`).
 - **Global search** (`/search?q=`): client-side aggregation across tasks/complaints/reservations/rooms/notes/concierge, launched from the NavBar search box.
 - **Notifications** are per-user via `readBy[]` (no shared read state). **Client error toasts**: `send-request` surfaces server error messages through `src/utilities/toast.js` + `ToastHost` (401s are suppressed and handled by logout).
+- **Real-time (socket.io)**: `server.js` wraps Express in an `http.Server` and attaches socket.io via `config/io.js`. The message controller emits `chat:new` (full message) and `notify()` emits `notification:new` (a ping). The client (`src/utilities/socket.js`) connects on login; NavBar refreshes its scoped notifications on `notification:new` and ChatPage appends live on `chat:new`. Polling remains only as a slow fallback (chat 20s, notifications 60s). In dev, `src/setupProxy.js` proxies `/api`, `/uploads`, and the `/socket.io` websocket upgrade — because it exists, CRA ignores the package.json `proxy` field, so keep all three routes in it. Use default socket.io transports (polling→upgrade); forcing `websocket`-only fails through the dev proxy.
 - **Admin lockout guards**: an admin can't change their own role or remove the last admin.
 
 ### Lint / test / build
