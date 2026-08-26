@@ -11,6 +11,7 @@ import Home from "../Home/Home.jsx";
 import HotelPage from "../HotelPage/HotelPage";
 import ChatPage from "../ChatPage/ChatPage";
 import AdminPage from "../AdminPage/AdminPage";
+import ToastHost from "../../components/ToastHost/ToastHost";
 import { Routes, Route } from "react-router-dom";
 
 
@@ -38,6 +39,7 @@ export default function App() {
 
   return (
     <main className="App">
+      <ToastHost />
       {user ? (
         <>
           <NavBar user={user} setUser={setUser} />

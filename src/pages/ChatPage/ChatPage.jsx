@@ -6,11 +6,21 @@ import './ChatPage.css';
 
 const CHANNELS = ['General', 'Front Desk', 'Housekeeping', 'Maintenance', 'Food & Beverage', 'Security', 'Concierge'];
 
+const SEEN_KEY = 'chat_last_seen';
+function loadSeen() {
+    try { return JSON.parse(localStorage.getItem(SEEN_KEY)) || {}; } catch { return {}; }
+}
+function saveSeen(seen) {
+    localStorage.setItem(SEEN_KEY, JSON.stringify(seen));
+}
+
 export default function ChatPage() {
     const [messages, setMessages] = useState([]);
     const [channel, setChannel] = useState('General');
     const [text, setText] = useState('');
     const [sending, setSending] = useState(false);
+    const [summary, setSummary] = useState([]);
+    const [seen, setSeen] = useState(loadSeen);
     const bottomRef = useRef(null);
     const user = getUser();
 
@@ -23,11 +33,34 @@ export default function ChatPage() {
         }
     }, []);
 
+    const loadSummary = useCallback(async () => {
+        try {
+            setSummary(await messagesAPI.getChannelSummary());
+        } catch { /* non-fatal */ }
+    }, []);
+
     useEffect(() => {
         loadMessages(channel);
-        const interval = setInterval(() => loadMessages(channel), 3000);
+        loadSummary();
+        const interval = setInterval(() => { loadMessages(channel); loadSummary(); }, 3000);
         return () => clearInterval(interval);
-    }, [loadMessages, channel]);
+    }, [loadMessages, loadSummary, channel]);
+
+    // Mark the active channel as seen whenever its messages update.
+    useEffect(() => {
+        setSeen(prev => {
+            const next = { ...prev, [channel]: Date.now() };
+            saveSeen(next);
+            return next;
+        });
+    }, [channel, messages]);
+
+    function hasUnread(ch) {
+        const s = summary.find(x => x.channel === ch);
+        if (!s || !s.latest) return false;
+        if (ch === channel) return false;
+        return new Date(s.latest).getTime() > (seen[ch] || 0);
+    }
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -66,6 +99,7 @@ export default function ChatPage() {
                         onClick={() => setChannel(ch)}
                     >
                         #{ch}
+                        {hasUnread(ch) && <span className="chat-unread-dot" />}
                     </button>
                 ))}
             </div>

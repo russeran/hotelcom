@@ -2,8 +2,24 @@ const Message = require('../../models/message')
 
 module.exports = {
     index,
-    create
+    create,
+    channels
 };
+
+// Per-channel summary (latest message time + count) so the client can show
+// unread indicators without loading every channel.
+async function channels(req, res) {
+    const summary = await Message.aggregate([
+        {
+            $group: {
+                _id: { $ifNull: ['$channel', 'General'] },
+                latest: { $max: '$createdAt' },
+                count: { $sum: 1 }
+            }
+        }
+    ])
+    res.json(summary.map(s => ({ channel: s._id, latest: s.latest, count: s.count })))
+}
 
 async function index(req, res) {
     // Optionally scope to a department channel; default to all if unspecified.

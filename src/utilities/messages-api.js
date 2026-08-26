@@ -7,6 +7,10 @@ export function getAllMessages(channel) {
     return sendRequest(`${BASE_URL}/index${qs}`);
 }
 
+export function getChannelSummary() {
+    return sendRequest(`${BASE_URL}/channels`);
+}
+
 export function sendMessage(text, channel = 'General') {
     return sendRequest(`${BASE_URL}/create`, "POST", { text, channel });
 }

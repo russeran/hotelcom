@@ -22,7 +22,14 @@ async function index(req, res) {
         }
     }
     const notifications = await Notification.find(filter).sort({ createdAt: -1 })
-    res.json(notifications)
+    // Compute a per-user `read` flag from readBy so read state isn't shared
+    // across users.
+    const uid = req.user && req.user._id
+    res.json(notifications.map(n => {
+        const obj = n.toObject()
+        obj.read = Array.isArray(n.readBy) && n.readBy.includes(uid)
+        return obj
+    }))
 }
 
 async function create(req, res) {
@@ -31,8 +38,15 @@ async function create(req, res) {
 }
 
 async function markRead(req, res) {
-    const notification = await Notification.findByIdAndUpdate(req.params.id, { read: true }, { new: true })
-    return res.json(notification)
+    const notification = await Notification.findByIdAndUpdate(
+        req.params.id,
+        { $addToSet: { readBy: req.user._id } },
+        { new: true }
+    )
+    if (!notification) return res.status(404).json('Notification not found')
+    const obj = notification.toObject()
+    obj.read = true
+    return res.json(obj)
 }
 
 async function deleteNotification(req, res) {
