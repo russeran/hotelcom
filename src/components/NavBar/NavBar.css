@@ -65,6 +65,7 @@
   align-items: center;
   gap: 14px;
 }
+.nav-search .form-control { width: 150px; }
 .nav-clock {
   font-variant-numeric: tabular-nums;
   color: var(--muted);

@@ -1,15 +1,23 @@
 import { useEffect, useState, useCallback } from "react";
 import * as userService from "../../utilities/users-service";
-import { isAdmin } from "../../utilities/users-service";
+import { isAdmin, canManage } from "../../utilities/users-service";
 import * as notificationsAPI from "../../utilities/notifications-api";
-import { Navbar, Nav, NavDropdown, Container, Badge, Button, Image } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { Navbar, Nav, NavDropdown, Container, Badge, Button, Image, Form } from "react-bootstrap";
+import { NavLink, useNavigate } from "react-router-dom";
 import './NavBar.css';
 
 
 export default function NavBar({ user, setUser }) {
   const [notifications, setNotifications] = useState([]);
   const [clock, setClock] = useState(new Date().toLocaleTimeString());
+  const [search, setSearch] = useState('');
+  const navigate = useNavigate();
+
+  function handleSearch(e) {
+    e.preventDefault();
+    const q = search.trim();
+    if (q) navigate(`/search?q=${encodeURIComponent(q)}`);
+  }
 
   const loadNotifications = useCallback(async () => {
     try {
@@ -69,10 +77,20 @@ export default function NavBar({ user, setUser }) {
             <Nav.Link as={NavLink} to="/concierge">Concierge</Nav.Link>
             <Nav.Link as={NavLink} to="/chat">Chat</Nav.Link>
             <Nav.Link as={NavLink} to="/hotels">Hotels</Nav.Link>
+            {canManage(user) && <Nav.Link as={NavLink} to="/reports">Reports</Nav.Link>}
             {isAdmin(user) && <Nav.Link as={NavLink} to="/admin">Admin</Nav.Link>}
           </Nav>
 
           <div className="nav-right">
+            <Form className="nav-search" onSubmit={handleSearch}>
+              <Form.Control
+                type="search"
+                size="sm"
+                placeholder="Search…"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </Form>
             <span className="nav-clock">{clock}</span>
 
             <NavDropdown
