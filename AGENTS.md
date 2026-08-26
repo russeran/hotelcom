@@ -69,7 +69,15 @@ REACT_APP_RAPIDAPI_KEY=<rapidapi hotels-com-provider key>
 - **Real-time (socket.io)**: `server.js` wraps Express in an `http.Server` and attaches socket.io via `config/io.js`. The message controller emits `chat:new` (full message) and `notify()` emits `notification:new` (a ping). The client (`src/utilities/socket.js`) connects on login; NavBar refreshes its scoped notifications on `notification:new` and ChatPage appends live on `chat:new`. Polling remains only as a slow fallback (chat 20s, notifications 60s). In dev, `src/setupProxy.js` proxies `/api`, `/uploads`, and the `/socket.io` websocket upgrade — because it exists, CRA ignores the package.json `proxy` field, so keep all three routes in it. Use default socket.io transports (polling→upgrade); forcing `websocket`-only fails through the dev proxy.
 - **Admin lockout guards**: an admin can't change their own role or remove the last admin.
 
-### Lint / test / build
-- Lint: there is no standalone lint script; ESLint (CRA config) runs as part of `npm start` and `npm run build`. `npm run build` fails the build on ESLint errors unless `CI=false` (warnings are allowed).
-- Tests: `npm test` runs the CRA (Jest) test runner, but the repo currently has no test files.
-- Build: `CI=false npm run build` produces the production `build/` folder.
+### Testing, validation, pagination
+- **API tests**: `npm run test:api` (jest + supertest, config `jest.config.api.js`). It imports the Express app from `app.js` (which does NOT connect to the DB or listen) and connects to a dedicated `hotelcom_test` database via `tests/setup.js` (wiped between tests). The auth rate-limiter is relaxed under `NODE_ENV=test`. Requires the local `mongod` to be running.
+- **Frontend tests**: `CI=true npm test` (CRA's jest + React Testing Library; `src/setupTests.js` loads jest-dom). Component/util tests live beside their source as `*.test.js`.
+- **Server structure**: `app.js` exports the configured Express app; `server.js` wires dotenv + DB + socket.io + `listen`. Keep route/middleware wiring in `app.js` so it stays testable.
+- **Validation**: `config/validate.js` `requireFields(...)` guards key create endpoints with friendly `400`s before controllers (Mongoose enforces types/enums as a second layer).
+- **Pagination**: `GET /api/audit?limit=&skip=` returns `{ logs, total }` (Admin "Load more"); `GET /api/messages/index?before=&limit=` powers chat "load earlier".
+
+### Accessibility
+- Icon-only/unlabeled controls carry `aria-label`s (notifications bell, search, room/task status selects, chat input, guest-request textarea, avatar picker); the toast and chat message regions are `aria-live`; the ticking clock is `aria-hidden`. `public/index.html` was cleaned of a stale duplicate Bootstrap CDN stylesheet and leftover React/react-bootstrap UMD scripts (Bootstrap comes only from the npm import in `src/index.js`).
+
+### Lint / build
+- Lint: no standalone lint script; ESLint (CRA config) runs during `npm start` and `npm run build`. `CI=false npm run build` allows warnings; `build/` is the production bundle.
