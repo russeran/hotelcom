@@ -11,6 +11,18 @@
 .complaint-room { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--text); }
 .complaint-guest { color: var(--muted); font-size: 0.9rem; }
 
+.complaint-dept {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(34, 211, 238, 0.12);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 3px 10px;
+    margin-bottom: 10px;
+}
+
 .complaint-field {
     display: flex;
     flex-direction: column;

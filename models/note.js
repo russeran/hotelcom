@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 const noteSchema = new Schema({
     date: { type: Date, default: Date.now },
     user: { type: String, required: false },
+    department: { type: String, required: false },
     note: { type: String, required: false }
 
 }, {

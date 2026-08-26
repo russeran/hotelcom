@@ -10,6 +10,7 @@ export default function ComplaintUpdate({ complaint, updateComplaint, onClose })
         issue: complaint.issue || "",
         solution: complaint.solution || "",
         status: complaint.status || "",
+        department: complaint.department || "Front Desk",
         user: complaint.user || ""
 
     });
@@ -52,6 +53,17 @@ export default function ComplaintUpdate({ complaint, updateComplaint, onClose })
              <Form.Group controlId="formComplaintStatus">
                  <Form.Label>Status</Form.Label>
                  <Form.Control type="text" name="status" value={updateComplaints.status} onChange={handleChange} />
+             </Form.Group>
+             <Form.Group controlId="formComplaintDepartment">
+                 <Form.Label>Department</Form.Label>
+                 <Form.Select name="department" value={updateComplaints.department} onChange={handleChange}>
+                     <option>Front Desk</option>
+                     <option>Housekeeping</option>
+                     <option>Maintenance</option>
+                     <option>Food &amp; Beverage</option>
+                     <option>Security</option>
+                     <option>Concierge</option>
+                 </Form.Select>
              </Form.Group>
              <Form.Group controlId="formComplaintUser">
                  <Form.Label>User</Form.Label>

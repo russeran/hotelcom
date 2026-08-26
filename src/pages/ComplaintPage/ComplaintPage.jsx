@@ -43,7 +43,7 @@ export default function ComplaintPage() {
             if (filter === 'open' && closed) return false;
             if (filter === 'resolved' && !closed) return false;
             if (!q) return true;
-            return [c.name, c.issue, c.solution, c.room, c.status]
+            return [c.name, c.issue, c.solution, c.room, c.status, c.department]
                 .map(v => (v ?? '').toString().toLowerCase())
                 .some(v => v.includes(q));
         });

@@ -10,6 +10,7 @@ export default function NoteList({ notes, handleDelete, currentUser }) {
                 <tr>
                     <th>Date</th>
                     <th>Author</th>
+                    <th>Department</th>
                     <th>Note</th>
                     <th className="text-end">Actions</th>
                 </tr>

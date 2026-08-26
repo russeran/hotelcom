@@ -15,6 +15,7 @@ export default function NoteListItem({ note, handleDelete, currentUser }) {
         <tr>
             <td className="text-nowrap">{formatDate(note.date)}</td>
             <td>{note.user}</td>
+            <td>{note.department || <span className="muted">General</span>}</td>
             <td>{note.note}</td>
             <td className="text-end">
                 {canDelete && (

@@ -8,7 +8,19 @@ module.exports = {
 };
 
 async function index(req, res) {
-    const notes = await Note.find({})
+    // Managers see only their department's notes (+ department-less/general);
+    // staff and admins see all.
+    let filter = {}
+    if (req.user && req.user.role === 'manager' && req.user.department) {
+        filter = {
+            $or: [
+                { department: req.user.department },
+                { department: { $in: [null, ''] } },
+                { department: { $exists: false } }
+            ]
+        }
+    }
+    const notes = await Note.find(filter).sort({ createdAt: -1 })
     res.json(notes)
 }
 

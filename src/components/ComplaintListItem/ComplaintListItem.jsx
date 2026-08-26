@@ -26,6 +26,7 @@ export default function ComplaintListItem({ complaint, handleDelete, updateCompl
                     </div>
                     <StatusBadge status={complaint.status} />
                 </div>
+                {complaint.department && <div className="complaint-dept">{complaint.department}</div>}
 
                 <div className="complaint-field">
                     <span className="field-label">Issue</span>

@@ -10,17 +10,32 @@ module.exports = {
 
 };
 
+// Managers see only their department's complaints (+ department-less/general);
+// staff and admins see all.
+function scopeFor(req) {
+    if (req.user && req.user.role === 'manager' && req.user.department) {
+        return {
+            $or: [
+                { department: req.user.department },
+                { department: { $in: [null, ''] } },
+                { department: { $exists: false } }
+            ]
+        }
+    }
+    return {}
+}
+
 async function index(req, res) {
-    const complaint = await Complaint.find({})
+    const complaint = await Complaint.find(scopeFor(req)).sort({ createdAt: -1 })
     res.json(complaint)
 }
 
 async function create(req, res) {
     req.body.user = req.user._id
     const newComplaint = await Complaint.create(req.body)
-    // Notify the Front Desk about the new complaint.
+    // Notify the department that handles the complaint (defaults to Front Desk).
     await notifications.notify({
-        department: 'Front Desk',
+        department: newComplaint.department || 'Front Desk',
         message: `New complaint (room ${newComplaint.room}): ${newComplaint.issue}`,
         type: 'complaint'
     })
