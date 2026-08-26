@@ -86,24 +86,25 @@ export default function NavBar({ user, setUser }) {
           </Nav>
 
           <div className="nav-right">
-            <Form className="nav-search" onSubmit={handleSearch}>
+            <Form className="nav-search" role="search" onSubmit={handleSearch}>
               <Form.Control
                 type="search"
                 size="sm"
                 placeholder="Search…"
+                aria-label="Search across the app"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </Form>
-            <span className="nav-clock">{clock}</span>
+            <span className="nav-clock" aria-hidden="true">{clock}</span>
 
             <NavDropdown
               id="notifications-nav-dropdown"
               align="end"
               className="notif-dropdown"
               title={
-                <span className="notif-toggle" title="Notifications">
-                  <span className="notif-bell">🔔</span>
+                <span className="notif-toggle" aria-label={`Notifications${unreadCount ? `, ${unreadCount} unread` : ''}`}>
+                  <span className="notif-bell" aria-hidden="true">🔔</span>
                   {unreadCount > 0 && <Badge bg="danger" className="notif-badge">{unreadCount}</Badge>}
                 </span>
               }

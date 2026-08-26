@@ -41,6 +41,7 @@ export default function GuestRequestForm() {
                 name="task"
                 as="textarea"
                 rows={2}
+                aria-label="Guest request details"
                 placeholder="What does the guest need? (e.g. extra towels to room 214)"
                 value={form.task}
                 onChange={change}

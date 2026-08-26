@@ -39,6 +39,7 @@ export default function AvatarUpload({ user, setUser }) {
                 <Form.Control
                     type="file"
                     accept="image/*"
+                    aria-label="Choose a profile picture"
                     onChange={(e) => setFile(e.target.files[0])}
                 />
                 <Button type="submit" variant="success" disabled={!file || saving}>

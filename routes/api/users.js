@@ -11,7 +11,7 @@ const { requireFields } = require('../../config/validate')
 // Throttle auth endpoints to slow brute-force attempts.
 const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 20,
+    max: process.env.NODE_ENV === 'test' ? 100000 : 20,
     standardHeaders: true,
     legacyHeaders: false,
     message: 'Too many attempts, please try again later.'

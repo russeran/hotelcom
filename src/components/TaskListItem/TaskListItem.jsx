@@ -31,6 +31,7 @@ export default function TaskListItem({ task, handleDelete, handleUpdateStatus, h
                 <Form.Select
                     size="sm"
                     className="status-select"
+                    aria-label={`Status for task: ${task.task}`}
                     value={STATUSES.includes(task.status) ? task.status : 'Open'}
                     onChange={(e) => handleUpdateStatus(task, e.target.value)}
                 >

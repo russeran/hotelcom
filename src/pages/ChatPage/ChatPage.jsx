@@ -124,7 +124,7 @@ export default function ChatPage() {
                 ))}
             </div>
 
-            <div className="chat-messages surface-card">
+            <div className="chat-messages surface-card" aria-live="polite" aria-label={`${channel} messages`}>
                 {messages.length >= 50 && (
                     <button type="button" className="chat-load-earlier" onClick={loadEarlier}>Load earlier messages</button>
                 )}
@@ -146,6 +146,7 @@ export default function ChatPage() {
             <Form className="chat-form" onSubmit={handleSubmit}>
                 <Form.Control
                     type="text"
+                    aria-label={`Message #${channel}`}
                     placeholder={`Message #${channel}…`}
                     value={text}
                     onChange={(e) => setText(e.target.value)}

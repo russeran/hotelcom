@@ -19,7 +19,7 @@ export default function ToastHost() {
     }
 
     return (
-        <ToastContainer position="top-end" className="p-3" style={{ zIndex: 2000 }}>
+        <ToastContainer position="top-end" className="p-3" style={{ zIndex: 2000 }} aria-live="assertive" aria-atomic="true">
             {toasts.map(t => (
                 <Toast key={t.id} bg={t.variant === 'success' ? 'success' : 'danger'} onClose={() => dismiss(t.id)}>
                     <Toast.Header closeButton>

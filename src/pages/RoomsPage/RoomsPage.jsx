@@ -103,13 +103,14 @@ export default function RoomsPage() {
                             <Form.Select
                                 size="sm"
                                 className="room-status-select"
+                                aria-label={`Status for room ${room.number}`}
                                 value={room.status}
                                 onChange={(e) => changeStatus(room, e.target.value)}
                             >
                                 {roomsAPI.ROOM_STATUSES.map(s => <option key={s}>{s}</option>)}
                             </Form.Select>
                             {manage && (
-                                <button className="room-delete" onClick={() => handleDelete(room)} title="Delete room">×</button>
+                                <button className="room-delete" onClick={() => handleDelete(room)} aria-label={`Delete room ${room.number}`} title="Delete room">×</button>
                             )}
                         </div>
                     ))}
