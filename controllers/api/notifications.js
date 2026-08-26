@@ -9,7 +9,19 @@ module.exports = {
 };
 
 async function index(req, res) {
-    const notifications = await Notification.find({}).sort({ createdAt: -1 })
+    // Managers/admins see everything. Staff with an assigned department see
+    // notifications for their department plus general (department-less) ones.
+    let filter = {}
+    if (req.user && req.user.role === 'staff' && req.user.department) {
+        filter = {
+            $or: [
+                { department: req.user.department },
+                { department: { $in: [null, ''] } },
+                { department: { $exists: false } }
+            ]
+        }
+    }
+    const notifications = await Notification.find(filter).sort({ createdAt: -1 })
     res.json(notifications)
 }
 

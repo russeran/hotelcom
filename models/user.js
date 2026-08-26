@@ -22,6 +22,15 @@ const userSchema = new Schema({
     avatar: {
         type: String,
         required: false
+    },
+    role: {
+        type: String,
+        enum: ['staff', 'manager', 'admin'],
+        default: 'staff'
+    },
+    department: {
+        type: String,
+        required: false
     }
 }, {
     timestamps: true,

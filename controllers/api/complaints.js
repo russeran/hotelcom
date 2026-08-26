@@ -27,8 +27,16 @@ async function create(req, res) {
 }
 
 async function deleteComplaint(req, res) {
-    const deleteComplaint = await Complaint.findByIdAndDelete(req.params.id)
-    return res.json(deleteComplaint)
+    const complaint = await Complaint.findById(req.params.id)
+    if (!complaint) return res.status(404).json('Complaint not found')
+    // The complaint's owner, or any manager/admin, may delete it.
+    const isPrivileged = ['manager', 'admin'].includes(req.user.role)
+    const isOwner = complaint.user && complaint.user.toString() === req.user._id
+    if (!isPrivileged && !isOwner) {
+        return res.status(403).json('Forbidden: only the owner or a manager can delete this complaint')
+    }
+    await complaint.deleteOne()
+    return res.json(complaint)
 }
 
 async function update(req, res) {

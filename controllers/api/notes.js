@@ -17,6 +17,14 @@ async function create(req, res) {
 }
 
 async function deleteNote(req, res) {
-    const deleteNote = await Note.findByIdAndDelete(req.params.id)
-    return res.json(deleteNote)
+    const note = await Note.findById(req.params.id)
+    if (!note) return res.status(404).json('Note not found')
+    // The note's author (matched by name), or any manager/admin, may delete it.
+    const isPrivileged = ['manager', 'admin'].includes(req.user.role)
+    const isAuthor = note.user && note.user === req.user.name
+    if (!isPrivileged && !isAuthor) {
+        return res.status(403).json('Forbidden: only the author or a manager can delete this note')
+    }
+    await note.deleteOne()
+    return res.json(note)
 }
