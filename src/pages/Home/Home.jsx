@@ -24,6 +24,7 @@ const isToday = (d) => {
 
 export default function Home({ user, setUser }) {
     const [stats, setStats] = useState({ tasks: [], complaints: [], notes: [], concierges: [], notifications: [], messages: [], rooms: [], reservations: [] });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function load() {
@@ -38,6 +39,7 @@ export default function Home({ user, setUser }) {
                 reservationsAPI.getAllReservations().catch(() => []),
             ]);
             setStats({ tasks, complaints, notes, concierges, notifications, messages, rooms, reservations });
+            setLoading(false);
         }
         load();
     }, []);
@@ -64,6 +66,8 @@ export default function Home({ user, setUser }) {
                     <p className="section-subtitle">{today} · Front desk overview</p>
                 </div>
             </header>
+
+            {loading && <div className="surface-card page-card muted">Loading dashboard…</div>}
 
             <Row className="g-3 dash-stats">
                 <Col xs={6} lg={3}><StatCard label="Arrivals Today" value={arrivalsToday} sub={`${stats.reservations.length} reservations`} icon="🛎" accent="primary" to="/reservations" /></Col>
