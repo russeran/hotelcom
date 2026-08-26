@@ -9,10 +9,10 @@ module.exports = {
 };
 
 async function index(req, res) {
-    // Managers/admins see everything. Staff with an assigned department see
+    // Admins see everything. Staff and managers with an assigned department see
     // notifications for their department plus general (department-less) ones.
     let filter = {}
-    if (req.user && req.user.role === 'staff' && req.user.department) {
+    if (req.user && req.user.role !== 'admin' && req.user.department) {
         filter = {
             $or: [
                 { department: req.user.department },

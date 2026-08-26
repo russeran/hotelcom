@@ -32,6 +32,12 @@ async function update(req, res) {
 }
 
 async function deleteTask(req, res) {
-    const deletedTask = await Task.findByIdAndDelete(req.params.id)
-    return res.json(deletedTask)
+    const task = await Task.findById(req.params.id)
+    if (!task) return res.status(404).json('Task not found')
+    // Managers can only delete tasks within their own department; admins any.
+    if (req.user.role === 'manager' && task.department !== req.user.department) {
+        return res.status(403).json('Forbidden: managers can only manage tasks in their own department')
+    }
+    await task.deleteOne()
+    return res.json(task)
 }

@@ -3,18 +3,22 @@ import { Form, InputGroup } from 'react-bootstrap';
 import TaskForm from '../../components/TaskForm/TaskForm';
 import TaskList from '../../components/TaskList/TaskList';
 import { PRIORITY_RANK } from '../../components/PriorityBadge/PriorityBadge';
-import { canManage } from '../../utilities/users-service';
+import { getUser } from '../../utilities/users-service';
 import * as tasksAPI from '../../utilities/tasks-api';
 import './TaskPage.css';
 
 const CLOSED = ['done', 'resolved', 'complete', 'completed', 'closed', 'cancelled'];
 const rank = (p) => PRIORITY_RANK[(p || 'normal').toLowerCase()] ?? 2;
+const currentUser = getUser();
 
 export default function TaskPage() {
     const [tasks, setTasks] = useState([]);
     const [search, setSearch] = useState('');
     const [filter, setFilter] = useState('all');
-    const [dept, setDept] = useState('all');
+    // Managers default to viewing their own department.
+    const [dept, setDept] = useState(
+        currentUser && currentUser.role === 'manager' && currentUser.department ? currentUser.department : 'all'
+    );
 
     useEffect(function () {
         async function getAllTasks() {
@@ -121,7 +125,7 @@ export default function TaskPage() {
             </div>
 
             <div className="surface-card page-card">
-                <TaskList tasks={visibleTasks} handleDelete={handleDelete} handleToggleStatus={handleToggleStatus} canManage={canManage()} />
+                <TaskList tasks={visibleTasks} handleDelete={handleDelete} handleToggleStatus={handleToggleStatus} currentUser={currentUser} />
             </div>
         </div>
     );

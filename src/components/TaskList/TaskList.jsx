@@ -2,7 +2,7 @@ import TaskListItem from "../TaskListItem/TaskListItem";
 import { Table } from "react-bootstrap";
 
 
-export default function TaskList({ tasks, handleDelete, handleToggleStatus, canManage }) {
+export default function TaskList({ tasks, handleDelete, handleToggleStatus, currentUser }) {
     if (!tasks.length) {
         return <div className="empty-state">No tasks match your filters yet.</div>;
     }
@@ -21,7 +21,7 @@ export default function TaskList({ tasks, handleDelete, handleToggleStatus, canM
             </thead>
             <tbody>
                 {tasks.map((task, index) => (
-                    <TaskListItem key={task._id || index} task={task} handleDelete={handleDelete} handleToggleStatus={handleToggleStatus} canManage={canManage} />
+                    <TaskListItem key={task._id || index} task={task} handleDelete={handleDelete} handleToggleStatus={handleToggleStatus} currentUser={currentUser} />
                 ))}
             </tbody>
         </Table>
