@@ -42,13 +42,15 @@ export default function App() {
     };
   }, [sync]);
 
-  // Maintain a real-time socket connection while signed in.
+  // Maintain a real-time socket connection while signed in. Keyed on the user
+  // id (stable) so the periodic token refresh doesn't churn the connection.
+  const userId = user && user._id;
   useEffect(() => {
-    if (user) {
+    if (userId) {
       connectSocket();
       return () => disconnectSocket();
     }
-  }, [user]);
+  }, [userId]);
 
   return (
     <main className="App">
