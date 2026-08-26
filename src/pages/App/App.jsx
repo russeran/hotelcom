@@ -11,6 +11,8 @@ import Home from "../Home/Home.jsx";
 import HotelPage from "../HotelPage/HotelPage";
 import ChatPage from "../ChatPage/ChatPage";
 import AdminPage from "../AdminPage/AdminPage";
+import RoomsPage from "../RoomsPage/RoomsPage";
+import ReservationsPage from "../ReservationsPage/ReservationsPage";
 import ToastHost from "../../components/ToastHost/ToastHost";
 import { Routes, Route } from "react-router-dom";
 
@@ -51,6 +53,8 @@ export default function App() {
               <Route path="/concierge" element={<ConciergePage/>}/>
               <Route path="/hotels" element={<HotelPage />} />
               <Route path="/chat" element={<ChatPage />} />
+              <Route path="/rooms" element={<RoomsPage />} />
+              <Route path="/reservations" element={<ReservationsPage />} />
               <Route path="/admin" element={<AdminPage />} />
               <Route path="/" element={<Home user={user} setUser={setUser} />} />
             </Routes>

@@ -44,6 +44,8 @@ app.use('/api/notifications', require('./routes/api/notifications'))
 app.use('/api/messages', require('./routes/api/messages'))
 app.use('/api/audit', require('./routes/api/audit'))
 app.use('/api/events', require('./routes/api/events'))
+app.use('/api/rooms', require('./routes/api/rooms'))
+app.use('/api/reservations', require('./routes/api/reservations'))
 
 // JSON 404 for unknown API routes (before the SPA catch-all).
 app.use('/api/*', function(req, res) {

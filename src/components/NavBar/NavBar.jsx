@@ -61,6 +61,8 @@ export default function NavBar({ user, setUser }) {
         <Navbar.Collapse id="main-nav">
           <Nav className="me-auto main-links">
             <Nav.Link as={NavLink} to="/" end>Dashboard</Nav.Link>
+            <Nav.Link as={NavLink} to="/reservations">Reservations</Nav.Link>
+            <Nav.Link as={NavLink} to="/rooms">Rooms</Nav.Link>
             <Nav.Link as={NavLink} to="/tasks">Tasks</Nav.Link>
             <Nav.Link as={NavLink} to="/complaints">Complaints</Nav.Link>
             <Nav.Link as={NavLink} to="/notes">Notes</Nav.Link>
