@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
 import ConciergeForm from '../../components/ConciergeForm/ConciergeForm';
 import ConciergeList from '../../components/ConciergeList/ConciergeList';
+import EventsNearby from '../../components/EventsNearby/EventsNearby';
 import * as conciergesAPI from '../../utilities/concierges-api';
 import { canManage } from '../../utilities/users-service';
 import './ConciergePage.css';
@@ -59,6 +60,11 @@ export default function ConciergePage() {
                 </div>
             </header>
 
+            <h2 className="subsection-title">Events Happening Nearby</h2>
+            <p className="section-subtitle events-subtitle">Auto-updated live from local venues · save any to your recommendations</p>
+            <EventsNearby onSave={addConcierge} />
+
+            <h2 className="subsection-title mt-4">Local Recommendations</h2>
             <div className="surface-card page-card">
                 <ConciergeForm addConcierge={addConcierge} />
             </div>

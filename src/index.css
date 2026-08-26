@@ -173,6 +173,8 @@ a:hover { color: #67e8f9; }
   margin: 0;
 }
 .section-subtitle { color: var(--muted); margin-top: 4px; }
+.subsection-title { font-size: 1.15rem; font-weight: 700; margin: 0 0 2px; }
+.events-subtitle { margin-bottom: 14px; }
 .muted { color: var(--muted); }
 .surface-card {
   background: linear-gradient(180deg, var(--surface), var(--surface-2));

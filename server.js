@@ -38,6 +38,7 @@ app.use('/api/tasks', require('./routes/api/tasks'))
 app.use('/api/notifications', require('./routes/api/notifications'))
 app.use('/api/messages', require('./routes/api/messages'))
 app.use('/api/audit', require('./routes/api/audit'))
+app.use('/api/events', require('./routes/api/events'))
 
 // The following "catch all" route (note the *) is necessary
 // to return the index.html on all non-AJAX requests
