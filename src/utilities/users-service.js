@@ -18,6 +18,20 @@ export function logOut() {
     localStorage.removeItem('token')
 }
 
+// Ask the server for a fresh JWT reflecting the current DB state (role,
+// department, etc.). Returns the updated user, or null if the token is no
+// longer valid (e.g. the account was deleted), in which case we log out.
+export async function refreshUser() {
+    try {
+        const token = await usersAPI.refreshToken()
+        localStorage.setItem('token', token)
+        return getUser()
+    } catch {
+        logOut()
+        return null
+    }
+}
+
 export async function updateAvatar(file) {
     const formData = new FormData()
     formData.append('avatar', file)

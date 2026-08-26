@@ -7,14 +7,27 @@ import './AdminPage.css';
 const ROLES = ['staff', 'manager', 'admin'];
 const DEPARTMENTS = ['', 'Front Desk', 'Housekeeping', 'Maintenance', 'Food & Beverage', 'Security', 'Concierge'];
 
+const ACTION_VARIANT = { create: 'success', update: 'info', delete: 'danger', role_change: 'warning' };
+
+function formatWhen(value) {
+    const d = new Date(value);
+    return isNaN(d) ? '' : d.toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+
 export default function AdminPage() {
     const me = getUser();
     const [users, setUsers] = useState([]);
+    const [logs, setLogs] = useState([]);
     const [error, setError] = useState('');
 
     async function load() {
         try {
-            setUsers(await usersAPI.getUsers());
+            const [u, l] = await Promise.all([
+                usersAPI.getUsers(),
+                usersAPI.getAuditLog().catch(() => []),
+            ]);
+            setUsers(u);
+            setLogs(l);
         } catch {
             setError('Could not load users.');
         }
@@ -109,7 +122,42 @@ export default function AdminPage() {
                     </tbody>
                 </Table>
             </div>
-            <p className="muted admin-hint">Role and department changes take effect the next time the user logs in.</p>
+            <p className="muted admin-hint">Role and department changes propagate to signed-in users automatically within ~30 seconds.</p>
+
+            <header className="page-header mt-4">
+                <div>
+                    <h2 className="section-title">Activity Log</h2>
+                    <p className="section-subtitle">{logs.length} recent action{logs.length === 1 ? '' : 's'}</p>
+                </div>
+            </header>
+            <div className="surface-card page-card">
+                {logs.length === 0 ? (
+                    <div className="empty-state">No activity recorded yet.</div>
+                ) : (
+                    <Table hover responsive className="align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>When</th>
+                                <th>Actor</th>
+                                <th>Action</th>
+                                <th>Entity</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {logs.map(log => (
+                                <tr key={log._id}>
+                                    <td className="text-nowrap muted">{formatWhen(log.createdAt)}</td>
+                                    <td>{log.actor} <span className="muted">({log.role || 'staff'})</span></td>
+                                    <td><Badge bg={ACTION_VARIANT[log.action] || 'secondary'} className="text-uppercase">{log.action.replace('_', ' ')}</Badge></td>
+                                    <td className="text-capitalize">{log.entity}</td>
+                                    <td className="muted audit-details">{log.details}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                )}
+            </div>
         </div>
     );
 }

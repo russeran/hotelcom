@@ -1,4 +1,5 @@
 const Note = require('../../models/note')
+const audit = require('./audit')
 
 module.exports = {
     create,
@@ -13,6 +14,7 @@ async function index(req, res) {
 
 async function create(req, res) {
     const newNote = await Note.create(req.body)
+    await audit.record({ req, action: 'create', entity: 'note', entityId: newNote._id, details: newNote.note })
     return res.json(newNote)
 }
 
@@ -26,5 +28,6 @@ async function deleteNote(req, res) {
         return res.status(403).json('Forbidden: only the author or a manager can delete this note')
     }
     await note.deleteOne()
+    await audit.record({ req, action: 'delete', entity: 'note', entityId: note._id, details: note.note })
     return res.json(note)
 }

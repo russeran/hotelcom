@@ -1,5 +1,6 @@
 const Task = require('../../models/task')
 const notifications = require('./notifications')
+const audit = require('./audit')
 
 module.exports = {
     create,
@@ -23,11 +24,13 @@ async function create(req, res) {
         message: `${priorityTag}New task for ${newTask.department || 'the team'}: ${newTask.task}`,
         type: 'task'
     })
+    await audit.record({ req, action: 'create', entity: 'task', entityId: newTask._id, details: `${newTask.priority} · ${newTask.department} · ${newTask.task}` })
     return res.json(newTask)
 }
 
 async function update(req, res) {
     const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    await audit.record({ req, action: 'update', entity: 'task', entityId: req.params.id, details: `${updatedTask ? updatedTask.task : ''} → ${JSON.stringify(req.body)}` })
     return res.json(updatedTask)
 }
 
@@ -39,5 +42,6 @@ async function deleteTask(req, res) {
         return res.status(403).json('Forbidden: managers can only manage tasks in their own department')
     }
     await task.deleteOne()
+    await audit.record({ req, action: 'delete', entity: 'task', entityId: task._id, details: `${task.department} · ${task.task}` })
     return res.json(task)
 }

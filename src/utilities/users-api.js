@@ -13,6 +13,14 @@ export function checkToken() {
     return sendRequest(`${BASE_URL}/check-token`)
 }
 
+export function refreshToken() {
+    return sendRequest(`${BASE_URL}/refresh-token`)
+}
+
+export function getAuditLog() {
+    return sendRequest('/api/audit')
+}
+
 // --- Admin user management ---
 export function getUsers() {
     return sendRequest(BASE_URL)

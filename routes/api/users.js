@@ -24,6 +24,7 @@ const upload = multer({
 router.post('/', usersCtrl.create)
 router.post('/login', usersCtrl.login)
 router.get('/check-token', ensureLoggedIn, usersCtrl.checkToken)
+router.get('/refresh-token', ensureLoggedIn, usersCtrl.refreshToken)
 router.post('/avatar', ensureLoggedIn, upload.single('avatar'), usersCtrl.uploadAvatar)
 
 // Admin-only user management

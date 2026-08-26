@@ -6,3 +6,10 @@
     margin-top: 12px;
     font-size: 0.85rem;
 }
+.audit-details {
+    max-width: 380px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.85rem;
+}

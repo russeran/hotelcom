@@ -1,6 +1,6 @@
 import "./App.css";
-import { useState } from "react";
-import { getUser } from "../../utilities/users-service";
+import { useState, useEffect, useCallback } from "react";
+import { getUser, refreshUser } from "../../utilities/users-service";
 import AuthPage from "../AuthPage/AuthPage";
 import NavBar from "../../components/NavBar/NavBar";
 import TaskPage from "../TaskPage/TaskPage";
@@ -17,7 +17,24 @@ import { Routes, Route } from "react-router-dom";
 export default function App() {
   const [user, setUser] = useState(getUser());
 
+  // Keep the session in sync with the server so admin-made role/department
+  // changes take effect without a manual re-login. Refresh on mount, on a
+  // timer, and when the tab regains focus.
+  const sync = useCallback(async () => {
+    if (!getUser()) return;
+    const refreshed = await refreshUser();
+    setUser(refreshed);
+  }, []);
 
+  useEffect(() => {
+    sync();
+    const interval = setInterval(sync, 30000);
+    window.addEventListener('focus', sync);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('focus', sync);
+    };
+  }, [sync]);
 
   return (
     <main className="App">

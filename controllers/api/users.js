@@ -1,15 +1,31 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('../../models/user')
+const audit = require('./audit')
 
 module.exports = {
     create,
     login,
     checkToken,
+    refreshToken,
     uploadAvatar,
     index,
     updateRole,
     delete: deleteUser
+}
+
+// Re-issue a JWT from the current DB state so role/department changes (made by
+// an admin) propagate to an already-logged-in client without a manual re-login.
+async function refreshToken(req, res) {
+    try {
+        if (!req.user) return res.status(401).json('Unauthorized')
+        const user = await User.findById(req.user._id)
+        if (!user) return res.status(401).json('User no longer exists')
+        res.json(createJWT(user))
+    } catch (err) {
+        console.log(err)
+        res.status(400).json(err)
+    }
 }
 
 async function create(req, res) {
@@ -46,6 +62,7 @@ async function updateRole(req, res) {
         if (req.body.department !== undefined) updates.department = req.body.department
         const user = await User.findByIdAndUpdate(req.params.id, updates, { new: true, runValidators: true })
         if (!user) return res.status(404).json('User not found')
+        await audit.record({ req, action: 'role_change', entity: 'user', entityId: user._id, details: `${user.name} → role=${user.role}${user.department ? ', dept=' + user.department : ''}` })
         res.json(user)
     } catch (err) {
         console.log(err)
@@ -58,6 +75,7 @@ async function deleteUser(req, res) {
     if (req.user._id === req.params.id) return res.status(400).json('You cannot delete your own account')
     const user = await User.findByIdAndDelete(req.params.id)
     if (!user) return res.status(404).json('User not found')
+    await audit.record({ req, action: 'delete', entity: 'user', entityId: user._id, details: `${user.name} (${user.email})` })
     res.json(user)
 }
 
