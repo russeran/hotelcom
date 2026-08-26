@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
 
-const SALT_ROUNDS = 6
+const SALT_ROUNDS = 12
 
 const userSchema = new Schema({
     name: {type: String, required: true},
@@ -16,8 +16,21 @@ const userSchema = new Schema({
     password: {
         type: String,
         trim: true,
-        minLength: 3,
+        minLength: 6,
         required: true
+    },
+    avatar: {
+        type: String,
+        required: false
+    },
+    role: {
+        type: String,
+        enum: ['staff', 'manager', 'admin'],
+        default: 'staff'
+    },
+    department: {
+        type: String,
+        required: false
     }
 }, {
     timestamps: true,

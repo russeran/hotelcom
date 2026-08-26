@@ -1,49 +1,51 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import NoteForm from '../../components/NoteForm/NoteForm';
 import NoteList from '../../components/NoteList/NoteList';
 import * as notesAPI from '../../utilities/notes-api';
+import { getUser } from '../../utilities/users-service';
 import './NotePage.css';
 
 export default function NotePage() {
     const [notes, setNotes] = useState([]);
-    const [change, setChange] = useState(true);
 
-    useEffect(function(){
-        async function getAllNotes(){
-          let users = await notesAPI.getAllNotes();
-          setNotes(users);
-      }
-      getAllNotes();
-      },[change] );
+    useEffect(function () {
+        async function getAllNotes() {
+            let all = await notesAPI.getAllNotes();
+            setNotes(all);
+        }
+        getAllNotes();
+    }, []);
 
-
-      function addNote(note) {
-        notesAPI.addANote(note);
-        setNotes ([...notes, note])
-      }
-
-      async function handleDelete(note) {
-        await notesAPI.deleteANote(note);
-        const notesCopy = [...notes];
-        const newNotes = notesCopy.filter(note => note.id === note._id);
-        setNotes(newNotes);
-        setChange(!change);
-      
+    async function addNote(note) {
+        const newNote = await notesAPI.addANote(note);
+        setNotes([newNote, ...notes]);
     }
 
-      return (
-        <>
-        <br></br>
-        <br></br>
-        <strong><h1 id="note-h1" >SHO</h1></strong>
-        <NoteForm addNote={addNote} />
-        <div className="note-page">
-          <br />
-            
-            
-            <NoteList notes={notes} handleDelete={handleDelete}/>
+    async function handleDelete(noteId) {
+        await notesAPI.deleteANote(noteId);
+        setNotes(notes.filter(note => note._id !== noteId));
+    }
+
+    return (
+        <div className="page">
+            <header className="page-header">
+                <div>
+                    <h1 className="section-title">Shift Handover Notes</h1>
+                    <p className="section-subtitle">{notes.length} note{notes.length === 1 ? '' : 's'} logged</p>
+                </div>
+            </header>
+
+            <div className="surface-card page-card">
+                <NoteForm addNote={addNote} />
+            </div>
+
+            <div className="surface-card page-card">
+                {notes.length === 0 ? (
+                    <div className="empty-state">No notes yet. Add the first handover note above.</div>
+                ) : (
+                    <NoteList notes={notes} handleDelete={handleDelete} currentUser={getUser()} />
+                )}
+            </div>
         </div>
-        </>
-        );
-    }
-
+    );
+}

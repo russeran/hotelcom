@@ -10,6 +10,10 @@ export function addAConcierge(conciergeForm) {
     return sendRequest(`${BASE_URL}/create`, "POST", conciergeForm);
 }
 
+export function updateAConcierge(conciergeId, updates) {
+    return sendRequest(`${BASE_URL}/${conciergeId}`, "PUT", updates);
+}
+
 export function deleteAConcierge(concierge) {
 
     return sendRequest(`${BASE_URL}/delete/${concierge}`, `DELETE`);

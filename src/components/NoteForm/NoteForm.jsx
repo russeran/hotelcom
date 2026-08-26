@@ -1,66 +1,45 @@
 import "./NoteForm.css";
-import {useState} from 'react';
-import {Button, Form} from 'react-bootstrap';
+import { useState } from 'react';
+import { Row, Col, Button, Form } from 'react-bootstrap';
 
+const BLANK = { user: '', department: '', note: '' };
+const DEPARTMENTS = ['Front Desk', 'Housekeeping', 'Maintenance', 'Food & Beverage', 'Security', 'Concierge'];
 
-export default function NoteForm ({
-    addNote}) 
-{
-    const [newNote, setNewNote] =
-    useState({
-        date: '',
-        user: '',
-        note:'',
-    })
+export default function NoteForm({ addNote }) {
+    const [newNote, setNewNote] = useState(BLANK);
 
+    function handleAddNote(e) {
+        e.preventDefault();
+        addNote(newNote);
+        setNewNote(BLANK);
+    }
 
-function handleAddNote(e){
-    e.preventDefault();
-    addNote(newNote);
-    setNewNote({
-        date:'',
-        user:'',
-        note:'',
-    })
+    function handleInputChange(e) {
+        setNewNote({ ...newNote, [e.target.name]: e.target.value });
+    }
+
+    return (
+        <Form onSubmit={handleAddNote} className="note-form">
+            <Row className="g-2 align-items-end">
+                <Col md={2}>
+                    <Form.Label>Author</Form.Label>
+                    <Form.Control type="text" name="user" placeholder="Your name" value={newNote.user} onChange={handleInputChange} required />
+                </Col>
+                <Col md={3}>
+                    <Form.Label>Department</Form.Label>
+                    <Form.Select name="department" value={newNote.department} onChange={handleInputChange}>
+                        <option value="">General</option>
+                        {DEPARTMENTS.map(d => <option key={d}>{d}</option>)}
+                    </Form.Select>
+                </Col>
+                <Col md={5}>
+                    <Form.Label>Note</Form.Label>
+                    <Form.Control type="text" name="note" placeholder="What should the next shift know?" value={newNote.note} onChange={handleInputChange} required />
+                </Col>
+                <Col md={2}>
+                    <Button type="submit" variant="primary" className="w-100">Add Note</Button>
+                </Col>
+            </Row>
+        </Form>
+    );
 }
-
-function handleInputChange(e) {
-    const addNewNote = {...newNote, 
-        [e.target.name]:e.target.value};
-        setNewNote(addNewNote)
-}
-
-
-return (
- <Form onSubmit={handleAddNote}>
-    <table  id="new-note" >
-<thead>
-    <tr>
-        
-        <th className="form-item" >
-           <label>Date</label>
-           <input type="text" name="date" value={newNote.date} onChange={handleInputChange} required />
-        </th>
-
-        <th className="form-item">
-           <label>User</label>
-            <input type="text" name="user" value={newNote.user} onChange={handleInputChange} required />
-        </th>
-        <th className="form-item" >
-            <label>Note</label>
-            <br />
-            <textarea className="note-input" type="text" name="note" value={newNote.note} onChange={handleInputChange} required /> 
-
-        </th>
-       <th>
-       <Button type="submit" >ADD</Button>
-       </th>
-            
-       
-</tr>
-</thead>
-    </table>
-
-
-</Form>
-)}

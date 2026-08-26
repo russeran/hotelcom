@@ -1,8 +1,46 @@
-.yo-mama {
-    font-family: Rubik Burned, Rubik, sans-serif;
-    font-size: 10rem;
-    color: rgb(249, 249, 14);
-    margin-top: 0.5rem;
-    display: inline-block;
-    width: 70%;
+.dashboard { animation: fade-in 0.3s ease; }
+
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
 }
+
+.dash-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.dash-panel { padding: 20px; height: 100%; }
+.panel-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 14px;
+}
+
+.activity-list, .chat-mini { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.activity-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+}
+.activity-list li.unread { border-color: rgba(99, 102, 241, 0.4); background: rgba(99, 102, 241, 0.08); }
+.activity-text { color: var(--text); font-size: 0.92rem; }
+.dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; background: var(--muted); }
+.dot.task { background: var(--warning); }
+.dot.complaint { background: var(--danger); }
+
+.chat-mini li {
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-left: 2px solid var(--border-strong);
+}
+.chat-mini strong { color: var(--accent); margin-right: 4px; }
+
+.dash-weather { margin-top: 16px; }

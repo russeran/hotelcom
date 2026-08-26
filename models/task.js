@@ -3,11 +3,14 @@ const Schema = mongoose.Schema
 
 const taskSchema = new Schema({
     status: { type: String, required: false },
+    priority: { type: String, default: 'Normal' },
     date: { type: Date, default: Date.now },
     department: { type: String, required: false },
     room: { type: Number, required: false },
     user: { type: String, required: false },
-    task: { type: String, required: false }
+    task: { type: String, required: false },
+    acknowledgedAt: { type: Date, required: false },
+    acknowledgedBy: { type: String, required: false }
 
 }, {
     timestamps: true,

@@ -1,0 +1,20 @@
+.status-badge {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+}
+.status-select { width: auto; min-width: 130px; display: inline-block; }
+.overdue-badge {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #fff;
+    background: var(--danger);
+    padding: 2px 6px;
+    border-radius: 6px;
+    vertical-align: middle;
+}
+.task-overdue { box-shadow: inset 3px 0 0 var(--danger); }
+.ack-note { font-size: 0.72rem; color: var(--success); margin-top: 2px; }

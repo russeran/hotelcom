@@ -1,67 +1,158 @@
-
+import { useEffect, useState, useCallback } from "react";
 import * as userService from "../../utilities/users-service";
-import { Navbar, Nav, NavDropdown, Container  } from "react-bootstrap";
+import { isAdmin, canManage } from "../../utilities/users-service";
+import { onSocket } from "../../utilities/socket";
+import * as notificationsAPI from "../../utilities/notifications-api";
+import { Navbar, Nav, NavDropdown, Container, Badge, Button, Image, Form } from "react-bootstrap";
+import { NavLink, useNavigate } from "react-router-dom";
 import './NavBar.css';
 
 
-
 export default function NavBar({ user, setUser }) {
+  const [notifications, setNotifications] = useState([]);
+  const [clock, setClock] = useState(new Date().toLocaleTimeString());
+  const [search, setSearch] = useState('');
+  const navigate = useNavigate();
+
+  function handleSearch(e) {
+    e.preventDefault();
+    const q = search.trim();
+    if (q) navigate(`/search?q=${encodeURIComponent(q)}`);
+  }
+
+  const loadNotifications = useCallback(async () => {
+    try {
+      const data = await notificationsAPI.getAllNotifications();
+      setNotifications(data);
+    } catch (err) {
+      console.log('Failed to load notifications', err);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadNotifications();
+    // Real-time: refresh the (server-scoped) feed the moment a notification is
+    // created. A slow interval remains as a resilience fallback.
+    const off = onSocket('notification:new', loadNotifications);
+    const interval = setInterval(loadNotifications, 60000);
+    return () => { off(); clearInterval(interval); };
+  }, [loadNotifications]);
+
+  useEffect(() => {
+    const t = setInterval(() => setClock(new Date().toLocaleTimeString()), 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  async function handleMarkRead(notificationId) {
+    await notificationsAPI.markNotificationRead(notificationId);
+    setNotifications(notifications.map(n => (n._id === notificationId ? { ...n, read: true } : n)));
+  }
+
   function handleLogOut() {
-    // Delegate to the users-service
     userService.logOut();
     setUser(null);
   }
 
+  const initials = (user.name || '?')
+    .split(' ')
+    .map(s => s[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
 
   return (
-    <Navbar className="navbar"  expand="lg">
-      <Container>
-        <Navbar.Brand className="mama-name" href="/">MAMA SHELTER LA</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <Nav.Link target="_blank" href="https://all.accor.com/hotel/9919/index.en.shtml?partner_id=mamashelter">Book A Room</Nav.Link>
-            &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <Nav.Link href="/hotels">Other Hotels</Nav.Link>
-            &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <NavDropdown title="FRONT DESK" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/complaints">Complaints</NavDropdown.Item>
-              <NavDropdown.Item href="/notes">
-                SHO
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/tasks">Tasks</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="/concierge">
-                Concierge
-              </NavDropdown.Item>
-            </NavDropdown>
-            &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <Nav.Link href="/" onClick={handleLogOut} >Log Out</Nav.Link>
-            &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <h5 className="user-welcome" >Welcome, {user.name}</h5>
+    <Navbar className="app-navbar" expand="lg" sticky="top">
+      <Container fluid className="app-navbar-inner">
+        <Navbar.Brand as={NavLink} to="/" className="brand">
+          <span className="brand-mark">MS</span>
+          <span className="brand-text">Mama Shelter <span className="brand-accent">LA</span></span>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="main-nav" />
+        <Navbar.Collapse id="main-nav">
+          <Nav className="me-auto main-links">
+            <Nav.Link as={NavLink} to="/" end>Dashboard</Nav.Link>
+            <Nav.Link as={NavLink} to="/reservations">Reservations</Nav.Link>
+            <Nav.Link as={NavLink} to="/rooms">Rooms</Nav.Link>
+            <Nav.Link as={NavLink} to="/tasks">Tasks</Nav.Link>
+            <Nav.Link as={NavLink} to="/complaints">Complaints</Nav.Link>
+            <Nav.Link as={NavLink} to="/notes">Notes</Nav.Link>
+            <Nav.Link as={NavLink} to="/concierge">Concierge</Nav.Link>
+            <Nav.Link as={NavLink} to="/chat">Chat</Nav.Link>
+            <Nav.Link as={NavLink} to="/hotels">Hotels</Nav.Link>
+            {canManage(user) && <Nav.Link as={NavLink} to="/reports">Reports</Nav.Link>}
+            {isAdmin(user) && <Nav.Link as={NavLink} to="/admin">Admin</Nav.Link>}
           </Nav>
+
+          <div className="nav-right">
+            <Form className="nav-search" role="search" onSubmit={handleSearch}>
+              <Form.Control
+                type="search"
+                size="sm"
+                placeholder="Search…"
+                aria-label="Search across the app"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </Form>
+            <span className="nav-clock" aria-hidden="true">{clock}</span>
+
+            <NavDropdown
+              id="notifications-nav-dropdown"
+              align="end"
+              className="notif-dropdown"
+              title={
+                <span className="notif-toggle" aria-label={`Notifications${unreadCount ? `, ${unreadCount} unread` : ''}`}>
+                  <span className="notif-bell" aria-hidden="true">🔔</span>
+                  {unreadCount > 0 && <Badge bg="danger" className="notif-badge">{unreadCount}</Badge>}
+                </span>
+              }
+            >
+              <div className="notif-header">Notifications</div>
+              {notifications.length === 0 ? (
+                <NavDropdown.Item disabled>No notifications</NavDropdown.Item>
+              ) : (
+                notifications.slice(0, 10).map(n => (
+                  <NavDropdown.ItemText key={n._id} className="notification-item">
+                    <div className={`notif-msg ${n.read ? '' : 'unread'}`}>{n.message}</div>
+                    {!n.read && (
+                      <Button size="sm" variant="link" className="p-0 notif-mark" onClick={() => handleMarkRead(n._id)}>
+                        Mark read
+                      </Button>
+                    )}
+                  </NavDropdown.ItemText>
+                ))
+              )}
+            </NavDropdown>
+
+            <NavDropdown
+              align="end"
+              className="user-dropdown"
+              title={
+                <span className="user-chip">
+                  {user.avatar ? (
+                    <Image src={user.avatar} roundedCircle width={30} height={30} alt="avatar" className="user-avatar" />
+                  ) : (
+                    <span className="user-initials">{initials}</span>
+                  )}
+                  <span className="user-name">{user.name}</span>
+                </span>
+              }
+            >
+              <div className="user-menu-meta">
+                <span className={`role-badge role-${user.role || 'staff'}`}>{user.role || 'staff'}</span>
+                {user.department && <span className="user-dept">{user.department}</span>}
+              </div>
+              <NavDropdown.Divider />
+              <NavDropdown.Item as={NavLink} to="/">Profile & Dashboard</NavDropdown.Item>
+              {isAdmin(user) && <NavDropdown.Item as={NavLink} to="/admin">User Management</NavDropdown.Item>}
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={handleLogOut}>Log Out</NavDropdown.Item>
+            </NavDropdown>
+          </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
-
-  // (
-  //   <nav className="nav-bar">
-  //     <span>Welcome, {user.name}</span>
-  //     &nbsp; | &nbsp;
-  //     <Link to="" onClick={handleLogOut}>
-  //       Log Out
-  //     </Link>
-  //     &nbsp; | &nbsp;
-  //     <Link to="" >Tasks</Link>
-  //     &nbsp; | &nbsp;
-  //     <Link to="/complaints" >Complaints</Link>
-  //     &nbsp; | &nbsp;
-  //     <Link to="">Notes</Link>
-  //     &nbsp; | &nbsp;
-  //     <Link to="/concierge">Concierges</Link>
-  //   </nav>
-  // );
 }

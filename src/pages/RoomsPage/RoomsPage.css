@@ -1,0 +1,51 @@
+.rs-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.rs-chip {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+}
+
+.rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+}
+.room-card {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    background: var(--surface);
+    border-left-width: 5px;
+}
+.room-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+.room-number { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 1.3rem; }
+.room-type { color: var(--muted); font-size: 0.8rem; }
+.room-status-select { font-size: 0.8rem; }
+.room-delete {
+    position: absolute;
+    top: 6px; right: 8px;
+    border: none; background: transparent; color: var(--faint);
+    font-size: 1.1rem; line-height: 1; cursor: pointer;
+}
+.room-delete:hover { color: var(--danger); }
+
+/* Status accents (left border + chip colors) */
+.rs-clean { border-left-color: var(--success); }
+.rs-dirty { border-left-color: var(--warning); }
+.rs-occupied { border-left-color: var(--primary); }
+.rs-inspected { border-left-color: var(--accent); }
+.rs-ooo { border-left-color: var(--danger); }
+
+.rs-chip.rs-clean { color: #86efac; }
+.rs-chip.rs-dirty { color: #fcd34d; }
+.rs-chip.rs-occupied { color: #a5b4fc; }
+.rs-chip.rs-inspected { color: #67e8f9; }
+.rs-chip.rs-ooo { color: #fca5a5; }

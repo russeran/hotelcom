@@ -1,0 +1,51 @@
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.event-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+}
+
+.event-image {
+    height: 130px;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.event-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.event-cat { align-self: flex-start; }
+.event-name { font-family: 'Sora', sans-serif; font-weight: 700; line-height: 1.25; }
+.event-when { color: var(--accent); font-size: 0.85rem; font-weight: 600; }
+.event-venue { font-size: 0.85rem; }
+
+.event-footer {
+    margin-top: auto;
+    padding-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.event-price { font-weight: 700; color: var(--text); font-size: 0.9rem; }
+.event-actions { display: flex; gap: 6px; align-items: center; }
+
+.events-unconfigured { display: flex; flex-direction: column; gap: 4px; }
+.events-unconfigured code {
+    background: rgba(9, 14, 27, 0.7);
+    padding: 2px 6px;
+    border-radius: 6px;
+    color: var(--accent);
+}

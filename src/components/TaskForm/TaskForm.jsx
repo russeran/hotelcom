@@ -1,83 +1,77 @@
 import './TaskForm.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Row, Col, Form, Button } from 'react-bootstrap';
+import * as usersAPI from '../../utilities/users-api';
 
-export default function TaskForm ({
-    addTask }) {
+const BLANK = { status: 'Open', priority: 'Normal', department: '', room: '', user: '', task: '' };
 
-const [newTask, setNewTask] = useState({
-    status: '',
-    date: '',
-    department: '',
-    room: '',
-    user: '',
-    task: '',
+export default function TaskForm({ addTask }) {
+    const [newTask, setNewTask] = useState(BLANK);
+    const [roster, setRoster] = useState([]);
 
-    });
-
-
-    
-  
+    useEffect(() => {
+        usersAPI.getDirectory().then(setRoster).catch(() => setRoster([]));
+    }, []);
 
     function handleAddTask(e) {
         e.preventDefault();
         addTask(newTask);
-        setNewTask({
-            status: '',
-            date: '',
-            department: '',
-            room: '',
-            user: '',
-            task: '',
-        });
+        setNewTask(BLANK);
     }
 
     function handleInputChange(e) {
-        const addNewTask = { ...newTask,
-            [e.target.name]: e.target.value
-        };
-        
-        setNewTask(addNewTask)
+        setNewTask({ ...newTask, [e.target.name]: e.target.value });
     }
 
-
-
     return (
-        <form onSubmit={handleAddTask}>
-            <table  id="new-task" >
-<thead>
-            <tr>
-                
-                <th className="form-item">
-                    <label>Status</label>
-                    <input type="text" name="status" value={newTask.status} onChange={handleInputChange} required />
-                </th>
-                <th className="form-item">
-                    <label>Date</label>
-                    <input type="text" name="date" value={newTask.date} onChange={handleInputChange} required />
-                </th>
-                <th className="form-item">
-                    <label>Department</label>
-                    <input type="text" name="department" value={newTask.department} onChange={handleInputChange} required />
-                </th>
-                <th className="form-item">
-                    <label>Room</label>
-                    <input type="text" name="room" value={newTask.room} onChange={handleInputChange} />
-                </th>
-                <th className="form-item">
-                    <label>User</label>
-                    <input type="text" name="user" value={newTask.user} onChange={handleInputChange} required />
-                </th>
-                <th className="form-item">
-                    <label>Task</label>
-                    <input type="text" name="task" value={newTask.task} onChange={handleInputChange} required />
-                </th>
-
-                <th className="form-item">
-                    <button type="submit">ADD</button>
-                </th>
-            </tr>
-            </thead>
-            </table>
-        </form>
+        <Form onSubmit={handleAddTask} className="task-form">
+            <Row className="g-2 align-items-end">
+                <Col md={2}>
+                    <Form.Label>Department</Form.Label>
+                    <Form.Select name="department" value={newTask.department} onChange={handleInputChange} required>
+                        <option value="">Select…</option>
+                        <option>Housekeeping</option>
+                        <option>Maintenance</option>
+                        <option>Front Desk</option>
+                        <option>Food &amp; Beverage</option>
+                        <option>Security</option>
+                        <option>Concierge</option>
+                    </Form.Select>
+                </Col>
+                <Col md={2}>
+                    <Form.Label>Priority</Form.Label>
+                    <Form.Select name="priority" value={newTask.priority} onChange={handleInputChange}>
+                        <option>Low</option>
+                        <option>Normal</option>
+                        <option>High</option>
+                        <option>Urgent</option>
+                    </Form.Select>
+                </Col>
+                <Col md={1}>
+                    <Form.Label>Room</Form.Label>
+                    <Form.Control type="text" name="room" placeholder="101" value={newTask.room} onChange={handleInputChange} />
+                </Col>
+                <Col md={2}>
+                    <Form.Label>Assignee</Form.Label>
+                    {roster.length ? (
+                        <Form.Select name="user" value={newTask.user} onChange={handleInputChange} required>
+                            <option value="">Assign to…</option>
+                            {roster.map(u => (
+                                <option key={u._id} value={u.name}>{u.name}{u.department ? ` (${u.department})` : ''}</option>
+                            ))}
+                        </Form.Select>
+                    ) : (
+                        <Form.Control type="text" name="user" placeholder="Name" value={newTask.user} onChange={handleInputChange} required />
+                    )}
+                </Col>
+                <Col md={3}>
+                    <Form.Label>Task</Form.Label>
+                    <Form.Control type="text" name="task" placeholder="Describe the task" value={newTask.task} onChange={handleInputChange} required />
+                </Col>
+                <Col md={2}>
+                    <Button type="submit" variant="primary" className="w-100">Add Task</Button>
+                </Col>
+            </Row>
+        </Form>
     );
 }

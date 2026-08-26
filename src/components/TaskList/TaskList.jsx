@@ -2,26 +2,28 @@ import TaskListItem from "../TaskListItem/TaskListItem";
 import { Table } from "react-bootstrap";
 
 
-export default function TaskList({ tasks }) {
+export default function TaskList({ tasks, handleDelete, handleUpdateStatus, handleAcknowledge, currentUser }) {
+    if (!tasks.length) {
+        return <div className="empty-state">No tasks match your filters yet.</div>;
+    }
     return (
-        <div >
-  
-            <br />
-             <Table striped bordered hover  className="task-table" >
-                <thead>
-                    <tr>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th>Department</th>
-                        <th>Room</th>
-                        <th>User</th>
-                        <th>Task</th>
-                    </tr>
-                </thead>
+        <Table hover responsive className="align-middle mb-0 task-table">
+            <thead>
+                <tr>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Department</th>
+                    <th>Room</th>
+                    <th>Assignee</th>
+                    <th>Task</th>
+                    <th className="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
                 {tasks.map((task, index) => (
-                <TaskListItem  key={index}  task={task} index={index} />
+                    <TaskListItem key={task._id || index} task={task} handleDelete={handleDelete} handleUpdateStatus={handleUpdateStatus} handleAcknowledge={handleAcknowledge} currentUser={currentUser} />
                 ))}
-            </Table>
-        </div>
+            </tbody>
+        </Table>
     );
 }

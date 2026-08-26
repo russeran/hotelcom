@@ -1,28 +1,3 @@
-.new-complaint {
-    display: inline-block;
-    border: 2px solid black;
-    text-align: center;
-    height: fit-content;
-    background-color: goldenrod;
-    margin: 1rem;
-    padding: 1rem;
-    border-radius: 10px;
-}
-
-input {
-    height: 3rem;
-    width: fit-content;
-}
-
-.form-element {
-    display: inline;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.comp-button {
-    width: 8rem;
-    height: 2.5rem;
-    margin: 0.5rem;
+.complaint-form {
+    width: 100%;
 }

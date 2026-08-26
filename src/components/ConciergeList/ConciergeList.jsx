@@ -1,16 +1,18 @@
 import ConciergeListItem from "../../components/ConciergeListItem/ConciergeListItem.jsx";
 import "./ConciergeList.css"
 
-export default function ConciergeList({ concierges, handleDelete }) {
+export default function ConciergeList({ concierges, handleDelete, updateConcierge, canManage }) {
     return (
-        <>
-
-       
-         
+        <div className="concierge-grid">
             {concierges.map((concierge, index) => (
-                <ConciergeListItem key={index} concierge={concierge} index={index} handleDelete={handleDelete} />
+                <ConciergeListItem
+                    key={concierge._id || index}
+                    concierge={concierge}
+                    handleDelete={handleDelete}
+                    updateConcierge={updateConcierge}
+                    canManage={canManage}
+                />
             ))}
-    
-        </>
+        </div>
     );
 }

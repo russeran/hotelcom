@@ -1,23 +1,45 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 
+// Resolve the request's user from the JWT, then re-hydrate role/identity from
+// the database on every request. This makes authorization decisions reflect the
+// CURRENT state (role/department changes and account deletions take effect
+// immediately, server-side) instead of trusting the potentially-stale token.
 module.exports = function(req, res, next) {
-  // Check for the token being sent in a header or as a query parameter
   let token = req.get('Authorization') || req.query.token;
-  if (token) {
-    // Remove the 'Bearer ' if it was included in the token header
-    token = token.replace('Bearer ', '');
-    // Check if token is valid and not expired
-    jwt.verify(token, process.env.SECRET, function(err, decoded) {
-      // If valid token, decoded will be the token's entire payload
-      // If invalid token, err will be set
-      req.user = err ? null : decoded.user;  
-      // If your app cares... (optional)
-      req.exp = err ? null : new Date(decoded.exp * 1000);  
-      return next();
-    });
-  } else {
-    // No token was sent
+  if (!token) {
     req.user = null;
     return next();
   }
+  // Remove the 'Bearer ' if it was included in the token header
+  token = token.replace('Bearer ', '');
+  jwt.verify(token, process.env.SECRET, async function(err, decoded) {
+    if (err || !decoded || !decoded.user) {
+      req.user = null;
+      req.exp = null;
+      return next();
+    }
+    req.exp = new Date(decoded.exp * 1000);
+    try {
+      // The token only proves identity; the authoritative role comes from the DB.
+      const user = await User.findById(decoded.user._id);
+      if (!user) {
+        // Account no longer exists -> treat as logged out (instant lockout).
+        req.user = null;
+        return next();
+      }
+      req.user = {
+        _id: String(user._id),
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        department: user.department,
+        avatar: user.avatar
+      };
+    } catch (e) {
+      console.log('checkToken error', e);
+      req.user = null;
+    }
+    return next();
+  });
 };

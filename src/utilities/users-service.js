@@ -18,6 +18,29 @@ export function logOut() {
     localStorage.removeItem('token')
 }
 
+// Ask the server for a fresh JWT reflecting the current DB state (role,
+// department, etc.). Returns the updated user, or null if the token is no
+// longer valid (e.g. the account was deleted), in which case we log out.
+export async function refreshUser() {
+    try {
+        const token = await usersAPI.refreshToken()
+        localStorage.setItem('token', token)
+        return getUser()
+    } catch {
+        logOut()
+        return null
+    }
+}
+
+export async function updateAvatar(file) {
+    const formData = new FormData()
+    formData.append('avatar', file)
+    // The server responds with a fresh JWT that includes the new avatar.
+    const token = await usersAPI.uploadAvatar(formData, getToken())
+    localStorage.setItem('token', token)
+    return getUser()
+}
+
 export function getToken() {
     // getItem returns null if there's no string
     const token = localStorage.getItem('token')
@@ -37,6 +60,16 @@ export function getUser() {
     const token = getToken()
     // If there's a token, return the user in the payload, otherwise return null
     return token ? JSON.parse(atob(token.split('.')[1])).user : null
+}
+
+// --- Role helpers (role travels in the JWT payload) ---
+export function isAdmin(user = getUser()) {
+    return !!user && user.role === 'admin'
+}
+
+// Managers and admins can perform privileged actions (e.g. delete records).
+export function canManage(user = getUser()) {
+    return !!user && (user.role === 'manager' || user.role === 'admin')
 }
 
 export function checkToken() {
