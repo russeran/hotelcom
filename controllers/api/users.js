@@ -10,8 +10,16 @@ module.exports = {
     refreshToken,
     uploadAvatar,
     index,
+    directory,
     updateRole,
     delete: deleteUser
+}
+
+// Lightweight roster (name + department) any signed-in user can read, e.g. to
+// populate an assignee dropdown. Excludes emails/roles.
+async function directory(req, res) {
+    const users = await User.find({}, 'name department').sort({ name: 1 })
+    res.json(users)
 }
 
 // Re-issue a JWT from the current DB state so role/department changes (made by

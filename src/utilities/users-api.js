@@ -21,6 +21,11 @@ export function getAuditLog() {
     return sendRequest('/api/audit')
 }
 
+// Roster (name + department) for assignment dropdowns; any signed-in user.
+export function getDirectory() {
+    return sendRequest(`${BASE_URL}/directory`)
+}
+
 // --- Admin user management ---
 export function getUsers() {
     return sendRequest(BASE_URL)

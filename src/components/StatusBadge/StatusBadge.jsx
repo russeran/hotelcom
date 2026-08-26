@@ -4,6 +4,7 @@ const VARIANTS = {
     open: 'warning',
     new: 'warning',
     pending: 'warning',
+    acknowledged: 'primary',
     'in progress': 'info',
     progress: 'info',
     working: 'info',

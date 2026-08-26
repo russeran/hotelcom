@@ -6,8 +6,22 @@ module.exports = {
     create,
     index,
     update,
+    acknowledge,
     delete: deleteTask
 };
+
+// The receiving department acknowledges a task; timestamp/actor are set
+// server-side so they're trustworthy.
+async function acknowledge(req, res) {
+    const task = await Task.findByIdAndUpdate(
+        req.params.id,
+        { status: 'Acknowledged', acknowledgedAt: new Date(), acknowledgedBy: req.user.name },
+        { new: true }
+    )
+    if (!task) return res.status(404).json('Task not found')
+    await audit.record({ req, action: 'update', entity: 'task', entityId: task._id, details: `acknowledged by ${req.user.name}` })
+    return res.json(task)
+}
 
 
 async function index(req, res) {

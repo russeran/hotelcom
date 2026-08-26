@@ -1,11 +1,17 @@
 import './TaskForm.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
+import * as usersAPI from '../../utilities/users-api';
 
 const BLANK = { status: 'Open', priority: 'Normal', department: '', room: '', user: '', task: '' };
 
 export default function TaskForm({ addTask }) {
     const [newTask, setNewTask] = useState(BLANK);
+    const [roster, setRoster] = useState([]);
+
+    useEffect(() => {
+        usersAPI.getDirectory().then(setRoster).catch(() => setRoster([]));
+    }, []);
 
     function handleAddTask(e) {
         e.preventDefault();
@@ -47,7 +53,16 @@ export default function TaskForm({ addTask }) {
                 </Col>
                 <Col md={2}>
                     <Form.Label>Assignee</Form.Label>
-                    <Form.Control type="text" name="user" placeholder="Name" value={newTask.user} onChange={handleInputChange} required />
+                    {roster.length ? (
+                        <Form.Select name="user" value={newTask.user} onChange={handleInputChange} required>
+                            <option value="">Assign to…</option>
+                            {roster.map(u => (
+                                <option key={u._id} value={u.name}>{u.name}{u.department ? ` (${u.department})` : ''}</option>
+                            ))}
+                        </Form.Select>
+                    ) : (
+                        <Form.Control type="text" name="user" placeholder="Name" value={newTask.user} onChange={handleInputChange} required />
+                    )}
                 </Col>
                 <Col md={3}>
                     <Form.Label>Task</Form.Label>

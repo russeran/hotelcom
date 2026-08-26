@@ -35,6 +35,7 @@ router.post('/', authLimiter, usersCtrl.create)
 router.post('/login', authLimiter, usersCtrl.login)
 router.get('/check-token', ensureLoggedIn, usersCtrl.checkToken)
 router.get('/refresh-token', ensureLoggedIn, usersCtrl.refreshToken)
+router.get('/directory', ensureLoggedIn, usersCtrl.directory)
 router.post('/avatar', ensureLoggedIn, upload.single('avatar'), usersCtrl.uploadAvatar)
 
 // Admin-only user management

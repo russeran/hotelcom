@@ -8,7 +8,9 @@ const taskSchema = new Schema({
     department: { type: String, required: false },
     room: { type: Number, required: false },
     user: { type: String, required: false },
-    task: { type: String, required: false }
+    task: { type: String, required: false },
+    acknowledgedAt: { type: Date, required: false },
+    acknowledgedBy: { type: String, required: false }
 
 }, {
     timestamps: true,

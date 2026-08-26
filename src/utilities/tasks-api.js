@@ -14,6 +14,10 @@ export function updateATask(taskId, updatedTask) {
     return sendRequest(`${BASE_URL}/${taskId}`, "PUT", updatedTask);
 }
 
+export function acknowledgeATask(taskId) {
+    return sendRequest(`${BASE_URL}/${taskId}/acknowledge`, "PUT");
+}
+
 export function deleteATask(taskId) {
     return sendRequest(`${BASE_URL}/delete/${taskId}`, "DELETE");
 }

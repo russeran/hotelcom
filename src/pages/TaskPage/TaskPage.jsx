@@ -38,9 +38,13 @@ export default function TaskPage() {
         setTasks(tasks.filter(task => task._id !== taskId));
     }
 
-    async function handleToggleStatus(task) {
-        const nextStatus = task.status === 'Done' ? 'Open' : 'Done';
-        const updatedTask = await tasksAPI.updateATask(task._id, { status: nextStatus });
+    async function handleUpdateStatus(task, status) {
+        const updatedTask = await tasksAPI.updateATask(task._id, { status });
+        setTasks(tasks.map(t => (t._id === task._id ? updatedTask : t)));
+    }
+
+    async function handleAcknowledge(task) {
+        const updatedTask = await tasksAPI.acknowledgeATask(task._id);
         setTasks(tasks.map(t => (t._id === task._id ? updatedTask : t)));
     }
 
@@ -125,7 +129,7 @@ export default function TaskPage() {
             </div>
 
             <div className="surface-card page-card">
-                <TaskList tasks={visibleTasks} handleDelete={handleDelete} handleToggleStatus={handleToggleStatus} currentUser={currentUser} />
+                <TaskList tasks={visibleTasks} handleDelete={handleDelete} handleUpdateStatus={handleUpdateStatus} handleAcknowledge={handleAcknowledge} currentUser={currentUser} />
             </div>
         </div>
     );
