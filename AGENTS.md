@@ -43,6 +43,14 @@ REACT_APP_RAPIDAPI_KEY=<rapidapi hotels-com-provider key>
 - Tasks carry a `priority` (Low/Normal/High/Urgent). The Task page sorts Urgent-first (open ahead of completed), supports a department filter, and new-task notifications are prefixed with the priority when it isn't Normal.
 - Concierge supports full CRUD including edit (`PUT /api/concierges/:id`) and has `address`/`phone`/`url` fields that render as Directions/Call/Website links on each card.
 
+### Roles & authorization (RBAC)
+- Users have a `role` (`staff` | `manager` | `admin`, default `staff`) and an optional `department`. Both travel in the signed JWT, so **role/department changes only take effect on the user's next login** (there is no `/me` refresh endpoint).
+- Signup never trusts a client-provided role. Bootstrap rule: if no `admin` exists yet, the next account created becomes `admin`; otherwise `staff`.
+- `config/requireRole(...roles)` guards routes (returns `403`); it runs after the global `checkToken` sets `req.user`. `config/ensureLoggedIn` still handles the `401`.
+- Policy: everyone authenticated can read + create + do operational updates (task status/priority, edit complaint/concierge). Destructive deletes are gated — tasks/concierge/notifications require `manager|admin`; complaints and notes allow the **owner/author OR** `manager|admin` (ownership is checked in-controller since it needs the document). Admin user management (`GET /api/users`, `PUT /api/users/:id/role`, `DELETE /api/users/:id`) is `admin`-only.
+- The notifications feed is department-scoped for `staff` (their department + department-less), while managers/admins see all.
+- Client helpers `isAdmin()` / `canManage()` in `users-service` gate UI controls; the `/admin` page is admin-only (guards in-component). Do not rely on client checks for security — they mirror the server rules, which are authoritative.
+
 ### Lint / test / build
 - Lint: there is no standalone lint script; ESLint (CRA config) runs as part of `npm start` and `npm run build`. `npm run build` fails the build on ESLint errors unless `CI=false` (warnings are allowed).
 - Tests: `npm test` runs the CRA (Jest) test runner, but the repo currently has no test files.
