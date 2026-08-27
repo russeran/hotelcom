@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Table, Form, Button, Badge } from 'react-bootstrap';
 import * as usersAPI from '../../utilities/users-api';
 import { getUser } from '../../utilities/users-service';
+import AiConversationsPanel from '../../components/AiConversationsPanel/AiConversationsPanel';
 import './AdminPage.css';
 
 const ROLES = ['staff', 'manager', 'admin'];
@@ -131,6 +132,9 @@ export default function AdminPage() {
                 </Table>
             </div>
             <p className="muted admin-hint">Role and department changes propagate to signed-in users automatically within ~30 seconds.</p>
+
+            {/* AI Concierge Analytics */}
+            <AiConversationsPanel />
 
             <header className="page-header mt-4">
                 <div>
