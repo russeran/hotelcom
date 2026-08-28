@@ -15,6 +15,7 @@ export default function TaskPage() {
     const [tasks, setTasks] = useState([]);
     const [search, setSearch] = useState('');
     const [filter, setFilter] = useState('all');
+    const [showForm, setShowForm] = useState(false);
     // Managers default to viewing their own department.
     const [dept, setDept] = useState(
         currentUser && currentUser.role === 'manager' && currentUser.department ? currentUser.department : 'all'
@@ -31,6 +32,7 @@ export default function TaskPage() {
     async function addTask(task) {
         const newTask = await tasksAPI.addATask(task);
         setTasks([...tasks, newTask]);
+        setShowForm(false); // Close form after adding task
     }
 
     async function handleDelete(taskId) {
@@ -88,11 +90,20 @@ export default function TaskPage() {
                         {urgentCount > 0 && <span className="urgent-note"> · {urgentCount} urgent</span>}
                     </p>
                 </div>
+                <button 
+                    className="task-add-btn"
+                    onClick={() => setShowForm(!showForm)}
+                    aria-label="Add new task"
+                >
+                    {showForm ? '✕ Cancel' : '+ New Task'}
+                </button>
             </header>
 
-            <div className="surface-card page-card">
-                <TaskForm addTask={addTask} />
-            </div>
+            {showForm && (
+                <div className="surface-card page-card">
+                    <TaskForm addTask={addTask} />
+                </div>
+            )}
 
             <div className="toolbar">
                 <InputGroup className="search-box">
