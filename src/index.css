@@ -4,15 +4,19 @@
   /* Surfaces */
   --bg-1: #0b1220;
   --bg-2: #0f1b33;
+  --bg-dark: #0b1220;
+  --bg-darker: #070d17;
   --surface: #141f38;
   --surface-2: #1b294a;
   --surface-3: #223257;
+  --surface-light: #1b294a;
   --border: rgba(148, 163, 184, 0.16);
   --border-strong: rgba(148, 163, 184, 0.3);
 
   /* Text */
   --text: #e8eefb;
   --muted: #9fb0cd;
+  --text-muted: #9fb0cd;
   --faint: #6b7c9c;
 
   /* Brand */

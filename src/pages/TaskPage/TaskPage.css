@@ -114,11 +114,11 @@
 }
 
 .task-card-mobile {
-    background: var(--surface-light);
+    background: var(--surface-2);
     border-radius: 8px;
     padding: 1rem;
     margin-bottom: 0.75rem;
-    border: 1px solid var(--surface-light);
+    border: 1px solid var(--border);
 }
 
 .task-card-mobile-header {
@@ -158,7 +158,7 @@
 
 .task-card-mobile-detail-label {
     font-size: 0.7rem;
-    color: var(--text-muted);
+    color: var(--muted);
     text-transform: uppercase;
     font-weight: 600;
 }
