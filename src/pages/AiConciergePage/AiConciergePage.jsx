@@ -192,7 +192,7 @@ export default function AiConciergePage() {
 
     const needsVerification = !verified && messages.length > 1;
 
-    // Welcome Screen
+    // Welcome Screen with Guest Type Selection
     if (showWelcome) {
         return (
             <div className="ai-concierge-page">
@@ -216,44 +216,65 @@ export default function AiConciergePage() {
                                 <span>24/7 Available</span>
                             </div>
                         </div>
+                    </div>
 
-                        <Button 
-                            size="lg" 
-                            variant="primary" 
-                            className="ai-start-chat-btn"
-                            onClick={() => startChat()}
-                        >
-                            Start Conversation
-                        </Button>
+                    <div className="ai-guest-types-section">
+                        <h3>I'm a...</h3>
+                        <p className="text-muted mb-3">Tell us your status so we can assist you better</p>
+                        
+                        <div className="ai-guest-types-grid">
+                            <button className="ai-guest-type-card" onClick={() => startChat("I'm currently staying at the hotel")}>
+                                <span className="ai-guest-type-icon">🏨</span>
+                                <h4>Current Guest</h4>
+                                <p>In-house services, requests, complaints</p>
+                            </button>
+                            
+                            <button className="ai-guest-type-card" onClick={() => startChat("I have an upcoming reservation")}>
+                                <span className="ai-guest-type-icon">📅</span>
+                                <h4>Future Guest</h4>
+                                <p>Check reservation, modify dates, questions</p>
+                            </button>
+                            
+                            <button className="ai-guest-type-card" onClick={() => startChat("I'm interested in booking a room")}>
+                                <span className="ai-guest-type-icon">🔍</span>
+                                <h4>Prospective Guest</h4>
+                                <p>Availability, rates, amenities, location</p>
+                            </button>
+                            
+                            <button className="ai-guest-type-card" onClick={() => startChat("I recently checked out")}>
+                                <span className="ai-guest-type-icon">✅</span>
+                                <h4>Past Guest</h4>
+                                <p>Billing, feedback, lost items, receipts</p>
+                            </button>
+                        </div>
                     </div>
 
                     <div className="ai-quick-actions-section">
-                        <h3>Quick Actions</h3>
-                        <p className="text-muted mb-4">Or get started with a common request:</p>
+                        <h3>Common Requests</h3>
                         
                         <div className="ai-quick-actions-grid">
                             <button className="ai-quick-action-card" onClick={() => startChat("I need extra towels in my room")}>
                                 <span className="ai-quick-icon">🛁</span>
-                                <h4>Request Housekeeping</h4>
-                                <p>Towels, cleaning, amenities</p>
+                                <h4>Housekeeping</h4>
+                                <p>Towels, cleaning</p>
                             </button>
                             
                             <button className="ai-quick-action-card" onClick={() => startChat("Something in my room needs repair")}>
                                 <span className="ai-quick-icon">🔧</span>
-                                <h4>Report an Issue</h4>
-                                <p>AC, plumbing, electrical</p>
+                                <h4>Maintenance</h4>
+                                <p>Repairs, issues</p>
                             </button>
                             
                             <button className="ai-quick-action-card" onClick={() => startChat("What's the WiFi password?")}>
                                 <span className="ai-quick-icon">📶</span>
-                                <h4>Hotel Information</h4>
-                                <p>WiFi, amenities, policies</p>
+                                <h4>Information</h4>
+                                <p>WiFi, amenities</p>
                             </button>
                             
                             <button className="ai-quick-action-card" onClick={() => startChat("Can you recommend a restaurant nearby?")}>
                                 <span className="ai-quick-icon">🍽️</span>
-                                <h4>Local Recommendations</h4>
-                                <p>Restaurants, attractions, transport</p>
+                                <h4>Recommendations</h4>
+                                <p>Dining, attractions</p>
                             </button>
                         </div>
                     </div>

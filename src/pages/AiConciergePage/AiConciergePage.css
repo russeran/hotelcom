@@ -314,6 +314,36 @@
         padding: 1.5rem 1rem;
     }
     
+    .ai-guest-types-section {
+        padding: 1.5rem 1rem 1rem;
+    }
+    
+    .ai-guest-types-section h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .ai-guest-types-grid {
+        gap: 0.75rem;
+    }
+    
+    .ai-guest-type-card {
+        padding: 1.25rem 0.875rem;
+    }
+    
+    .ai-guest-type-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .ai-guest-type-card h4 {
+        font-size: 0.875rem;
+    }
+    
+    .ai-guest-type-card p {
+        font-size: 0.7rem;
+    }
+    
     .ai-quick-actions-section h3 {
         font-size: 1.25rem;
         margin-bottom: 1rem;
@@ -547,6 +577,89 @@
     margin-bottom: 1.5rem;
     text-align: center;
     font-weight: 600;
+}
+
+.ai-guest-types-section {
+    padding: 2rem 1rem 1rem;
+    background: var(--bg-darker);
+    border-bottom: 1px solid var(--surface-light);
+}
+
+.ai-guest-types-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.ai-guest-types-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.ai-guest-type-card {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
+    border: 2px solid var(--surface-light);
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-guest-type-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 0;
+}
+
+.ai-guest-type-card:hover::before {
+    opacity: 0.1;
+}
+
+.ai-guest-type-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(112, 107, 255, 0.3);
+}
+
+.ai-guest-type-card * {
+    position: relative;
+    z-index: 1;
+}
+
+.ai-guest-type-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.ai-guest-type-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+}
+
+.ai-guest-type-card p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.4;
 }
 
 .ai-quick-actions-grid {
