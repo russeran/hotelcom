@@ -12,6 +12,7 @@ export default function NavBar({ user, setUser }) {
   const [notifications, setNotifications] = useState([]);
   const [clock, setClock] = useState(new Date().toLocaleTimeString());
   const [search, setSearch] = useState('');
+  const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
 
   function handleSearch(e) {
@@ -62,27 +63,29 @@ export default function NavBar({ user, setUser }) {
     .join('')
     .toUpperCase();
 
+  const closeNavbar = () => setExpanded(false);
+
   return (
-    <Navbar className="app-navbar" expand="lg" sticky="top">
+    <Navbar className="app-navbar" expand="lg" sticky="top" expanded={expanded} onToggle={setExpanded}>
       <Container fluid className="app-navbar-inner">
-        <Navbar.Brand as={NavLink} to="/" className="brand">
+        <Navbar.Brand as={NavLink} to="/" className="brand" onClick={closeNavbar}>
           <span className="brand-mark">MS</span>
           <span className="brand-text">Mama Shelter <span className="brand-accent">LA</span></span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="main-nav" />
         <Navbar.Collapse id="main-nav">
           <Nav className="me-auto main-links">
-            <Nav.Link as={NavLink} to="/" end>Dashboard</Nav.Link>
-            <Nav.Link as={NavLink} to="/reservations">Reservations</Nav.Link>
-            <Nav.Link as={NavLink} to="/rooms">Rooms</Nav.Link>
-            <Nav.Link as={NavLink} to="/tasks">Tasks</Nav.Link>
-            <Nav.Link as={NavLink} to="/complaints">Complaints</Nav.Link>
-            <Nav.Link as={NavLink} to="/notes">Notes</Nav.Link>
-            <Nav.Link as={NavLink} to="/concierge">Concierge</Nav.Link>
-            <Nav.Link as={NavLink} to="/chat">Chat</Nav.Link>
-            <Nav.Link as={NavLink} to="/hotels">Hotels</Nav.Link>
-            {canManage(user) && <Nav.Link as={NavLink} to="/reports">Reports</Nav.Link>}
-            {isAdmin(user) && <Nav.Link as={NavLink} to="/admin">Admin</Nav.Link>}
+            <Nav.Link as={NavLink} to="/" end onClick={closeNavbar}>Dashboard</Nav.Link>
+            <Nav.Link as={NavLink} to="/reservations" onClick={closeNavbar}>Reservations</Nav.Link>
+            <Nav.Link as={NavLink} to="/rooms" onClick={closeNavbar}>Rooms</Nav.Link>
+            <Nav.Link as={NavLink} to="/tasks" onClick={closeNavbar}>Tasks</Nav.Link>
+            <Nav.Link as={NavLink} to="/complaints" onClick={closeNavbar}>Complaints</Nav.Link>
+            <Nav.Link as={NavLink} to="/notes" onClick={closeNavbar}>Notes</Nav.Link>
+            <Nav.Link as={NavLink} to="/concierge" onClick={closeNavbar}>Concierge</Nav.Link>
+            <Nav.Link as={NavLink} to="/chat" onClick={closeNavbar}>Chat</Nav.Link>
+            <Nav.Link as={NavLink} to="/hotels" onClick={closeNavbar}>Hotels</Nav.Link>
+            {canManage(user) && <Nav.Link as={NavLink} to="/reports" onClick={closeNavbar}>Reports</Nav.Link>}
+            {isAdmin(user) && <Nav.Link as={NavLink} to="/admin" onClick={closeNavbar}>Admin</Nav.Link>}
           </Nav>
 
           <div className="nav-right">
@@ -145,10 +148,10 @@ export default function NavBar({ user, setUser }) {
                 {user.department && <span className="user-dept">{user.department}</span>}
               </div>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={NavLink} to="/">Profile & Dashboard</NavDropdown.Item>
-              {isAdmin(user) && <NavDropdown.Item as={NavLink} to="/admin">User Management</NavDropdown.Item>}
+              <NavDropdown.Item as={NavLink} to="/" onClick={closeNavbar}>Profile & Dashboard</NavDropdown.Item>
+              {isAdmin(user) && <NavDropdown.Item as={NavLink} to="/admin" onClick={closeNavbar}>User Management</NavDropdown.Item>}
               <NavDropdown.Divider />
-              <NavDropdown.Item onClick={handleLogOut}>Log Out</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => { handleLogOut(); closeNavbar(); }}>Log Out</NavDropdown.Item>
             </NavDropdown>
           </div>
         </Navbar.Collapse>
