@@ -12,6 +12,7 @@ export default function ComplaintPage() {
     const [complaints, setComplaints] = useState([]);
     const [search, setSearch] = useState('');
     const [filter, setFilter] = useState('all');
+    const [showForm, setShowForm] = useState(false);
 
     useEffect(function () {
         async function getAllComplaints() {
@@ -24,6 +25,7 @@ export default function ComplaintPage() {
     async function addComplaint(complaint) {
         const created = await complaintsAPI.addAComplaint(complaint);
         setComplaints([created, ...complaints]);
+        setShowForm(false);
     }
 
     async function handleDelete(complaintId) {
@@ -58,11 +60,19 @@ export default function ComplaintPage() {
                     <h1 className="section-title">Complaints</h1>
                     <p className="section-subtitle">{openCount} open · {complaints.length} total</p>
                 </div>
+                <button 
+                    className="add-btn"
+                    onClick={() => setShowForm(!showForm)}
+                >
+                    {showForm ? '✕ Cancel' : '+ New Complaint'}
+                </button>
             </header>
 
-            <div className="surface-card page-card">
-                <ComplaintForm addComplaint={addComplaint} />
-            </div>
+            {showForm && (
+                <div className="surface-card page-card">
+                    <ComplaintForm addComplaint={addComplaint} />
+                </div>
+            )}
 
             <div className="toolbar">
                 <InputGroup className="search-box">
