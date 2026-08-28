@@ -6,7 +6,15 @@ import PriorityBadge from "../PriorityBadge/PriorityBadge";
 
 export default function TaskList({ tasks, handleDelete, handleUpdateStatus, handleAcknowledge, currentUser }) {
     if (!tasks.length) {
-        return <div className="empty-state">No tasks match your filters yet.</div>;
+        return (
+            <div className="empty-state">
+                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>📋</div>
+                <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>No tasks yet</div>
+                <div style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>
+                    Click "+ New Task" above to create your first task
+                </div>
+            </div>
+        );
     }
 
     // Desktop table view
