@@ -92,26 +92,24 @@
     
     /* Hide table on mobile, show card layout instead */
     .task-table {
-        display: none;
+        display: none !important;
     }
     
     /* Task cards for mobile */
     .task-list-mobile {
-        display: block;
+        display: block !important;
+        min-height: 100px;
     }
 }
 
 /* Desktop only - hide mobile cards */
 @media (min-width: 769px) {
     .task-list-mobile {
-        display: none;
+        display: none !important;
     }
-}
-
-/* Task cards for mobile */
-.task-list-mobile {
-    display: none;
-    min-height: 100px;
+    .task-table {
+        display: table !important;
+    }
 }
 
 .task-card-mobile {
