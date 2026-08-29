@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import './Home.css'
-import Weather from '../../components/Weather/Weather';
 import AvatarUpload from '../../components/AvatarUpload/AvatarUpload';
 import StatCard from '../../components/StatCard/StatCard';
 import * as tasksAPI from '../../utilities/tasks-api';
@@ -80,7 +79,7 @@ export default function Home({ user, setUser }) {
             </Row>
 
             <Row className="g-3 mt-1">
-                <Col lg={8}>
+                <Col lg={12}>
                     <div className="surface-card dash-panel">
                         <h2 className="panel-title">Recent Alerts</h2>
                         {recentNotifications.length === 0 ? (
@@ -108,15 +107,10 @@ export default function Home({ user, setUser }) {
                                 ))}
                             </ul>
                         )}
-                    </div>
-                </Col>
-                <Col lg={4}>
-                    <div className="surface-card dash-panel">
-                        <h2 className="panel-title">Your Profile</h2>
+                        
+                        <h2 className="panel-title mt-4">Profile Photo</h2>
+                        <p className="muted mb-3">Update your profile picture</p>
                         <AvatarUpload user={user} setUser={setUser} />
-                    </div>
-                    <div className="dash-weather">
-                        <Weather />
                     </div>
                 </Col>
             </Row>

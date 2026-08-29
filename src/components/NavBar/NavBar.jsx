@@ -135,7 +135,7 @@ export default function NavBar({ user, setUser }) {
               title={
                 <span className="user-chip">
                   {user.avatar ? (
-                    <Image src={user.avatar} roundedCircle width={30} height={30} alt="avatar" className="user-avatar" />
+                    <Image src={user.avatar} roundedCircle width={32} height={32} alt="avatar" className="user-avatar" />
                   ) : (
                     <span className="user-initials">{initials}</span>
                   )}
@@ -148,7 +148,8 @@ export default function NavBar({ user, setUser }) {
                 {user.department && <span className="user-dept">{user.department}</span>}
               </div>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={NavLink} to="/" onClick={closeNavbar}>Profile & Dashboard</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/" onClick={closeNavbar}>Dashboard</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/" onClick={closeNavbar}>Edit Profile Photo</NavDropdown.Item>
               {isAdmin(user) && <NavDropdown.Item as={NavLink} to="/admin" onClick={closeNavbar}>User Management</NavDropdown.Item>}
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={() => { handleLogOut(); closeNavbar(); }}>Log Out</NavDropdown.Item>
