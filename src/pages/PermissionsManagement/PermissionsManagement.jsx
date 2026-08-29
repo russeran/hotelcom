@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Form, Row, Col, Button, Table, Card, Badge, Accordion } from 'react-bootstrap';
+import { Form, Row, Col, Button, Table, Badge, Accordion } from 'react-bootstrap';
 import * as permissionsAPI from '../../utilities/permissions-api';
 import './PermissionsManagement.css';
 
@@ -20,6 +20,7 @@ export default function PermissionsManagement() {
 
     useEffect(() => {
         loadPermission();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedRole, selectedDept]);
 
     async function loadAllPermissions() {
