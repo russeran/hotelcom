@@ -137,9 +137,14 @@ export default function NavBar({ user, setUser }) {
                   Reports & Analytics
                 </NavDropdown.Item>
                 {isAdmin(user) && (
-                  <NavDropdown.Item as={NavLink} to="/admin" onClick={closeNavbar}>
-                    User Management
-                  </NavDropdown.Item>
+                  <>
+                    <NavDropdown.Item as={NavLink} to="/admin" onClick={closeNavbar}>
+                      User Management
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={NavLink} to="/permissions" onClick={closeNavbar}>
+                      Permissions Management
+                    </NavDropdown.Item>
+                  </>
                 )}
               </NavDropdown>
             )}

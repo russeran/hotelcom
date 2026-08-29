@@ -24,6 +24,7 @@ import PackagesPage from "../PackagesPage/PackagesPage";
 import RestaurantsPage from "../RestaurantsPage/RestaurantsPage";
 import RestaurantReservationsPage from "../RestaurantReservationsPage/RestaurantReservationsPage";
 import WaitlistPage from "../WaitlistPage/WaitlistPage";
+import PermissionsManagement from "../PermissionsManagement/PermissionsManagement";
 import ToastHost from "../../components/ToastHost/ToastHost";
 import { Routes, Route } from "react-router-dom";
 
@@ -87,6 +88,7 @@ export default function App() {
               <Route path="/restaurant-management" element={<RestaurantsPage />} />
               <Route path="/restaurant-reservations" element={<RestaurantReservationsPage />} />
               <Route path="/waitlist" element={<WaitlistPage />} />
+              <Route path="/permissions" element={<PermissionsManagement />} />
               <Route path="/" element={<Home user={user} setUser={setUser} />} />
             </Routes>
           </div>
