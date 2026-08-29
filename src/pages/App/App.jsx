@@ -17,6 +17,7 @@ import ReservationsPage from "../ReservationsPage/ReservationsPage";
 import ReportsPage from "../ReportsPage/ReportsPage";
 import SearchPage from "../SearchPage/SearchPage";
 import AiConciergePage from "../AiConciergePage/AiConciergePage";
+import ProfilePage from "../ProfilePage/ProfilePage";
 import ToastHost from "../../components/ToastHost/ToastHost";
 import { Routes, Route } from "react-router-dom";
 
@@ -73,6 +74,7 @@ export default function App() {
               <Route path="/search" element={<SearchPage />} />
               <Route path="/admin" element={<AdminPage />} />
               <Route path="/ai-concierge" element={<AiConciergePage />} />
+              <Route path="/profile" element={<ProfilePage user={user} setUser={setUser} />} />
               <Route path="/" element={<Home user={user} setUser={setUser} />} />
             </Routes>
           </div>

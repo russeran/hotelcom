@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import './Home.css'
-import AvatarUpload from '../../components/AvatarUpload/AvatarUpload';
 import StatCard from '../../components/StatCard/StatCard';
 import * as tasksAPI from '../../utilities/tasks-api';
 import * as complaintsAPI from '../../utilities/complaints-api';
@@ -107,10 +106,6 @@ export default function Home({ user, setUser }) {
                                 ))}
                             </ul>
                         )}
-                        
-                        <h2 className="panel-title mt-4">Profile Photo</h2>
-                        <p className="muted mb-3">Update your profile picture</p>
-                        <AvatarUpload user={user} setUser={setUser} />
                     </div>
                 </Col>
             </Row>

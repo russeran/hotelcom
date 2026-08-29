@@ -149,7 +149,7 @@ export default function NavBar({ user, setUser }) {
               </div>
               <NavDropdown.Divider />
               <NavDropdown.Item as={NavLink} to="/" onClick={closeNavbar}>Dashboard</NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/" onClick={closeNavbar}>Edit Profile Photo</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/profile" onClick={closeNavbar}>Edit Profile Photo</NavDropdown.Item>
               {isAdmin(user) && <NavDropdown.Item as={NavLink} to="/admin" onClick={closeNavbar}>User Management</NavDropdown.Item>}
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={() => { handleLogOut(); closeNavbar(); }}>Log Out</NavDropdown.Item>
