@@ -1,0 +1,167 @@
+/* Restaurants Page uses shared .page layout */
+
+.rest-add-btn {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border: none;
+    padding: 0.625rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(112, 107, 255, 0.3);
+}
+
+.rest-add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(112, 107, 255, 0.4);
+}
+
+/* Hours Row */
+.hours-day-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: var(--surface-2);
+    border-radius: 8px;
+}
+
+.day-label {
+    min-width: 100px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.hours-day-row input[type="time"] {
+    width: 120px;
+}
+
+/* Restaurants Grid */
+.restaurants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1rem;
+}
+
+.restaurant-card {
+    background: var(--surface-3);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.restaurant-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+    gap: 0.5rem;
+}
+
+.restaurant-card-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 0.5rem 0;
+}
+
+.restaurant-card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.restaurant-card-actions button {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.35rem 0.6rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.restaurant-card-actions button:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.restaurant-description {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.restaurant-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+/* Tables Management Modal */
+.tables-table {
+    color: var(--text);
+}
+
+.tables-table thead {
+    background: var(--surface-2);
+}
+
+.tables-table tbody tr {
+    background: var(--surface);
+}
+
+.tables-table tbody tr:hover {
+    background: var(--surface-2);
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .rest-add-btn {
+        width: 100%;
+        padding: 0.75rem;
+    }
+
+    .restaurants-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hours-day-row {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .day-label {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .hours-day-row input[type="time"] {
+        flex: 1;
+        width: auto;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+}

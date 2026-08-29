@@ -21,6 +21,8 @@ import ProfilePage from "../ProfilePage/ProfilePage";
 import GuestProfilesPage from "../GuestProfilesPage/GuestProfilesPage";
 import LostAndFoundPage from "../LostAndFoundPage/LostAndFoundPage";
 import PackagesPage from "../PackagesPage/PackagesPage";
+import RestaurantsPage from "../RestaurantsPage/RestaurantsPage";
+import RestaurantReservationsPage from "../RestaurantReservationsPage/RestaurantReservationsPage";
 import ToastHost from "../../components/ToastHost/ToastHost";
 import { Routes, Route } from "react-router-dom";
 
@@ -81,6 +83,8 @@ export default function App() {
               <Route path="/guest-profiles" element={<GuestProfilesPage />} />
               <Route path="/lost-and-found" element={<LostAndFoundPage />} />
               <Route path="/packages" element={<PackagesPage />} />
+              <Route path="/restaurant-management" element={<RestaurantsPage />} />
+              <Route path="/restaurant-reservations" element={<RestaurantReservationsPage />} />
               <Route path="/" element={<Home user={user} setUser={setUser} />} />
             </Routes>
           </div>

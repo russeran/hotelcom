@@ -52,6 +52,8 @@ app.use('/api/hotel-config', require('./routes/api/hotelConfig'))
 app.use('/api/guest-profiles', require('./routes/api/guestProfiles'))
 app.use('/api/lost-and-found', require('./routes/api/lostAndFound'))
 app.use('/api/packages', require('./routes/api/packages'))
+app.use('/api/restaurants', require('./routes/api/restaurants'))
+app.use('/api/restaurant-reservations', require('./routes/api/restaurantReservations'))
 
 // JSON 404 for unknown API routes (before the SPA catch-all).
 app.use('/api/*', function(req, res) {
