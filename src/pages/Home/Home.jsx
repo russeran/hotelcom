@@ -4,7 +4,6 @@ import './Home.css'
 import Weather from '../../components/Weather/Weather';
 import AvatarUpload from '../../components/AvatarUpload/AvatarUpload';
 import StatCard from '../../components/StatCard/StatCard';
-import GuestRequestForm from '../../components/GuestRequestForm/GuestRequestForm';
 import * as tasksAPI from '../../utilities/tasks-api';
 import * as complaintsAPI from '../../utilities/complaints-api';
 import * as notesAPI from '../../utilities/notes-api';
@@ -81,7 +80,7 @@ export default function Home({ user, setUser }) {
             </Row>
 
             <Row className="g-3 mt-1">
-                <Col lg={7}>
+                <Col lg={8}>
                     <div className="surface-card dash-panel">
                         <h2 className="panel-title">Recent Alerts</h2>
                         {recentNotifications.length === 0 ? (
@@ -111,12 +110,8 @@ export default function Home({ user, setUser }) {
                         )}
                     </div>
                 </Col>
-                <Col lg={5}>
+                <Col lg={4}>
                     <div className="surface-card dash-panel">
-                        <h2 className="panel-title">Log a Guest Request</h2>
-                        <GuestRequestForm />
-                    </div>
-                    <div className="surface-card dash-panel mt-3">
                         <h2 className="panel-title">Your Profile</h2>
                         <AvatarUpload user={user} setUser={setUser} />
                     </div>
