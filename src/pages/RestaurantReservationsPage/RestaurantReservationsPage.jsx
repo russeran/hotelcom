@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Row, Col, Button, Badge } from 'react-bootstrap';
 import * as restaurantReservationsAPI from '../../utilities/restaurantReservations-api';
 import * as restaurantsAPI from '../../utilities/restaurants-api';
