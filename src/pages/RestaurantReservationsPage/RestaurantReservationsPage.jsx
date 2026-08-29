@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Form, Row, Col, Button, Badge, Modal } from 'react-bootstrap';
+import { useState, useEffect, useCallback } from 'react';
+import { Form, Row, Col, Button, Badge } from 'react-bootstrap';
 import * as restaurantReservationsAPI from '../../utilities/restaurantReservations-api';
 import * as restaurantsAPI from '../../utilities/restaurants-api';
 import './RestaurantReservationsPage.css';
@@ -32,10 +32,12 @@ export default function RestaurantReservationsPage() {
 
     useEffect(() => {
         loadRestaurants();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         loadReservations();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedRestaurant, selectedDate, filter]);
 
     async function loadRestaurants() {

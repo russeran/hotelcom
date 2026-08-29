@@ -28,10 +28,12 @@ export default function WaitlistPage() {
 
     useEffect(() => {
         loadRestaurants();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         loadWaitlist();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedRestaurant, selectedDate, filter]);
 
     async function loadRestaurants() {
