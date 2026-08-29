@@ -89,6 +89,7 @@ export default function NavBar({ user, setUser }) {
             <Nav.Link as={NavLink} to="/packages" onClick={closeNavbar}>Packages</Nav.Link>
             <Nav.Link as={NavLink} to="/restaurant-management" onClick={closeNavbar}>Restaurants</Nav.Link>
             <Nav.Link as={NavLink} to="/restaurant-reservations" onClick={closeNavbar}>Dining</Nav.Link>
+            <Nav.Link as={NavLink} to="/waitlist" onClick={closeNavbar}>Waitlist</Nav.Link>
             {canManage(user) && <Nav.Link as={NavLink} to="/reports" onClick={closeNavbar}>Reports</Nav.Link>}
             {isAdmin(user) && <Nav.Link as={NavLink} to="/admin" onClick={closeNavbar}>Admin</Nav.Link>}
           </Nav>
