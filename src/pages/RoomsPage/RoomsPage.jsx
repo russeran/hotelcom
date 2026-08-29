@@ -17,6 +17,7 @@ const BLANK = { number: '', type: 'King', status: 'Vacant Clean' };
 export default function RoomsPage() {
     const [rooms, setRooms] = useState([]);
     const [form, setForm] = useState(BLANK);
+    const [showForm, setShowForm] = useState(false);
     const manage = canManage();
 
     useEffect(() => {
@@ -28,6 +29,7 @@ export default function RoomsPage() {
         const room = await roomsAPI.addRoom(form);
         setRooms([...rooms, room].sort((a, b) => (a.number > b.number ? 1 : -1)));
         setForm(BLANK);
+        setShowForm(false);
     }
 
     async function changeStatus(room, status) {
@@ -54,6 +56,14 @@ export default function RoomsPage() {
                         {rooms.length} rooms · {counts['Occupied'] || 0} occupied · {counts['Vacant Dirty'] || 0} need cleaning
                     </p>
                 </div>
+                {manage && (
+                    <button 
+                        className="room-add-btn"
+                        onClick={() => setShowForm(!showForm)}
+                    >
+                        {showForm ? '✕ Cancel' : '+ Add Room'}
+                    </button>
+                )}
             </header>
 
             <div className="rs-legend">
@@ -62,10 +72,10 @@ export default function RoomsPage() {
                 ))}
             </div>
 
-            {manage && (
+            {manage && showForm && (
                 <div className="surface-card page-card">
                     <Form onSubmit={handleAdd}>
-                        <Row className="g-2 align-items-end">
+                        <Row className="g-2 align-items-end room-form-row">
                             <Col md={3}>
                                 <Form.Label>Room number</Form.Label>
                                 <Form.Control value={form.number} onChange={e => setForm({ ...form, number: e.target.value })} placeholder="101" required />
