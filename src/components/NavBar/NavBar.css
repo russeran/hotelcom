@@ -133,6 +133,33 @@
 .role-staff { background: var(--surface-3); color: var(--muted); }
 .user-dept { color: var(--muted); font-size: 0.78rem; }
 
+/* User dropdown menu */
+.user-dropdown .dropdown-menu {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
 @media (max-width: 991px) {
-  .nav-right { margin-top: 12px; flex-wrap: wrap; }
+    .nav-right { margin-top: 12px; flex-wrap: wrap; }
+}
+
+/* Mobile dropdown fixes */
+@media (max-width: 768px) {
+    .user-dropdown .dropdown-menu {
+        max-height: 60vh;
+        overflow-y: auto;
+        position: absolute !important;
+        right: 0 !important;
+        left: auto !important;
+        transform: none !important;
+    }
+    
+    .notif-dropdown .dropdown-menu {
+        max-height: 50vh;
+        overflow-y: auto;
+        position: absolute !important;
+        right: 0 !important;
+        left: auto !important;
+        transform: none !important;
+    }
 }
