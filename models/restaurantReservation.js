@@ -19,6 +19,8 @@ const restaurantReservationSchema = new Schema({
     
     // Table assignment
     tableNumber: { type: String },
+    tableId: { type: Schema.Types.ObjectId },
+    autoAssigned: { type: Boolean, default: false },
     
     // Status
     status: {
@@ -31,13 +33,29 @@ const restaurantReservationSchema = new Schema({
     specialRequests: { type: String },
     dietaryRestrictions: [{ type: String }],
     occasion: { type: String }, // Birthday, Anniversary, Business, etc.
+    seatingPreferences: [{ type: String }], // Window, Quiet, Patio, etc.
     
     // Timing
     seatedAt: { type: Date },
     completedAt: { type: Date },
+    estimatedDuration: { type: Number }, // minutes
     
-    // Confirmation
+    // Confirmation & Communications
     confirmationNumber: { type: String, unique: true, index: true },
+    emailSent: { type: Boolean, default: false },
+    emailSentAt: { type: Date },
+    smsSent: { type: Boolean, default: false },
+    smsSentAt: { type: Date },
+    reminderSent: { type: Boolean, default: false },
+    reminderSentAt: { type: Date },
+    
+    // POS Integration
+    posOrderId: { type: String },
+    posTableId: { type: String },
+    posSynced: { type: Boolean, default: false },
+    posSyncedAt: { type: Date },
+    totalAmount: { type: Number },
+    paymentStatus: { type: String, enum: ['Pending', 'Paid', 'Cancelled'], default: 'Pending' },
     
     // Notes
     notes: { type: String },

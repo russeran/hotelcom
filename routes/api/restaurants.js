@@ -12,5 +12,7 @@ router.put('/:id', restaurantsCtrl.update);
 router.delete('/:id', restaurantsCtrl.delete);
 router.post('/:id/tables', restaurantsCtrl.addTable);
 router.delete('/:id/tables/:tableId', restaurantsCtrl.removeTable);
+router.post('/:id/generate-qr-codes', restaurantsCtrl.generateQRCodes);
+router.post('/:id/generate-menu-qr', restaurantsCtrl.generateMenuQR);
 
 module.exports = router;

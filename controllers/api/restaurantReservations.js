@@ -1,5 +1,9 @@
 const RestaurantReservation = require('../../models/restaurantReservation');
 const Restaurant = require('../../models/restaurant');
+const { autoAssignTable } = require('../../services/tableAssignment');
+const { sendConfirmationEmail, sendReminderEmail } = require('../../services/emailService');
+const { sendConfirmationSMS, sendReminderSMS } = require('../../services/smsService');
+const { syncReservationToPOS } = require('../../services/posIntegration');
 
 module.exports = {
     async index(req, res) {
@@ -38,16 +42,40 @@ module.exports = {
 
     async create(req, res) {
         try {
-            // Get restaurant name
+            // Get restaurant
             const restaurant = await Restaurant.findById(req.body.restaurantId);
             if (!restaurant) return res.status(404).json({ error: 'Restaurant not found' });
             
             const reservation = await RestaurantReservation.create({
                 ...req.body,
                 restaurantName: restaurant.name,
+                estimatedDuration: restaurant.reservationDuration || 90,
                 createdBy: req.user.name
             });
-            res.status(201).json(reservation);
+
+            // Auto-assign table if enabled
+            if (restaurant.autoAssignTables) {
+                await autoAssignTable(reservation._id);
+            }
+
+            // Send confirmation email if enabled
+            if (restaurant.notifications?.emailEnabled && restaurant.notifications?.sendConfirmations && reservation.guestEmail) {
+                await sendConfirmationEmail(reservation._id);
+            }
+
+            // Send confirmation SMS if enabled
+            if (restaurant.notifications?.smsEnabled && restaurant.notifications?.sendConfirmations && reservation.guestPhone) {
+                await sendConfirmationSMS(reservation._id);
+            }
+
+            // Sync to POS if enabled
+            if (restaurant.posIntegration?.enabled && restaurant.posIntegration?.syncOrders) {
+                await syncReservationToPOS(reservation._id);
+            }
+
+            // Reload to get updated data
+            const updated = await RestaurantReservation.findById(reservation._id);
+            res.status(201).json(updated);
         } catch (err) {
             res.status(400).json({ error: err.message });
         }
@@ -136,6 +164,61 @@ module.exports = {
                 totalCapacity: restaurant.totalCapacity,
                 reservedCapacity
             });
+        } catch (err) {
+            res.status(400).json({ error: err.message });
+        }
+    },
+
+    async sendConfirmation(req, res) {
+        try {
+            const reservation = await RestaurantReservation.findById(req.params.id);
+            if (!reservation) return res.status(404).json({ error: 'Reservation not found' });
+
+            const results = {};
+
+            // Send email
+            if (reservation.guestEmail) {
+                results.email = await sendConfirmationEmail(reservation._id);
+            }
+
+            // Send SMS
+            if (reservation.guestPhone) {
+                results.sms = await sendConfirmationSMS(reservation._id);
+            }
+
+            res.json({ sent: true, results });
+        } catch (err) {
+            res.status(400).json({ error: err.message });
+        }
+    },
+
+    async sendReminder(req, res) {
+        try {
+            const reservation = await RestaurantReservation.findById(req.params.id);
+            if (!reservation) return res.status(404).json({ error: 'Reservation not found' });
+
+            const results = {};
+
+            // Send email
+            if (reservation.guestEmail) {
+                results.email = await sendReminderEmail(reservation._id);
+            }
+
+            // Send SMS
+            if (reservation.guestPhone) {
+                results.sms = await sendReminderSMS(reservation._id);
+            }
+
+            res.json({ sent: true, results });
+        } catch (err) {
+            res.status(400).json({ error: err.message });
+        }
+    },
+
+    async assignTable(req, res) {
+        try {
+            const result = await autoAssignTable(req.params.id);
+            res.json(result);
         } catch (err) {
             res.status(400).json({ error: err.message });
         }

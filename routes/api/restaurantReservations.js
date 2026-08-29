@@ -12,5 +12,8 @@ router.post('/create', restaurantReservationsCtrl.create);
 router.put('/:id', restaurantReservationsCtrl.update);
 router.delete('/:id', restaurantReservationsCtrl.delete);
 router.post('/:id/status', restaurantReservationsCtrl.updateStatus);
+router.post('/:id/send-confirmation', restaurantReservationsCtrl.sendConfirmation);
+router.post('/:id/send-reminder', restaurantReservationsCtrl.sendReminder);
+router.post('/:id/assign-table', restaurantReservationsCtrl.assignTable);
 
 module.exports = router;

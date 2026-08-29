@@ -25,7 +25,9 @@ const restaurantSchema = new Schema({
         number: { type: String, required: true },
         capacity: { type: Number, required: true },
         location: { type: String }, // Window, Patio, Indoor, etc.
-        type: { type: String } // Standard, Booth, Bar, Private
+        type: { type: String }, // Standard, Booth, Bar, Private
+        qrCode: { type: String }, // QR code data or URL
+        qrCodeGenerated: { type: Boolean, default: false }
     }],
     
     // Reservation settings
@@ -33,10 +35,36 @@ const restaurantSchema = new Schema({
     advanceBookingDays: { type: Number, default: 30 },
     minPartySize: { type: Number, default: 1 },
     maxPartySize: { type: Number, default: 20 },
+    waitlistEnabled: { type: Boolean, default: true },
+    autoAssignTables: { type: Boolean, default: true },
     
     // Contact
     phone: { type: String },
     email: { type: String },
+    
+    // Menu
+    menuUrl: { type: String },
+    menuPdfUrl: { type: String },
+    menuQrCode: { type: String },
+    
+    // POS Integration
+    posIntegration: {
+        enabled: { type: Boolean, default: false },
+        provider: { type: String }, // 'Square', 'Toast', 'Clover', etc.
+        locationId: { type: String },
+        apiKey: { type: String },
+        webhookUrl: { type: String },
+        syncOrders: { type: Boolean, default: false }
+    },
+    
+    // Email & SMS
+    notifications: {
+        emailEnabled: { type: Boolean, default: false },
+        smsEnabled: { type: Boolean, default: false },
+        sendConfirmations: { type: Boolean, default: false },
+        sendReminders: { type: Boolean, default: false },
+        reminderHoursBefore: { type: Number, default: 24 }
+    },
     
     // Status
     active: { type: Boolean, default: true },

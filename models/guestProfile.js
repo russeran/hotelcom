@@ -14,6 +14,13 @@ const guestProfileSchema = new Schema({
         temperature: { type: String }
     },
     
+    // Dining preferences
+    diningPreferences: {
+        seating: [{ type: String }], // Window, Quiet, Patio, Indoor, etc.
+        favoriteRestaurants: [{ type: String }],
+        preferredTimes: [{ type: String }]
+    },
+    
     // Special needs
     specialRequests: [{ type: String }],
     allergies: [{ type: String }],

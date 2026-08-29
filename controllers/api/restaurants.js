@@ -1,4 +1,5 @@
 const Restaurant = require('../../models/restaurant');
+const { generateAllTableQRCodes, generateMenuQRCode } = require('../../services/qrCodeService');
 
 module.exports = {
     async index(req, res) {
@@ -77,6 +78,28 @@ module.exports = {
             restaurant.tables = restaurant.tables.filter(t => t._id.toString() !== req.params.tableId);
             await restaurant.save();
             res.json(restaurant);
+        } catch (err) {
+            res.status(400).json({ error: err.message });
+        }
+    },
+
+    async generateQRCodes(req, res) {
+        try {
+            const result = await generateAllTableQRCodes(req.params.id);
+            const restaurant = await Restaurant.findById(req.params.id);
+            res.json({ ...result, restaurant });
+        } catch (err) {
+            res.status(400).json({ error: err.message });
+        }
+    },
+
+    async generateMenuQR(req, res) {
+        try {
+            const qrCode = await generateMenuQRCode(req.params.id);
+            const restaurant = await Restaurant.findById(req.params.id);
+            restaurant.menuQrCode = qrCode;
+            await restaurant.save();
+            res.json({ qrCode, restaurant });
         } catch (err) {
             res.status(400).json({ error: err.message });
         }
