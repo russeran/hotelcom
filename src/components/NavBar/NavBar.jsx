@@ -76,22 +76,73 @@ export default function NavBar({ user, setUser }) {
         <Navbar.Collapse id="main-nav">
           <Nav className="me-auto main-links">
             <Nav.Link as={NavLink} to="/" end onClick={closeNavbar}>Dashboard</Nav.Link>
-            <Nav.Link as={NavLink} to="/reservations" onClick={closeNavbar}>Reservations</Nav.Link>
-            <Nav.Link as={NavLink} to="/rooms" onClick={closeNavbar}>Rooms</Nav.Link>
-            <Nav.Link as={NavLink} to="/tasks" onClick={closeNavbar}>Tasks</Nav.Link>
-            <Nav.Link as={NavLink} to="/complaints" onClick={closeNavbar}>Complaints</Nav.Link>
-            <Nav.Link as={NavLink} to="/notes" onClick={closeNavbar}>Notes</Nav.Link>
-            <Nav.Link as={NavLink} to="/concierge" onClick={closeNavbar}>Concierge</Nav.Link>
-            <Nav.Link as={NavLink} to="/chat" onClick={closeNavbar}>Chat</Nav.Link>
-            <Nav.Link as={NavLink} to="/hotels" onClick={closeNavbar}>Hotels</Nav.Link>
-            <Nav.Link as={NavLink} to="/guest-profiles" onClick={closeNavbar}>Guest Profiles</Nav.Link>
-            <Nav.Link as={NavLink} to="/lost-and-found" onClick={closeNavbar}>Lost & Found</Nav.Link>
-            <Nav.Link as={NavLink} to="/packages" onClick={closeNavbar}>Packages</Nav.Link>
-            <Nav.Link as={NavLink} to="/restaurant-management" onClick={closeNavbar}>Restaurants</Nav.Link>
-            <Nav.Link as={NavLink} to="/restaurant-reservations" onClick={closeNavbar}>Dining</Nav.Link>
-            <Nav.Link as={NavLink} to="/waitlist" onClick={closeNavbar}>Waitlist</Nav.Link>
-            {canManage(user) && <Nav.Link as={NavLink} to="/reports" onClick={closeNavbar}>Reports</Nav.Link>}
-            {isAdmin(user) && <Nav.Link as={NavLink} to="/admin" onClick={closeNavbar}>Admin</Nav.Link>}
+            
+            <NavDropdown title="Front Desk" id="front-desk-dropdown">
+              <NavDropdown.Item as={NavLink} to="/reservations" onClick={closeNavbar}>
+                Reservations
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/rooms" onClick={closeNavbar}>
+                Rooms
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/guest-profiles" onClick={closeNavbar}>
+                Guest Profiles
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/complaints" onClick={closeNavbar}>
+                Complaints
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/notes" onClick={closeNavbar}>
+                Notes
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown title="Food & Beverage" id="fnb-dropdown">
+              <NavDropdown.Item as={NavLink} to="/restaurant-management" onClick={closeNavbar}>
+                Restaurant Management
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/restaurant-reservations" onClick={closeNavbar}>
+                Dining Reservations
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/waitlist" onClick={closeNavbar}>
+                Waitlist
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown title="Guest Services" id="guest-services-dropdown">
+              <NavDropdown.Item as={NavLink} to="/concierge" onClick={closeNavbar}>
+                Concierge
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/lost-and-found" onClick={closeNavbar}>
+                Lost & Found
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/packages" onClick={closeNavbar}>
+                Packages & Mail
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/hotels" onClick={closeNavbar}>
+                Nearby Hotels
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown title="Operations" id="operations-dropdown">
+              <NavDropdown.Item as={NavLink} to="/tasks" onClick={closeNavbar}>
+                Tasks
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/chat" onClick={closeNavbar}>
+                Team Chat
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            {canManage(user) && (
+              <NavDropdown title="Management" id="management-dropdown">
+                <NavDropdown.Item as={NavLink} to="/reports" onClick={closeNavbar}>
+                  Reports & Analytics
+                </NavDropdown.Item>
+                {isAdmin(user) && (
+                  <NavDropdown.Item as={NavLink} to="/admin" onClick={closeNavbar}>
+                    User Management
+                  </NavDropdown.Item>
+                )}
+              </NavDropdown>
+            )}
           </Nav>
 
           <div className="nav-right">

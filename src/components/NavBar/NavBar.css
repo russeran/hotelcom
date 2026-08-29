@@ -59,6 +59,55 @@
   box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.35);
 }
 
+/* Department Dropdowns */
+.main-links .dropdown-toggle {
+  color: var(--muted) !important;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 8px 12px !important;
+  border-radius: 10px;
+  transition: color 0.15s ease, background 0.15s ease;
+  background: transparent !important;
+  border: none !important;
+}
+.main-links .dropdown-toggle:hover { 
+  color: var(--text) !important; 
+  background: rgba(255, 255, 255, 0.05) !important; 
+}
+.main-links .dropdown-toggle.show {
+  color: #fff !important;
+  background: rgba(99, 102, 241, 0.18) !important;
+  box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.35);
+}
+.main-links .dropdown-toggle::after {
+  margin-left: 6px;
+  vertical-align: 0.1em;
+}
+.main-links .dropdown-menu {
+  background: var(--surface1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px;
+  margin-top: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.main-links .dropdown-item {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+.main-links .dropdown-item:hover {
+  color: var(--text-primary);
+  background: rgba(99, 102, 241, 0.12);
+}
+.main-links .dropdown-item.active,
+.main-links .dropdown-item:active {
+  color: #fff;
+  background: rgba(99, 102, 241, 0.25);
+}
+
 /* Right cluster */
 .nav-right {
   display: flex;
@@ -141,6 +190,19 @@
 
 @media (max-width: 991px) {
     .nav-right { margin-top: 12px; flex-wrap: wrap; }
+    
+    .main-links .dropdown-menu {
+        background: var(--surface2);
+        border: none;
+        box-shadow: none;
+        padding: 4px 0;
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .main-links .dropdown-item {
+        padding: 10px 20px 10px 32px;
+    }
 }
 
 /* Mobile dropdown fixes */
