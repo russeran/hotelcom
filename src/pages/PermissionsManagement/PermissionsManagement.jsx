@@ -211,7 +211,7 @@ export default function PermissionsManagement() {
 
             <div className="surface-card page-card mt-4">
                 <h3 className="mb-3">All Configured Permissions</h3>
-                <Table hover responsive>
+                <Table hover responsive className="permissions-management-table">
                     <thead>
                         <tr>
                             <th>Role</th>
@@ -240,7 +240,7 @@ export default function PermissionsManagement() {
                     </tbody>
                 </Table>
                 {permissions.length === 0 && (
-                    <div className="text-center text-muted py-4">
+                    <div className="text-center py-4" style={{ color: 'var(--text-secondary)' }}>
                         No custom permissions configured. Click "Initialize Defaults" to create default permission sets.
                     </div>
                 )}

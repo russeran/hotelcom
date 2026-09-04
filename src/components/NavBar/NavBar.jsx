@@ -75,8 +75,6 @@ export default function NavBar({ user, setUser }) {
         <Navbar.Toggle aria-controls="main-nav" />
         <Navbar.Collapse id="main-nav">
           <Nav className="me-auto main-links">
-            <Nav.Link as={NavLink} to="/" end onClick={closeNavbar}>Dashboard</Nav.Link>
-            
             <NavDropdown title="Front Desk" id="front-desk-dropdown">
               <NavDropdown.Item as={NavLink} to="/reservations" onClick={closeNavbar}>
                 Reservations
