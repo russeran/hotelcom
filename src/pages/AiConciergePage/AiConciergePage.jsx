@@ -4,7 +4,6 @@ import * as aiConciergeAPI from '../../utilities/aiConcierge-api';
 import './AiConciergePage.css';
 
 export default function AiConciergePage() {
-    const [showWelcome, setShowWelcome] = useState(true);
     const [sessionId, setSessionId] = useState(null);
     const [messages, setMessages] = useState([]);
     const [inputText, setInputText] = useState('');
@@ -29,54 +28,28 @@ export default function AiConciergePage() {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, isTyping]);
 
-    // Start conversation when user clicks to start
-    async function startChat(quickAction = null) {
-        setShowWelcome(false);
-        try {
-            const data = await aiConciergeAPI.startConversation();
-            setSessionId(data.sessionId);
-            const initialMessages = [{
-                role: 'ai',
-                content: data.message,
-                timestamp: new Date()
-            }];
-            
-            // If quick action selected, automatically send it
-            if (quickAction) {
-                initialMessages.push({
-                    role: 'guest',
-                    content: quickAction,
+    // Start conversation on mount
+    useEffect(() => {
+        async function init() {
+            try {
+                const data = await aiConciergeAPI.startConversation();
+                setSessionId(data.sessionId);
+                setMessages([{
+                    role: 'ai',
+                    content: data.message,
                     timestamp: new Date()
-                });
-                setMessages(initialMessages);
-                setIsTyping(true);
-                
-                // Send the quick action message to AI
-                try {
-                    const response = await aiConciergeAPI.sendMessage(data.sessionId, quickAction);
-                    setMessages(prev => [...prev, {
-                        role: 'ai',
-                        content: response.message,
-                        timestamp: new Date(),
-                        action: response.action
-                    }]);
-                } catch (error) {
-                    console.error('Quick action error:', error);
-                } finally {
-                    setIsTyping(false);
-                }
-            } else {
-                setMessages(initialMessages);
+                }]);
+            } catch (error) {
+                console.error('Failed to start conversation:', error);
+                setMessages([{
+                    role: 'ai',
+                    content: 'Sorry, I\'m having trouble connecting. Please refresh the page or contact the front desk.',
+                    timestamp: new Date()
+                }]);
             }
-        } catch (error) {
-            console.error('Failed to start conversation:', error);
-            setMessages([{
-                role: 'ai',
-                content: 'Sorry, I\'m having trouble connecting. Please refresh the page or contact the front desk.',
-                timestamp: new Date()
-            }]);
         }
-    }
+        init();
+    }, []);
 
     async function handleVerification(e) {
         e.preventDefault();
@@ -192,124 +165,12 @@ export default function AiConciergePage() {
 
     const needsVerification = !verified && messages.length > 1;
 
-    // Welcome Screen with Guest Type Selection
-    if (showWelcome) {
-        return (
-            <div className="ai-concierge-page">
-                <div className="ai-welcome-container">
-                    <div className="ai-welcome-hero">
-                        <div className="ai-welcome-icon">🤖</div>
-                        <h1>AI Hotel Concierge</h1>
-                        <p className="ai-welcome-subtitle">Your personal 24/7 virtual assistant</p>
-                        
-                        <div className="ai-welcome-features">
-                            <div className="ai-feature-badge">
-                                <span className="ai-feature-icon">⚡</span>
-                                <span>Instant Response</span>
-                            </div>
-                            <div className="ai-feature-badge">
-                                <span className="ai-feature-icon">🔒</span>
-                                <span>Secure & Private</span>
-                            </div>
-                            <div className="ai-feature-badge">
-                                <span className="ai-feature-icon">🌟</span>
-                                <span>24/7 Available</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="ai-guest-types-section">
-                        <h3>I'm a...</h3>
-                        <p className="text-muted mb-3">Tell us your status so we can assist you better</p>
-                        
-                        <div className="ai-guest-types-grid">
-                            <button className="ai-guest-type-card" onClick={() => startChat("I'm currently staying at the hotel")}>
-                                <span className="ai-guest-type-icon">🏨</span>
-                                <h4>Current Guest</h4>
-                                <p>In-house services, requests, complaints</p>
-                            </button>
-                            
-                            <button className="ai-guest-type-card" onClick={() => startChat("I have an upcoming reservation")}>
-                                <span className="ai-guest-type-icon">📅</span>
-                                <h4>Future Guest</h4>
-                                <p>Check reservation, modify dates, questions</p>
-                            </button>
-                            
-                            <button className="ai-guest-type-card" onClick={() => startChat("I'm interested in booking a room")}>
-                                <span className="ai-guest-type-icon">🔍</span>
-                                <h4>Prospective Guest</h4>
-                                <p>Availability, rates, amenities, location</p>
-                            </button>
-                            
-                            <button className="ai-guest-type-card" onClick={() => startChat("I recently checked out")}>
-                                <span className="ai-guest-type-icon">✅</span>
-                                <h4>Past Guest</h4>
-                                <p>Billing, feedback, lost items, receipts</p>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="ai-quick-actions-section">
-                        <h3>Common Requests</h3>
-                        
-                        <div className="ai-quick-actions-grid">
-                            <button className="ai-quick-action-card" onClick={() => startChat("I need extra towels in my room")}>
-                                <span className="ai-quick-icon">🛁</span>
-                                <h4>Housekeeping</h4>
-                                <p>Towels, cleaning</p>
-                            </button>
-                            
-                            <button className="ai-quick-action-card" onClick={() => startChat("Something in my room needs repair")}>
-                                <span className="ai-quick-icon">🔧</span>
-                                <h4>Maintenance</h4>
-                                <p>Repairs, issues</p>
-                            </button>
-                            
-                            <button className="ai-quick-action-card" onClick={() => startChat("What's the WiFi password?")}>
-                                <span className="ai-quick-icon">📶</span>
-                                <h4>Information</h4>
-                                <p>WiFi, amenities</p>
-                            </button>
-                            
-                            <button className="ai-quick-action-card" onClick={() => startChat("Can you recommend a restaurant nearby?")}>
-                                <span className="ai-quick-icon">🍽️</span>
-                                <h4>Recommendations</h4>
-                                <p>Dining, attractions</p>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="ai-welcome-stats">
-                        <div className="ai-stat">
-                            <div className="ai-stat-value">24/7</div>
-                            <div className="ai-stat-label">Always Available</div>
-                        </div>
-                        <div className="ai-stat">
-                            <div className="ai-stat-value">&lt;30s</div>
-                            <div className="ai-stat-label">Average Response</div>
-                        </div>
-                        <div className="ai-stat">
-                            <div className="ai-stat-value">98%</div>
-                            <div className="ai-stat-label">Guest Satisfaction</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    // Chat Interface
     return (
         <div className="ai-concierge-page">
             <div className="ai-chat-container">
                 <div className="ai-chat-header">
-                    <button className="ai-back-btn" onClick={() => { setShowWelcome(true); setMessages([]); setSessionId(null); }}>
-                        ← Back
-                    </button>
-                    <div>
-                        <h2>🤖 AI Hotel Concierge</h2>
-                        <p>{verified ? `Welcome, ${guestName}!` : 'Your 24/7 virtual assistant'}</p>
-                    </div>
+                    <h2>🤖 AI Hotel Concierge</h2>
+                    <p>{verified ? `Welcome, ${guestName}!` : 'Your 24/7 virtual assistant'}</p>
                 </div>
 
                 <div className="ai-chat-messages">
