@@ -3,7 +3,6 @@ import { Button } from 'react-bootstrap';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import './Home.css';
 import 'react-grid-layout/css/styles.css';
-import 'react-grid-layout/css/resizable.css';
 import DashboardCard from '../../components/DashboardCard/DashboardCard';
 import StatCard from '../../components/StatCard/StatCard';
 import * as tasksAPI from '../../utilities/tasks-api';
