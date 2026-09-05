@@ -30,7 +30,6 @@ export default function Home({ user, setUser }) {
     const [loading, setLoading] = useState(true);
     const [customizeMode, setCustomizeMode] = useState(false);
     const [layout, setLayout] = useState([]);
-    const [availableCards, setAvailableCards] = useState([]);
 
     const loadData = useCallback(async () => {
         const [tasks, complaints, notes, concierges, notifications, messages, rooms, reservations] = await Promise.all([
@@ -149,7 +148,7 @@ export default function Home({ user, setUser }) {
     async function handleResetDashboard() {
         if (!window.confirm('Reset dashboard to default layout?')) return;
         try {
-            const prefs = await userPreferencesAPI.resetDashboard();
+            await userPreferencesAPI.resetDashboard();
             await loadPreferences();
         } catch (err) {
             console.error('Failed to reset dashboard:', err);
