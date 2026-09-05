@@ -51,6 +51,9 @@
     border-radius: 6px;
     border: 1px solid var(--border);
     transition: all 0.2s;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
 }
 
 .permission-item:hover {
@@ -60,25 +63,45 @@
 
 .permission-item .form-check {
     margin: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 0;
 }
 
 .permission-item .form-check-label {
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
     font-weight: 500;
     font-size: 0.9rem;
     cursor: pointer;
     user-select: none;
+    padding-left: 0.5rem;
+    flex: 1;
+    margin-bottom: 0;
+    line-height: 1.5;
 }
 
 .permission-item .form-check-input {
     cursor: pointer;
     width: 2.5rem;
     height: 1.25rem;
+    margin-top: 0;
+    float: none;
+    margin-left: 0;
 }
 
 .permission-item .form-check-input:checked {
     background-color: var(--primary);
     border-color: var(--primary);
+}
+
+/* Force label visibility */
+.permission-item .form-check-label,
+.permissions-grid .form-check-label {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    color: #e0e0e0 !important;
 }
 
 .form-actions {
@@ -126,6 +149,24 @@
 @media (max-width: 768px) {
     .permissions-grid {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .permission-item {
+        padding: 1rem;
+        min-height: 60px;
+    }
+    
+    .permission-item .form-check-label {
+        font-size: 0.95rem;
+        padding-left: 0.75rem;
+        line-height: 1.4;
+    }
+    
+    .permission-item .form-check-input {
+        width: 3rem;
+        height: 1.5rem;
+        flex-shrink: 0;
     }
     
     .form-actions {
@@ -134,5 +175,14 @@
     
     .form-actions button {
         width: 100%;
+    }
+    
+    .permissions-management-table {
+        font-size: 0.85rem;
+    }
+    
+    .permissions-management-table thead th,
+    .permissions-management-table tbody td {
+        padding: 0.5rem;
     }
 }
