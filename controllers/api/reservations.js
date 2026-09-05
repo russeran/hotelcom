@@ -1,5 +1,6 @@
 const Reservation = require('../../models/reservation')
 const Room = require('../../models/room')
+const GuestProfile = require('../../models/guestProfile')
 const notifications = require('./notifications')
 const audit = require('./audit')
 
@@ -25,6 +26,21 @@ async function create(req, res) {
         status: req.body.status,
         createdBy: req.user.name
     })
+    
+    // Guest Profile integration: find or create a profile for this guest
+    try {
+        let profile = await GuestProfile.findOne({ name: req.body.guestName })
+        if (!profile) {
+            profile = await GuestProfile.create({
+                name: req.body.guestName,
+                totalStays: 0,
+                createdBy: req.user.name
+            })
+        }
+    } catch (err) {
+        console.error('Guest profile creation failed:', err)
+    }
+    
     await audit.record({ req, action: 'create', entity: 'reservation', entityId: reservation._id, details: `${reservation.guestName} · room ${reservation.room || '—'}` })
     res.json(reservation)
 }
@@ -48,6 +64,18 @@ async function update(req, res) {
                 message: `Room ${reservation.room} checked out — needs cleaning`,
                 type: 'task'
             })
+            
+            // Guest Profile integration: update stay history on checkout
+            try {
+                const profile = await GuestProfile.findOne({ name: reservation.guestName })
+                if (profile) {
+                    profile.totalStays = (profile.totalStays || 0) + 1
+                    profile.lastStay = new Date()
+                    await profile.save()
+                }
+            } catch (err) {
+                console.error('Guest profile update failed:', err)
+            }
         }
     }
 

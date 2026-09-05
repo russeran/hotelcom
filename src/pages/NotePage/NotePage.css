@@ -1,1 +1,34 @@
 /* Note page uses the shared .page / .toolbar layout defined in index.css */
+
+/* Add button styling */
+.note-add-btn {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border: none;
+    padding: 0.625rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(112, 107, 255, 0.3);
+}
+
+.note-add-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(112, 107, 255, 0.4);
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .note-add-btn {
+        width: 100%;
+        padding: 0.75rem;
+    }
+}

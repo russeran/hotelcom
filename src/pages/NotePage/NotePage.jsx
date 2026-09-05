@@ -7,6 +7,7 @@ import './NotePage.css';
 
 export default function NotePage() {
     const [notes, setNotes] = useState([]);
+    const [showForm, setShowForm] = useState(false);
 
     useEffect(function () {
         async function getAllNotes() {
@@ -19,6 +20,7 @@ export default function NotePage() {
     async function addNote(note) {
         const newNote = await notesAPI.addANote(note);
         setNotes([newNote, ...notes]);
+        setShowForm(false);
     }
 
     async function handleDelete(noteId) {
@@ -33,11 +35,19 @@ export default function NotePage() {
                     <h1 className="section-title">Shift Handover Notes</h1>
                     <p className="section-subtitle">{notes.length} note{notes.length === 1 ? '' : 's'} logged</p>
                 </div>
+                <button 
+                    className="note-add-btn"
+                    onClick={() => setShowForm(!showForm)}
+                >
+                    {showForm ? '✕ Cancel' : '+ New Note'}
+                </button>
             </header>
 
-            <div className="surface-card page-card">
-                <NoteForm addNote={addNote} />
-            </div>
+            {showForm && (
+                <div className="surface-card page-card">
+                    <NoteForm addNote={addNote} />
+                </div>
+            )}
 
             <div className="surface-card page-card">
                 {notes.length === 0 ? (

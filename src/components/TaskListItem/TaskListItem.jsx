@@ -1,6 +1,5 @@
 import './TaskListItem.css'
 import { Button, Form } from "react-bootstrap";
-import StatusBadge from "../StatusBadge/StatusBadge";
 import PriorityBadge from "../PriorityBadge/PriorityBadge";
 
 const CLOSED = ['done', 'resolved', 'complete', 'completed', 'closed', 'cancelled'];
