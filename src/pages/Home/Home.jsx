@@ -30,6 +30,9 @@ export default function Home({ user, setUser }) {
     const [loading, setLoading] = useState(true);
     const [customizeMode, setCustomizeMode] = useState(false);
     const [layout, setLayout] = useState([]);
+    
+    const allAvailableCards = ['tasks', 'complaints', 'arrivals', 'occupied', 'to-clean', 'notifications', 'messages', 'concierge', 'recent-alerts', 'latest-chat'];
+    const hiddenCards = allAvailableCards.filter(cardId => !layout.find(l => l.i === cardId));
 
     const loadData = useCallback(async () => {
         const [tasks, complaints, notes, concierges, notifications, messages, rooms, reservations] = await Promise.all([
@@ -55,25 +58,25 @@ export default function Home({ user, setUser }) {
                     .filter(c => c.visible)
                     .map((c, idx) => ({
                         i: c.id,
-                        x: (idx % 4) * 3,
-                        y: Math.floor(idx / 4) * 2,
-                        w: c.size === 'small' ? 3 : c.size === 'large' ? 12 : 6,
-                        h: c.size === 'small' ? 1 : 2
+                        x: (idx % 2) * 6,  // 2 columns on mobile
+                        y: Math.floor(idx / 2) * 2,
+                        w: 6,  // Half width (mobile-first)
+                        h: 2
                     }));
                 setLayout(gridLayout);
             } else {
-                // Use default layout
+                // Use default mobile-friendly layout
                 const defaultCards = [
-                    { i: 'arrivals', x: 0, y: 0, w: 3, h: 1 },
-                    { i: 'occupied', x: 3, y: 0, w: 3, h: 1 },
-                    { i: 'to-clean', x: 6, y: 0, w: 3, h: 1 },
-                    { i: 'tasks', x: 9, y: 0, w: 3, h: 1 },
-                    { i: 'complaints', x: 0, y: 1, w: 3, h: 1 },
-                    { i: 'notifications', x: 3, y: 1, w: 3, h: 1 },
-                    { i: 'messages', x: 6, y: 1, w: 3, h: 1 },
-                    { i: 'concierge', x: 9, y: 1, w: 3, h: 1 },
-                    { i: 'recent-alerts', x: 0, y: 2, w: 6, h: 2 },
-                    { i: 'latest-chat', x: 6, y: 2, w: 6, h: 2 }
+                    { i: 'tasks', x: 0, y: 0, w: 6, h: 2 },
+                    { i: 'complaints', x: 6, y: 0, w: 6, h: 2 },
+                    { i: 'arrivals', x: 0, y: 2, w: 6, h: 2 },
+                    { i: 'occupied', x: 6, y: 2, w: 6, h: 2 },
+                    { i: 'to-clean', x: 0, y: 4, w: 6, h: 2 },
+                    { i: 'notifications', x: 6, y: 4, w: 6, h: 2 },
+                    { i: 'messages', x: 0, y: 6, w: 6, h: 2 },
+                    { i: 'concierge', x: 6, y: 6, w: 6, h: 2 },
+                    { i: 'recent-alerts', x: 0, y: 8, w: 12, h: 3 },
+                    { i: 'latest-chat', x: 0, y: 11, w: 12, h: 3 }
                 ];
                 setLayout(defaultCards);
             }
@@ -81,16 +84,16 @@ export default function Home({ user, setUser }) {
             console.error('Failed to load preferences:', err);
             // Fallback to default layout
             const defaultCards = [
-                { i: 'arrivals', x: 0, y: 0, w: 3, h: 1 },
-                { i: 'occupied', x: 3, y: 0, w: 3, h: 1 },
-                { i: 'to-clean', x: 6, y: 0, w: 3, h: 1 },
-                { i: 'tasks', x: 9, y: 0, w: 3, h: 1 },
-                { i: 'complaints', x: 0, y: 1, w: 3, h: 1 },
-                { i: 'notifications', x: 3, y: 1, w: 3, h: 1 },
-                { i: 'messages', x: 6, y: 1, w: 3, h: 1 },
-                { i: 'concierge', x: 9, y: 1, w: 3, h: 1 },
-                { i: 'recent-alerts', x: 0, y: 2, w: 6, h: 2 },
-                { i: 'latest-chat', x: 6, y: 2, w: 6, h: 2 }
+                { i: 'tasks', x: 0, y: 0, w: 6, h: 2 },
+                { i: 'complaints', x: 6, y: 0, w: 6, h: 2 },
+                { i: 'arrivals', x: 0, y: 2, w: 6, h: 2 },
+                { i: 'occupied', x: 6, y: 2, w: 6, h: 2 },
+                { i: 'to-clean', x: 0, y: 4, w: 6, h: 2 },
+                { i: 'notifications', x: 6, y: 4, w: 6, h: 2 },
+                { i: 'messages', x: 0, y: 6, w: 6, h: 2 },
+                { i: 'concierge', x: 6, y: 6, w: 6, h: 2 },
+                { i: 'recent-alerts', x: 0, y: 8, w: 12, h: 3 },
+                { i: 'latest-chat', x: 0, y: 11, w: 12, h: 3 }
             ];
             setLayout(defaultCards);
         }
@@ -282,15 +285,17 @@ export default function Home({ user, setUser }) {
 
             <ResponsiveGridLayout
                 className="dashboard-grid"
-                layouts={{ lg: layout }}
+                layouts={{ lg: layout, md: layout, sm: layout, xs: layout, xxs: layout }}
                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-                cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                rowHeight={150}
+                cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
+                rowHeight={80}
                 isDraggable={customizeMode}
-                isResizable={customizeMode}
+                isResizable={false}
                 onLayoutChange={handleLayoutChange}
                 compactType="vertical"
                 preventCollision={false}
+                margin={[16, 16]}
+                containerPadding={[0, 0]}
             >
                 {layout.map((l) => (
                     <div key={l.i}>
