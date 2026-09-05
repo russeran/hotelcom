@@ -144,19 +144,26 @@ export default function PermissionsManagement() {
                             <Accordion.Header>📄 Page Access ({Object.values(currentPermission.permissions.pages).filter(Boolean).length} enabled)</Accordion.Header>
                             <Accordion.Body>
                                 <div className="permissions-grid">
-                                    {Object.keys(currentPermission.permissions.pages).map(key => (
-                                        <div key={key} className="permission-item">
-                                            <Form.Check
-                                                type="switch"
-                                                id={`page-${key}`}
-                                                checked={currentPermission.permissions.pages[key]}
-                                                onChange={() => handleToggle('pages', key)}
-                                            />
-                                            <label htmlFor={`page-${key}`} className="permission-label">
-                                                {formatLabel(key)}
-                                            </label>
-                                        </div>
-                                    ))}
+                                    {Object.keys(currentPermission.permissions.pages).map(key => {
+                                        console.log('Page key:', key, 'Label:', formatLabel(key));
+                                        return (
+                                            <div key={key} className="permission-item">
+                                                <Form.Check
+                                                    type="switch"
+                                                    id={`page-${key}`}
+                                                    checked={currentPermission.permissions.pages[key]}
+                                                    onChange={() => handleToggle('pages', key)}
+                                                />
+                                                <label 
+                                                    htmlFor={`page-${key}`} 
+                                                    className="permission-label"
+                                                    style={{ color: '#ffffff', fontSize: '16px', fontWeight: '500' }}
+                                                >
+                                                    {formatLabel(key)}
+                                                </label>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </Accordion.Body>
                         </Accordion.Item>
@@ -173,7 +180,11 @@ export default function PermissionsManagement() {
                                                 checked={currentPermission.permissions.dashboardCards[key]}
                                                 onChange={() => handleToggle('dashboardCards', key)}
                                             />
-                                            <label htmlFor={`card-${key}`} className="permission-label">
+                                            <label 
+                                                htmlFor={`card-${key}`} 
+                                                className="permission-label"
+                                                style={{ color: '#ffffff', fontSize: '16px', fontWeight: '500' }}
+                                            >
                                                 {formatLabel(key)}
                                             </label>
                                         </div>
@@ -194,7 +205,11 @@ export default function PermissionsManagement() {
                                                 checked={currentPermission.permissions.actions[key]}
                                                 onChange={() => handleToggle('actions', key)}
                                             />
-                                            <label htmlFor={`action-${key}`} className="permission-label">
+                                            <label 
+                                                htmlFor={`action-${key}`} 
+                                                className="permission-label"
+                                                style={{ color: '#ffffff', fontSize: '16px', fontWeight: '500' }}
+                                            >
                                                 {formatLabel(key)}
                                             </label>
                                         </div>
