@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
-import { Responsive, WidthProvider } from 'react-grid-layout';
+import { Responsive, WidthProvider } from 'react-grid-layout/legacy';
 import './Home.css';
 import 'react-grid-layout/css/styles.css';
 import DashboardCard from '../../components/DashboardCard/DashboardCard';
