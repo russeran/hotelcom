@@ -149,10 +149,12 @@ export default function PermissionsManagement() {
                                             <Form.Check
                                                 type="switch"
                                                 id={`page-${key}`}
-                                                label={formatLabel(key)}
                                                 checked={currentPermission.permissions.pages[key]}
                                                 onChange={() => handleToggle('pages', key)}
                                             />
+                                            <label htmlFor={`page-${key}`} className="permission-label">
+                                                {formatLabel(key)}
+                                            </label>
                                         </div>
                                     ))}
                                 </div>
@@ -168,10 +170,12 @@ export default function PermissionsManagement() {
                                             <Form.Check
                                                 type="switch"
                                                 id={`card-${key}`}
-                                                label={formatLabel(key)}
                                                 checked={currentPermission.permissions.dashboardCards[key]}
                                                 onChange={() => handleToggle('dashboardCards', key)}
                                             />
+                                            <label htmlFor={`card-${key}`} className="permission-label">
+                                                {formatLabel(key)}
+                                            </label>
                                         </div>
                                     ))}
                                 </div>
@@ -187,10 +191,12 @@ export default function PermissionsManagement() {
                                             <Form.Check
                                                 type="switch"
                                                 id={`action-${key}`}
-                                                label={formatLabel(key)}
                                                 checked={currentPermission.permissions.actions[key]}
                                                 onChange={() => handleToggle('actions', key)}
                                             />
+                                            <label htmlFor={`action-${key}`} className="permission-label">
+                                                {formatLabel(key)}
+                                            </label>
                                         </div>
                                     ))}
                                 </div>
