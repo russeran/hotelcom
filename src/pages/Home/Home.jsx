@@ -55,15 +55,26 @@ export default function Home({ user, setUser }) {
             const prefs = await userPreferencesAPI.getPreferences();
             if (prefs.dashboardLayout && prefs.dashboardLayout.cards && prefs.dashboardLayout.cards.length > 0) {
                 const cards = prefs.dashboardLayout.cards;
+                let yPosition = 0;
                 const gridLayout = cards
                     .filter(c => c.visible)
-                    .map((c, idx) => ({
-                        i: c.id,
-                        x: (idx % 2) * 6,  // 2 columns on mobile
-                        y: Math.floor(idx / 2) * 2,
-                        w: 6,  // Half width (mobile-first)
-                        h: 2
-                    }));
+                    .map((c) => {
+                        // List cards (recent-alerts, latest-chat) get full width
+                        const isListCard = c.id === 'recent-alerts' || c.id === 'latest-chat';
+                        const width = isListCard ? 12 : 6;
+                        const height = isListCard ? 3 : 2;
+                        
+                        const card = {
+                            i: c.id,
+                            x: isListCard ? 0 : (yPosition % 2) * 6,
+                            y: Math.floor(yPosition / (isListCard ? 1 : 2)),
+                            w: width,
+                            h: height
+                        };
+                        
+                        yPosition += isListCard ? 2 : 1; // Full-width cards count as 2 positions
+                        return card;
+                    });
                 setLayout(gridLayout);
             } else {
                 // Use default mobile-friendly layout
@@ -151,12 +162,16 @@ export default function Home({ user, setUser }) {
 
     async function handleAddCard(cardId) {
         const maxY = layout.length > 0 ? Math.max(...layout.map(l => l.y + l.h)) : 0;
+        
+        // List cards get full width and more height
+        const isListCard = cardId === 'recent-alerts' || cardId === 'latest-chat';
+        
         const newCard = {
             i: cardId,
             x: 0,
             y: maxY,
-            w: 6,
-            h: 2
+            w: isListCard ? 12 : 6,
+            h: isListCard ? 3 : 2
         };
         const newLayout = [...layout, newCard];
         setLayout(newLayout);
