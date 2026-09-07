@@ -53,49 +53,21 @@ async function resetDashboard(req, res) {
 }
 
 function getDefaultCards(user) {
-    const baseCards = [
-        { id: 'clock', type: 'clock', title: 'Current Time', position: 0, visible: true, size: 'small' },
-        { id: 'weather', type: 'weather', title: 'Weather', position: 1, visible: true, size: 'small' },
-        { id: 'tasks', type: 'count', title: 'My Tasks', position: 2, visible: true, size: 'medium' },
-        { id: 'guest-request', type: 'form', title: 'Log Guest Request', position: 3, visible: true, size: 'large' }
+    // Default cards that match frontend renderCard cases
+    const defaultCards = [
+        { id: 'tasks', type: 'stat', title: 'Open Tasks', position: 0, visible: true, size: 'medium' },
+        { id: 'complaints', type: 'stat', title: 'Complaints', position: 1, visible: true, size: 'medium' },
+        { id: 'arrivals', type: 'stat', title: 'Arrivals Today', position: 2, visible: true, size: 'medium' },
+        { id: 'occupied', type: 'stat', title: 'Occupied Rooms', position: 3, visible: true, size: 'medium' },
+        { id: 'to-clean', type: 'stat', title: 'To Clean', position: 4, visible: true, size: 'medium' },
+        { id: 'notifications', type: 'stat', title: 'Notifications', position: 5, visible: true, size: 'medium' },
+        { id: 'messages', type: 'stat', title: 'Messages', position: 6, visible: true, size: 'medium' },
+        { id: 'concierge', type: 'stat', title: 'Concierge', position: 7, visible: true, size: 'medium' },
+        { id: 'recent-alerts', type: 'list', title: 'Recent Alerts', position: 8, visible: true, size: 'large' },
+        { id: 'latest-chat', type: 'list', title: 'Latest Chat', position: 9, visible: true, size: 'large' }
     ];
     
-    // Add role/department specific cards
-    const roleCards = [];
-    
-    if (user.department === 'Front Desk' || user.role === 'manager' || user.role === 'admin') {
-        roleCards.push(
-            { id: 'reservations', type: 'count', title: 'Reservations', position: 4, visible: true, size: 'medium' },
-            { id: 'rooms', type: 'count', title: 'Rooms', position: 5, visible: true, size: 'medium' },
-            { id: 'complaints', type: 'count', title: 'Complaints', position: 6, visible: true, size: 'medium' }
-        );
-    }
-    
-    if (user.department === 'Food & Beverage' || user.role === 'manager' || user.role === 'admin') {
-        roleCards.push(
-            { id: 'restaurants', type: 'count', title: 'Restaurants', position: 7, visible: true, size: 'medium' },
-            { id: 'waitlist', type: 'count', title: 'Waitlist', position: 8, visible: true, size: 'medium' }
-        );
-    }
-    
-    if (user.department === 'Concierge' || user.role === 'manager' || user.role === 'admin') {
-        roleCards.push(
-            { id: 'concierge', type: 'count', title: 'Concierge Items', position: 9, visible: true, size: 'medium' },
-            { id: 'packages', type: 'count', title: 'Packages', position: 10, visible: true, size: 'medium' }
-        );
-    }
-    
-    if (user.department === 'Housekeeping' || user.role === 'manager' || user.role === 'admin') {
-        roleCards.push(
-            { id: 'lost-found', type: 'count', title: 'Lost & Found', position: 11, visible: true, size: 'medium' }
-        );
-    }
-    
-    roleCards.push(
-        { id: 'notes', type: 'count', title: 'Notes', position: 12, visible: true, size: 'medium' }
-    );
-    
-    return [...baseCards, ...roleCards];
+    return defaultCards;
 }
 
 module.exports = {
