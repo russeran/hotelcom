@@ -30,6 +30,10 @@ export default function Home({ user, setUser }) {
     const [loading, setLoading] = useState(true);
     const [customizeMode, setCustomizeMode] = useState(false);
     const [layout, setLayout] = useState([]);
+    const [showAddCards, setShowAddCards] = useState(false);
+
+    const allAvailableCards = ['tasks', 'complaints', 'arrivals', 'occupied', 'to-clean', 'notifications', 'messages', 'concierge', 'recent-alerts', 'latest-chat'];
+    const hiddenCards = allAvailableCards.filter(cardId => !layout.find(l => l.i === cardId));
 
     const loadData = useCallback(async () => {
         const [tasks, complaints, notes, concierges, notifications, messages, rooms, reservations] = await Promise.all([
@@ -143,6 +147,21 @@ export default function Home({ user, setUser }) {
         const newLayout = layout.filter(l => l.i !== cardId);
         setLayout(newLayout);
         await handleLayoutChange(newLayout);
+    }
+
+    async function handleAddCard(cardId) {
+        const maxY = layout.length > 0 ? Math.max(...layout.map(l => l.y + l.h)) : 0;
+        const newCard = {
+            i: cardId,
+            x: 0,
+            y: maxY,
+            w: 6,
+            h: 2
+        };
+        const newLayout = [...layout, newCard];
+        setLayout(newLayout);
+        await handleLayoutChange(newLayout);
+        setShowAddCards(false);
     }
 
     async function handleResetDashboard() {
@@ -259,6 +278,11 @@ export default function Home({ user, setUser }) {
                     <p className="section-subtitle">{today} · Front desk overview</p>
                 </div>
                 <div className="dash-header-actions">
+                    {customizeMode && hiddenCards.length > 0 && (
+                        <Button variant="outline-success" size="sm" onClick={() => setShowAddCards(!showAddCards)}>
+                            + Add Cards ({hiddenCards.length})
+                        </Button>
+                    )}
                     {customizeMode && (
                         <Button variant="outline-secondary" size="sm" onClick={handleResetDashboard}>
                             Reset to Default
@@ -280,6 +304,25 @@ export default function Home({ user, setUser }) {
                 </div>
             )}
 
+            {customizeMode && showAddCards && hiddenCards.length > 0 && (
+                <div className="add-cards-panel surface-card" style={{ marginBottom: '1.5rem', padding: '1rem' }}>
+                    <h4 style={{ marginBottom: '1rem', color: 'var(--text)' }}>Available Cards</h4>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.75rem' }}>
+                        {hiddenCards.map(cardId => (
+                            <Button 
+                                key={cardId} 
+                                variant="outline-primary" 
+                                size="sm"
+                                onClick={() => handleAddCard(cardId)}
+                                style={{ textAlign: 'left' }}
+                            >
+                                + {cardId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                            </Button>
+                        ))}
+                    </div>
+                </div>
+            )}
+
             <ResponsiveGridLayout
                 className="dashboard-grid"
                 layouts={{ lg: layout, md: layout, sm: layout, xs: layout, xxs: layout }}
@@ -291,7 +334,7 @@ export default function Home({ user, setUser }) {
                 onLayoutChange={handleLayoutChange}
                 compactType="vertical"
                 preventCollision={false}
-                margin={[16, 16]}
+                margin={[8, 8]}
                 containerPadding={[0, 0]}
             >
                 {layout.map((l) => (
