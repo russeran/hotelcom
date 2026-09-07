@@ -30,9 +30,6 @@ export default function Home({ user, setUser }) {
     const [loading, setLoading] = useState(true);
     const [customizeMode, setCustomizeMode] = useState(false);
     const [layout, setLayout] = useState([]);
-    
-    const allAvailableCards = ['tasks', 'complaints', 'arrivals', 'occupied', 'to-clean', 'notifications', 'messages', 'concierge', 'recent-alerts', 'latest-chat'];
-    const hiddenCards = allAvailableCards.filter(cardId => !layout.find(l => l.i === cardId));
 
     const loadData = useCallback(async () => {
         const [tasks, complaints, notes, concierges, notifications, messages, rooms, reservations] = await Promise.all([
