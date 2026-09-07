@@ -1,0 +1,215 @@
+/* Lost & Found Page uses shared .page layout */
+
+.lf-add-btn {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border: none;
+    padding: 0.625rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(112, 107, 255, 0.3);
+}
+
+.lf-add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(112, 107, 255, 0.4);
+}
+
+/* Desktop Grid */
+.lf-grid-desktop {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+}
+
+.lf-card {
+    background: var(--surface-3);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+}
+
+.lf-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.lf-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+    gap: 0.5rem;
+}
+
+.lf-card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 0.5rem 0;
+}
+
+.lf-card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.lf-card-actions button {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.35rem 0.6rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.lf-card-actions button:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.lf-card-detail {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 0.35rem;
+}
+
+/* Mobile List - hidden by default */
+.lf-list-mobile {
+    display: none;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .lf-add-btn {
+        width: 100%;
+        padding: 0.75rem;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+    }
+
+    .search-box {
+        width: 100%;
+        max-width: none;
+    }
+
+    .filter-pills {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .filter-pills .pill {
+        flex: 1;
+        min-width: 70px;
+        text-align: center;
+    }
+
+    /* Hide desktop grid, show mobile list */
+    .lf-grid-desktop {
+        display: none;
+    }
+
+    .lf-list-mobile {
+        display: block;
+    }
+
+    .lf-card-mobile {
+        background: var(--surface-3);
+        border: 1px solid var(--border-strong);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .lf-mobile-header {
+        margin-bottom: 0.75rem;
+    }
+
+    .lf-mobile-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 0.5rem;
+    }
+
+    .lf-mobile-badges {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .lf-mobile-details {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 0.75rem;
+    }
+
+    .lf-mobile-details > div {
+        margin-bottom: 0.25rem;
+    }
+
+    .lf-mobile-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .lf-mobile-actions button {
+        flex: 1;
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.5rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .lf-mobile-actions button.delete-btn {
+        background: #ef4444;
+        flex: 0 0 auto;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .lf-mobile-actions button:hover {
+        opacity: 0.9;
+    }
+
+    /* Mobile form */
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+}
+
+/* Desktop - ensure mobile view is hidden */
+@media (min-width: 769px) {
+    .lf-list-mobile {
+        display: none !important;
+    }
+
+    .lf-grid-desktop {
+        display: grid !important;
+    }
+}

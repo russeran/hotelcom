@@ -1,0 +1,267 @@
+/* Restaurant Reservations Page uses shared .page layout */
+
+.res-add-btn {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border: none;
+    padding: 0.625rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(112, 107, 255, 0.3);
+}
+
+.res-add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(112, 107, 255, 0.4);
+}
+
+/* Availability Check */
+.availability-msg {
+    display: inline-block;
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.availability-msg.available {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.availability-msg.unavailable {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+/* Filter Row */
+.filter-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.restaurant-filter,
+.date-filter {
+    max-width: 200px;
+}
+
+/* Desktop Grid */
+.reservations-grid-desktop {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+}
+
+.reservation-card {
+    background: var(--surface-3);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+}
+
+.reservation-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.reservation-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+    gap: 0.5rem;
+}
+
+.reservation-card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 0.5rem 0;
+}
+
+.reservation-card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.reservation-card-actions button {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.35rem 0.6rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.reservation-card-actions button:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.reservation-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.conf-number {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    color: var(--faint);
+    font-family: monospace;
+}
+
+/* Mobile List - hidden by default */
+.reservations-list-mobile {
+    display: none;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .res-add-btn {
+        width: 100%;
+        padding: 0.75rem;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+    }
+
+    .search-box {
+        width: 100%;
+        max-width: none;
+    }
+
+    .filter-row {
+        flex-direction: column;
+    }
+
+    .restaurant-filter,
+    .date-filter {
+        max-width: none;
+        width: 100%;
+    }
+
+    .filter-pills {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .filter-pills .pill {
+        flex: 1;
+        min-width: 65px;
+        text-align: center;
+    }
+
+    /* Hide desktop grid, show mobile list */
+    .reservations-grid-desktop {
+        display: none;
+    }
+
+    .reservations-list-mobile {
+        display: block;
+    }
+
+    .reservation-card-mobile {
+        background: var(--surface-3);
+        border: 1px solid var(--border-strong);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .reservation-mobile-header {
+        margin-bottom: 0.75rem;
+    }
+
+    .reservation-mobile-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 0.5rem;
+    }
+
+    .reservation-mobile-details {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 0.75rem;
+    }
+
+    .reservation-mobile-details > div {
+        margin-bottom: 0.25rem;
+    }
+
+    .reservation-mobile-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .reservation-mobile-actions button {
+        flex: 1;
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.5rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-width: 60px;
+    }
+
+    .reservation-mobile-actions button.delete-btn {
+        background: #ef4444;
+        flex: 0 0 auto;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .reservation-mobile-actions button:hover {
+        opacity: 0.9;
+    }
+
+    .availability-msg {
+        display: block;
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+
+    /* Mobile form */
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+}
+
+/* Desktop - ensure mobile view is hidden */
+@media (min-width: 769px) {
+    .reservations-list-mobile {
+        display: none !important;
+    }
+
+    .reservations-grid-desktop {
+        display: grid !important;
+    }
+}
