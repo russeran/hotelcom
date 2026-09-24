@@ -17,6 +17,7 @@ export default function ReservationsPage() {
     const [reservations, setReservations] = useState([]);
     const [form, setForm] = useState(BLANK);
     const [filter, setFilter] = useState('all');
+    const [showForm, setShowForm] = useState(false);
     const manage = canManage();
 
     useEffect(() => {
@@ -28,6 +29,7 @@ export default function ReservationsPage() {
         const created = await reservationsAPI.addReservation(form);
         setReservations([created, ...reservations]);
         setForm(BLANK);
+        setShowForm(false);
     }
 
     async function setStatus(r, status) {
@@ -57,33 +59,41 @@ export default function ReservationsPage() {
                     <h1 className="section-title">Reservations</h1>
                     <p className="section-subtitle">{arrivals} arrivals today · {departures} departures today · {reservations.length} total</p>
                 </div>
+                <button 
+                    className="res-add-btn"
+                    onClick={() => setShowForm(!showForm)}
+                >
+                    {showForm ? '✕ Cancel' : '+ New Reservation'}
+                </button>
             </header>
 
-            <div className="surface-card page-card">
-                <Form onSubmit={handleAdd}>
-                    <Row className="g-2 align-items-end">
-                        <Col md={4}>
-                            <Form.Label>Guest name</Form.Label>
-                            <Form.Control value={form.guestName} onChange={e => setForm({ ...form, guestName: e.target.value })} placeholder="Guest name" required />
-                        </Col>
-                        <Col md={2}>
-                            <Form.Label>Room</Form.Label>
-                            <Form.Control value={form.room} onChange={e => setForm({ ...form, room: e.target.value })} placeholder="101" />
-                        </Col>
-                        <Col md={2}>
-                            <Form.Label>Check-in</Form.Label>
-                            <Form.Control type="date" value={form.checkIn} onChange={e => setForm({ ...form, checkIn: e.target.value })} />
-                        </Col>
-                        <Col md={2}>
-                            <Form.Label>Check-out</Form.Label>
-                            <Form.Control type="date" value={form.checkOut} onChange={e => setForm({ ...form, checkOut: e.target.value })} />
-                        </Col>
-                        <Col md={2}>
-                            <Button type="submit" variant="primary" className="w-100">Add</Button>
-                        </Col>
-                    </Row>
-                </Form>
-            </div>
+            {showForm && (
+                <div className="surface-card page-card">
+                    <Form onSubmit={handleAdd}>
+                        <Row className="g-2 align-items-end res-form-row">
+                            <Col md={4}>
+                                <Form.Label>Guest name</Form.Label>
+                                <Form.Control value={form.guestName} onChange={e => setForm({ ...form, guestName: e.target.value })} placeholder="Guest name" required />
+                            </Col>
+                            <Col md={2}>
+                                <Form.Label>Room</Form.Label>
+                                <Form.Control value={form.room} onChange={e => setForm({ ...form, room: e.target.value })} placeholder="101" />
+                            </Col>
+                            <Col md={2}>
+                                <Form.Label>Check-in</Form.Label>
+                                <Form.Control type="date" value={form.checkIn} onChange={e => setForm({ ...form, checkIn: e.target.value })} />
+                            </Col>
+                            <Col md={2}>
+                                <Form.Label>Check-out</Form.Label>
+                                <Form.Control type="date" value={form.checkOut} onChange={e => setForm({ ...form, checkOut: e.target.value })} />
+                            </Col>
+                            <Col md={2}>
+                                <Button type="submit" variant="primary" className="w-100">Add</Button>
+                            </Col>
+                        </Row>
+                    </Form>
+                </div>
+            )}
 
             <div className="toolbar">
                 <div className="filter-pills">
@@ -97,34 +107,73 @@ export default function ReservationsPage() {
                 {visible.length === 0 ? (
                     <div className="empty-state">No reservations match this view.</div>
                 ) : (
-                    <Table hover responsive className="align-middle mb-0">
-                        <thead>
-                            <tr>
-                                <th>Guest</th><th>Room</th><th>Check-in</th><th>Check-out</th><th>Status</th><th className="text-end">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <>
+                        {/* Desktop Table View */}
+                        <Table hover responsive className="align-middle mb-0 res-table">
+                            <thead>
+                                <tr>
+                                    <th>Guest</th><th>Room</th><th>Check-in</th><th>Check-out</th><th>Status</th><th className="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {visible.map(r => (
+                                    <tr key={r._id}>
+                                        <td>{r.guestName}</td>
+                                        <td>{r.room || '—'}</td>
+                                        <td className={isToday(r.checkIn) ? 'res-today' : ''}>{fmt(r.checkIn)}</td>
+                                        <td className={isToday(r.checkOut) ? 'res-today' : ''}>{fmt(r.checkOut)}</td>
+                                        <td><StatusBadge status={r.status} /></td>
+                                        <td className="text-end text-nowrap">
+                                            {r.status === 'Booked' && <Button size="sm" variant="success" onClick={() => setStatus(r, 'Checked In')}>Check In</Button>}
+                                            {r.status === 'Checked In' && <Button size="sm" variant="outline-primary" onClick={() => setStatus(r, 'Checked Out')}>Check Out</Button>}
+                                            {' '}
+                                            {manage && r.status !== 'Cancelled' && r.status !== 'Checked Out' && (
+                                                <Button size="sm" variant="outline-secondary" onClick={() => setStatus(r, 'Cancelled')}>Cancel</Button>
+                                            )}
+                                            {' '}
+                                            {manage && <Button size="sm" variant="outline-danger" onClick={() => handleDelete(r)}>Delete</Button>}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+
+                        {/* Mobile Card View */}
+                        <div className="res-list-mobile">
                             {visible.map(r => (
-                                <tr key={r._id}>
-                                    <td>{r.guestName}</td>
-                                    <td>{r.room || '—'}</td>
-                                    <td className={isToday(r.checkIn) ? 'res-today' : ''}>{fmt(r.checkIn)}</td>
-                                    <td className={isToday(r.checkOut) ? 'res-today' : ''}>{fmt(r.checkOut)}</td>
-                                    <td><StatusBadge status={r.status} /></td>
-                                    <td className="text-end text-nowrap">
+                                <div key={r._id} className="res-card-mobile">
+                                    <div className="res-card-mobile-header">
+                                        <div className="res-card-mobile-guest">{r.guestName}</div>
+                                        <StatusBadge status={r.status} />
+                                    </div>
+
+                                    <div className="res-card-mobile-details">
+                                        <div className="res-card-mobile-detail">
+                                            <span className="res-card-mobile-detail-label">Room</span>
+                                            <span>{r.room || '—'}</span>
+                                        </div>
+                                        <div className="res-card-mobile-detail">
+                                            <span className="res-card-mobile-detail-label">Check-in</span>
+                                            <span className={isToday(r.checkIn) ? 'res-today' : ''}>{fmt(r.checkIn)}</span>
+                                        </div>
+                                        <div className="res-card-mobile-detail">
+                                            <span className="res-card-mobile-detail-label">Check-out</span>
+                                            <span className={isToday(r.checkOut) ? 'res-today' : ''}>{fmt(r.checkOut)}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="res-card-mobile-actions">
                                         {r.status === 'Booked' && <Button size="sm" variant="success" onClick={() => setStatus(r, 'Checked In')}>Check In</Button>}
                                         {r.status === 'Checked In' && <Button size="sm" variant="outline-primary" onClick={() => setStatus(r, 'Checked Out')}>Check Out</Button>}
-                                        {' '}
                                         {manage && r.status !== 'Cancelled' && r.status !== 'Checked Out' && (
                                             <Button size="sm" variant="outline-secondary" onClick={() => setStatus(r, 'Cancelled')}>Cancel</Button>
                                         )}
-                                        {' '}
                                         {manage && <Button size="sm" variant="outline-danger" onClick={() => handleDelete(r)}>Delete</Button>}
-                                    </td>
-                                </tr>
+                                    </div>
+                                </div>
                             ))}
-                        </tbody>
-                    </Table>
+                        </div>
+                    </>
                 )}
             </div>
         </div>

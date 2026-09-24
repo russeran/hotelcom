@@ -12,6 +12,7 @@ export default function NavBar({ user, setUser }) {
   const [notifications, setNotifications] = useState([]);
   const [clock, setClock] = useState(new Date().toLocaleTimeString());
   const [search, setSearch] = useState('');
+  const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
 
   function handleSearch(e) {
@@ -62,27 +63,89 @@ export default function NavBar({ user, setUser }) {
     .join('')
     .toUpperCase();
 
+  const closeNavbar = () => setExpanded(false);
+
   return (
-    <Navbar className="app-navbar" expand="lg" sticky="top">
+    <Navbar className="app-navbar" expand="lg" sticky="top" expanded={expanded} onToggle={setExpanded}>
       <Container fluid className="app-navbar-inner">
-        <Navbar.Brand as={NavLink} to="/" className="brand">
+        <Navbar.Brand as={NavLink} to="/" className="brand" onClick={closeNavbar}>
           <span className="brand-mark">MS</span>
           <span className="brand-text">Mama Shelter <span className="brand-accent">LA</span></span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="main-nav" />
         <Navbar.Collapse id="main-nav">
           <Nav className="me-auto main-links">
-            <Nav.Link as={NavLink} to="/" end>Dashboard</Nav.Link>
-            <Nav.Link as={NavLink} to="/reservations">Reservations</Nav.Link>
-            <Nav.Link as={NavLink} to="/rooms">Rooms</Nav.Link>
-            <Nav.Link as={NavLink} to="/tasks">Tasks</Nav.Link>
-            <Nav.Link as={NavLink} to="/complaints">Complaints</Nav.Link>
-            <Nav.Link as={NavLink} to="/notes">Notes</Nav.Link>
-            <Nav.Link as={NavLink} to="/concierge">Concierge</Nav.Link>
-            <Nav.Link as={NavLink} to="/chat">Chat</Nav.Link>
-            <Nav.Link as={NavLink} to="/hotels">Hotels</Nav.Link>
-            {canManage(user) && <Nav.Link as={NavLink} to="/reports">Reports</Nav.Link>}
-            {isAdmin(user) && <Nav.Link as={NavLink} to="/admin">Admin</Nav.Link>}
+            <NavDropdown title="Front Desk" id="front-desk-dropdown">
+              <NavDropdown.Item as={NavLink} to="/reservations" onClick={closeNavbar}>
+                Reservations
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/rooms" onClick={closeNavbar}>
+                Rooms
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/guest-profiles" onClick={closeNavbar}>
+                Guest Profiles
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/complaints" onClick={closeNavbar}>
+                Complaints
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/notes" onClick={closeNavbar}>
+                Notes
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown title="Food & Beverage" id="fnb-dropdown">
+              <NavDropdown.Item as={NavLink} to="/restaurant-management" onClick={closeNavbar}>
+                Restaurant Management
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/restaurant-reservations" onClick={closeNavbar}>
+                Dining Reservations
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/waitlist" onClick={closeNavbar}>
+                Waitlist
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown title="Guest Services" id="guest-services-dropdown">
+              <NavDropdown.Item as={NavLink} to="/concierge" onClick={closeNavbar}>
+                Concierge
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/lost-and-found" onClick={closeNavbar}>
+                Lost & Found
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/packages" onClick={closeNavbar}>
+                Packages & Mail
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/hotels" onClick={closeNavbar}>
+                Nearby Hotels
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown title="Operations" id="operations-dropdown">
+              <NavDropdown.Item as={NavLink} to="/tasks" onClick={closeNavbar}>
+                Tasks
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/chat" onClick={closeNavbar}>
+                Team Chat
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            {canManage(user) && (
+              <NavDropdown title="Management" id="management-dropdown">
+                <NavDropdown.Item as={NavLink} to="/reports" onClick={closeNavbar}>
+                  Reports & Analytics
+                </NavDropdown.Item>
+                {isAdmin(user) && (
+                  <>
+                    <NavDropdown.Item as={NavLink} to="/admin" onClick={closeNavbar}>
+                      User Management
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={NavLink} to="/permissions" onClick={closeNavbar}>
+                      Permissions Management
+                    </NavDropdown.Item>
+                  </>
+                )}
+              </NavDropdown>
+            )}
           </Nav>
 
           <div className="nav-right">
@@ -132,7 +195,7 @@ export default function NavBar({ user, setUser }) {
               title={
                 <span className="user-chip">
                   {user.avatar ? (
-                    <Image src={user.avatar} roundedCircle width={30} height={30} alt="avatar" className="user-avatar" />
+                    <Image src={user.avatar} roundedCircle width={32} height={32} alt="avatar" className="user-avatar" />
                   ) : (
                     <span className="user-initials">{initials}</span>
                   )}
@@ -145,10 +208,11 @@ export default function NavBar({ user, setUser }) {
                 {user.department && <span className="user-dept">{user.department}</span>}
               </div>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={NavLink} to="/">Profile & Dashboard</NavDropdown.Item>
-              {isAdmin(user) && <NavDropdown.Item as={NavLink} to="/admin">User Management</NavDropdown.Item>}
+              <NavDropdown.Item as={NavLink} to="/" onClick={closeNavbar}>Dashboard</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/profile" onClick={closeNavbar}>Edit Profile Photo</NavDropdown.Item>
+              {isAdmin(user) && <NavDropdown.Item as={NavLink} to="/admin" onClick={closeNavbar}>User Management</NavDropdown.Item>}
               <NavDropdown.Divider />
-              <NavDropdown.Item onClick={handleLogOut}>Log Out</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => { handleLogOut(); closeNavbar(); }}>Log Out</NavDropdown.Item>
             </NavDropdown>
           </div>
         </Navbar.Collapse>

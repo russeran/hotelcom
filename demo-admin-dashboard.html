@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AI Concierge Analytics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1d2e 0%, #151825 100%);
+            padding: 2rem;
+            min-height: 100vh;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #21243d;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #2a2e4a;
+            transition: all 0.2s;
+        }
+
+        .stat-card:hover {
+            border-color: #706bff;
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #706bff;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .stat-meta {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+        }
+
+        .card {
+            background: #21243d;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            color: #e2e8f0;
+            font-size: 1.1rem;
+        }
+
+        .intent-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .intent-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: #151825;
+            border-radius: 8px;
+        }
+
+        .intent-name {
+            text-transform: capitalize;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+
+        .badge {
+            background: #706bff;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .badge.success {
+            background: #48bb78;
+        }
+
+        .badge.primary {
+            background: #706bff;
+        }
+
+        .badge.warning {
+            background: #f59e0b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.75rem;
+            color: #94a3b8;
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-bottom: 1px solid #2a2e4a;
+        }
+
+        td {
+            padding: 0.875rem 0.75rem;
+            border-bottom: 1px solid #2a2e4a;
+            color: #e2e8f0;
+        }
+
+        tr:hover {
+            background: #1a1d2e;
+        }
+
+        .view-button {
+            background: transparent;
+            border: 1px solid #706bff;
+            color: #706bff;
+            padding: 0.375rem 0.875rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .view-button:hover {
+            background: #706bff;
+            color: white;
+        }
+
+        .demo-label {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(112, 107, 255, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 1000;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #21243d;
+            border-radius: 12px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #2a2e4a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #e2e8f0;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .conversation-meta {
+            background: #151825;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .conversation-meta strong {
+            color: #706bff;
+        }
+
+        .message-detail {
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid #2a2e4a;
+        }
+
+        .message-detail:last-child {
+            border-bottom: none;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-header strong {
+            color: #e2e8f0;
+        }
+
+        .message-header .time {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .message-content {
+            color: #94a3b8;
+            line-height: 1.6;
+            padding-left: 1.5rem;
+        }
+
+        .message-detail.guest .message-content {
+            color: #706bff;
+            font-weight: 500;
+        }
+
+        .message-detail.ai .message-content {
+            color: #6366f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-label">✨ NEW Admin Analytics Dashboard</div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>AI Concierge Analytics</h1>
+            <p>Performance metrics and conversation history</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">45</div>
+                <div class="stat-label">Total Conversations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">38</div>
+                <div class="stat-label">Verified Guests</div>
+                <div class="stat-meta">84.4% rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">12</div>
+                <div class="stat-label">Tasks Created</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">8</div>
+                <div class="stat-label">Complaints Logged</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">4.6 ★</div>
+                <div class="stat-label">Avg Satisfaction</div>
+            </div>
+        </div>
+
+        <!-- Intent Breakdown -->
+        <div class="card">
+            <h3>Top Request Types</h3>
+            <div class="intent-list">
+                <div class="intent-item">
+                    <span class="intent-name">Maintenance</span>
+                    <span class="badge">12</span>
+                </div>
+                <div class="intent-item">
+                    <span class="intent-name">Housekeeping</span>
+                    <span class="badge">8</span>
+                </div>
+                <div class="intent-item">
+                    <span class="intent-name">Noise Complaint</span>
+                    <span class="badge">5</span>
+                </div>
+                <div class="intent-item">
+                    <span class="intent-name">Reservation Change</span>
+                    <span class="badge">4</span>
+                </div>
+                <div class="intent-item">
+                    <span class="intent-name">Concierge</span>
+                    <span class="badge">3</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conversations Table -->
+        <div class="card">
+            <h3>Recent Conversations</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Started</th>
+                        <th>Guest</th>
+                        <th>Room</th>
+                        <th>Status</th>
+                        <th>Messages</th>
+                        <th>Actions</th>
+                        <th>Rating</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>9:16 AM</td>
+                        <td>John Smith</td>
+                        <td>305</td>
+                        <td><span class="badge success">completed</span> <span class="badge success">✓</span></td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td style="color: #f59e0b;">5 ★</td>
+                        <td><button class="view-button" onclick="showModal()">View</button></td>
+                    </tr>
+                    <tr>
+                        <td>9:10 AM</td>
+                        <td>Jane Doe</td>
+                        <td>412</td>
+                        <td><span class="badge primary">active</span></td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>—</td>
+                        <td><button class="view-button">View</button></td>
+                    </tr>
+                    <tr>
+                        <td>8:45 AM</td>
+                        <td>Bob Johnson</td>
+                        <td>201</td>
+                        <td><span class="badge success">completed</span> <span class="badge success">✓</span></td>
+                        <td>12</td>
+                        <td>2</td>
+                        <td style="color: #f59e0b;">4 ★</td>
+                        <td><button class="view-button">View</button></td>
+                    </tr>
+                    <tr>
+                        <td>8:30 AM</td>
+                        <td>Sarah Williams</td>
+                        <td>150</td>
+                        <td><span class="badge success">completed</span> <span class="badge success">✓</span></td>
+                        <td>8</td>
+                        <td>1</td>
+                        <td style="color: #f59e0b;">5 ★</td>
+                        <td><button class="view-button">View</button></td>
+                    </tr>
+                    <tr>
+                        <td>8:15 AM</td>
+                        <td>Michael Brown</td>
+                        <td>520</td>
+                        <td><span class="badge success">completed</span></td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td style="color: #f59e0b;">5 ★</td>
+                        <td><button class="view-button">View</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal for Conversation Details -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Conversation Details</h3>
+                <button class="close-button" onclick="hideModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="conversation-meta">
+                    <div><strong>Guest:</strong> John Smith</div>
+                    <div><strong>Room:</strong> 305</div>
+                    <div><strong>Status:</strong> <span class="badge success">completed</span></div>
+                    <div><strong>Started:</strong> Aug 27, 9:16 AM</div>
+                    <div><strong>Duration:</strong> 2m 34s</div>
+                    <div><strong>Rating:</strong> <span style="color: #f59e0b;">⭐⭐⭐⭐⭐ 5 stars</span></div>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: #e2e8f0; margin-bottom: 0.75rem;">Actions Taken</h4>
+                    <div style="background: rgba(72, 187, 120, 0.2); padding: 0.75rem; border-radius: 8px; color: #48bb78; display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="badge success">task</span>
+                        <span>Created High priority task for Maintenance</span>
+                    </div>
+                </div>
+
+                <h4 style="color: #e2e8f0; margin-bottom: 1rem;">Conversation</h4>
+                
+                <div class="message-detail ai">
+                    <div class="message-header">
+                        <strong>🤖 AI Concierge</strong>
+                        <span class="time">9:16 AM</span>
+                    </div>
+                    <div class="message-content">
+                        Hello! I'm your hotel AI concierge. How can I help you today?
+                    </div>
+                </div>
+
+                <div class="message-detail guest">
+                    <div class="message-header">
+                        <strong>👤 Guest</strong>
+                        <span class="time">9:16 AM</span>
+                    </div>
+                    <div class="message-content">
+                        The AC in my room isn't working and it's really hot
+                    </div>
+                </div>
+
+                <div class="message-detail ai">
+                    <div class="message-header">
+                        <strong>🤖 AI Concierge</strong>
+                        <span class="time">9:16 AM</span>
+                    </div>
+                    <div class="message-content">
+                        I'm sorry to hear that. I'll notify our maintenance team right away. May I have your room number and last name to verify your reservation?
+                    </div>
+                </div>
+
+                <div class="message-detail guest">
+                    <div class="message-header">
+                        <strong>👤 Guest</strong>
+                        <span class="time">9:17 AM</span>
+                    </div>
+                    <div class="message-content">
+                        Room 305, Smith
+                    </div>
+                </div>
+
+                <div class="message-detail ai">
+                    <div class="message-header">
+                        <strong>🤖 AI Concierge</strong>
+                        <span class="time">9:17 AM</span>
+                    </div>
+                    <div class="message-content">
+                        Thank you, Mr. Smith! I've created a high-priority maintenance request for the AC in room 305. Our maintenance team will be there within 30 minutes. Is there anything else I can help you with?
+                    </div>
+                </div>
+
+                <div class="message-detail guest">
+                    <div class="message-header">
+                        <strong>👤 Guest</strong>
+                        <span class="time">9:18 AM</span>
+                    </div>
+                    <div class="message-content">
+                        No, that's all. Thank you!
+                    </div>
+                </div>
+
+                <div class="message-detail ai">
+                    <div class="message-header">
+                        <strong>🤖 AI Concierge</strong>
+                        <span class="time">9:18 AM</span>
+                    </div>
+                    <div class="message-content">
+                        You're welcome! Our maintenance team has been notified and should arrive soon. Have a wonderful stay!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showModal() {
+            document.getElementById('modal').classList.add('show');
+        }
+
+        function hideModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        // Close modal on background click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideModal();
+            }
+        });
+    </script>
+</body>
+</html>

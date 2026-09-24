@@ -11,6 +11,7 @@ export default function ConciergePage() {
     const [concierges, setConcierges] = useState([]);
     const [search, setSearch] = useState('');
     const [typeFilter, setTypeFilter] = useState('all');
+    const [showForm, setShowForm] = useState(false);
 
     useEffect(function () {
         async function getAllConcierges() {
@@ -23,6 +24,7 @@ export default function ConciergePage() {
     async function addConcierge(concierge) {
         const created = await conciergesAPI.addAConcierge(concierge);
         setConcierges([created, ...concierges]);
+        setShowForm(false);
     }
 
     async function handleDelete(conciergeId) {
@@ -65,9 +67,20 @@ export default function ConciergePage() {
             <EventsNearby onSave={addConcierge} />
 
             <h2 className="subsection-title mt-4">Local Recommendations</h2>
-            <div className="surface-card page-card">
-                <ConciergeForm addConcierge={addConcierge} />
+            <div className="concierge-form-header">
+                <button 
+                    className="concierge-add-btn"
+                    onClick={() => setShowForm(!showForm)}
+                >
+                    {showForm ? '✕ Cancel' : '+ Add Recommendation'}
+                </button>
             </div>
+            
+            {showForm && (
+                <div className="surface-card page-card">
+                    <ConciergeForm addConcierge={addConcierge} />
+                </div>
+            )}
 
             <div className="toolbar">
                 <InputGroup className="search-box">
